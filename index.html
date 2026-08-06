@@ -286,6 +286,33 @@
   .ad-preview .ad-desc{color:var(--ink-muted); font-size:13px;}
   .channel-flag{font-family:'Manrope', sans-serif; font-weight:700; font-size:10.5px; letter-spacing:0.06em; color:var(--rust-soft); border:1px solid var(--rust-soft); padding:3px 8px; margin-right:12px;}
 
+  .ad-group-block{margin-top:38px;}
+  .ad-group-block:first-child{margin-top:26px;}
+  .ag-title{
+    font-family:'Manrope', sans-serif; font-weight:700; font-size:15px; color:var(--ink);
+    display:flex; align-items:center; gap:10px; margin-bottom:12px;
+  }
+  .ag-title .ag-tag{font-family:'Manrope', sans-serif; font-weight:600; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); border:1px solid var(--rule); padding:3px 8px;}
+
+  .sitelink-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:12px;}
+  .sitelink-card{background:var(--panel); padding:16px 18px;}
+  .sitelink-card .st{font-family:'Manrope', sans-serif; font-weight:700; font-size:13px; color:var(--ink); margin-bottom:8px;}
+  .sitelink-card .sl{font-size:12px; color:var(--ink-muted); line-height:1.5;}
+
+  .subsection-label{
+    font-family:'Manrope', sans-serif; font-size:10.5px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--rust-soft); margin-top:30px; margin-bottom:6px;
+  }
+  .divider-thin{height:1px; background:var(--rule); margin:34px 0;}
+
+  .audience-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:26px;}
+  .audience-card{background:var(--panel); padding:22px 24px;}
+  .audience-card h4{font-family:'Manrope', sans-serif; font-weight:700; font-size:13.5px; color:var(--ink); margin-bottom:10px; letter-spacing:0.02em;}
+  .audience-card ul{list-style:none;}
+  .audience-card li{font-size:13px; color:var(--ink-muted); padding:6px 0; border-bottom:1px solid var(--rule);}
+  .audience-card li:last-child{border-bottom:none;}
+  .audience-card li b{color:var(--ink); font-weight:600;}
+
   footer{padding:40px 0 70px; display:flex; justify-content:space-between; font-family:'Manrope', sans-serif; font-size:11px; letter-spacing:0.04em; color:var(--ink-faint);}
   .panel-tab{display:none;}
   .panel-tab.active{display:block;}
@@ -542,44 +569,236 @@
     </div>
 
     <div class="chapter">
-      <div class="chapter-head"><span class="chapter-tag">[02]</span><h2>Google Ads</h2></div>
+      <div class="chapter-head"><span class="chapter-tag">[02]</span><h2>Google Ads — RU</h2></div>
+      <p class="lede">Кампания <b>ELYSIUM Tbilisi — Premium RU</b>, две группы объявлений: Generic (общий спрос) и Investment (инвестиционный спрос).</p>
 
-      <p class="lede"><span class="channel-flag">RU</span>Ключевые слова: элитная недвижимость тбилиси · апартаменты тбилиси купить · квартиры премиум класса тбилиси · клубный дом тбилиси · недвижимость грузия инвестиции</p>
-      <div class="kw-label">Заголовки RSA</div>
-      <div class="headline-list">
-        <div class="headline-pill">Элитная недвижимость Тбилиси</div>
-        <div class="headline-pill">ELYSIUM — клубный дом</div>
-        <div class="headline-pill">Апартаменты премиум-класса</div>
-        <div class="headline-pill">Дом полностью сдан</div>
-        <div class="headline-pill">Инвестиции в недвижимость</div>
-        <div class="headline-pill">Купить квартиру в Тбилиси</div>
+      <div class="ad-group-block">
+        <div class="ag-title">Группа 1 <span class="ag-tag">Generic</span></div>
+        <div class="chip-row">
+          <span class="chip">элитная недвижимость тбилиси</span>
+          <span class="chip">[апартаменты тбилиси купить]</span>
+          <span class="chip">"квартиры премиум класса тбилиси"</span>
+          <span class="chip">клубный дом тбилиси</span>
+          <span class="chip">новостройки тбилиси элитные</span>
+          <span class="chip">элитная недвижимость грузия</span>
+          <span class="chip">квартиры бизнес класса тбилиси</span>
+          <span class="chip">жилой комплекс тбилиси премиум</span>
+          <span class="chip">резиденции тбилиси</span>
+          <span class="chip">новостройки грузия элитные</span>
+          <span class="chip">вилла тбилиси купить</span>
+          <span class="chip">пентхаус тбилиси</span>
+        </div>
       </div>
+
+      <div class="ad-group-block">
+        <div class="ag-title">Группа 2 <span class="ag-tag">Investment</span></div>
+        <div class="chip-row">
+          <span class="chip">недвижимость грузия инвестиции</span>
+          <span class="chip">[купить квартиру в грузии инвестиции]</span>
+          <span class="chip">"вложить деньги в недвижимость тбилиси"</span>
+          <span class="chip">недвижимость тбилиси для инвестора</span>
+          <span class="chip">инвестиции в недвижимость тбилиси</span>
+          <span class="chip">доходная недвижимость грузия</span>
+          <span class="chip">[вложить деньги в недвижимость грузия]</span>
+          <span class="chip">ROI недвижимость грузия</span>
+        </div>
+      </div>
+
+      <div class="subsection-label">Минус-слова (уровень кампании)</div>
+      <div class="chip-row">
+        <span class="chip">аренда</span><span class="chip">снять</span><span class="chip">дешево</span><span class="chip">вакансии</span><span class="chip">работа</span><span class="chip">ипотека бесплатно</span><span class="chip">б/у</span><span class="chip">вторичка</span><span class="chip">реновация</span><span class="chip">ремонт квартир</span>
+      </div>
+
+      <div class="kw-label">Заголовки RSA · 15 шт · ≤30 симв.</div>
+      <div class="headline-list">
+        <div class="headline-pill">Элитная Недвижимость Тбилиси</div>
+        <div class="headline-pill">ELYSIUM — Клубный Дом</div>
+        <div class="headline-pill">Апартаменты Премиум-Класса</div>
+        <div class="headline-pill">Дом Полностью Сдан</div>
+        <div class="headline-pill">Недвижимость Бизнес-Класса</div>
+        <div class="headline-pill">Квартиры в Тбилиси</div>
+        <div class="headline-pill">Резиденции ELYSIUM</div>
+        <div class="headline-pill">Инвестиции в Недвижимость</div>
+        <div class="headline-pill">Жилой Комплекс Премиум</div>
+        <div class="headline-pill">Купить Квартиру в Тбилиси</div>
+        <div class="headline-pill">Новостройка в Тбилиси</div>
+        <div class="headline-pill">Апартаменты 138–191 м²</div>
+        <div class="headline-pill">Панорамные Виды на Город</div>
+        <div class="headline-pill">Тбилиси, Элия Хилл</div>
+        <div class="headline-pill">Записаться на Просмотр</div>
+      </div>
+
+      <div class="kw-label">Описания · 4 шт · ≤90 симв.</div>
+      <div class="headline-list" style="grid-template-columns:1fr 1fr;">
+        <div class="headline-pill">Клубный дом на 14 резиденций с панорамными видами на Тбилиси.</div>
+        <div class="headline-pill">Дом полностью сдан. Автономный генератор, запас воды 70 тонн, охрана 24/7.</div>
+        <div class="headline-pill">Площади от 138 до 191 м², свободная планировка без несущих стен внутри.</div>
+        <div class="headline-pill">Элия Хилл: тишина и приватность в 10 минутах от центра Тбилиси.</div>
+      </div>
+
       <div class="ad-preview">
-        <div class="ad-title">Элитная недвижимость Тбилиси | ELYSIUM — клубный дом</div>
+        <div class="ad-title">Элитная Недвижимость Тбилиси | ELYSIUM — Клубный Дом</div>
         <div class="ad-url">elysiumtbilisi.com</div>
         <div class="ad-desc">Клубный дом на 14 резиденций с панорамными видами на Тбилиси. Дом полностью сдан.</div>
       </div>
 
-      <p class="lede" style="margin-top:36px;"><span class="channel-flag">EN</span>Keywords: luxury apartments tbilisi · buy apartment tbilisi · premium real estate tbilisi · club residence tbilisi · real estate investment georgia</p>
-      <div class="kw-label">RSA headlines</div>
+      <div class="kw-label">Быстрые ссылки</div>
+      <div class="sitelink-grid">
+        <div class="sitelink-card"><div class="st">Резиденции и планировки</div><div class="sl">От 138 до 191 м²<br>Свободная планировка</div></div>
+        <div class="sitelink-card"><div class="st">Крыша и удобства</div><div class="sl">Джакузи, барбекю, фитнес<br>Только для резидентов</div></div>
+        <div class="sitelink-card"><div class="st">Локация — Элия Хилл</div><div class="sl">10 минут до центра<br>Тишина и приватность</div></div>
+        <div class="sitelink-card"><div class="st">О проекте ELYSIUM</div><div class="sl">Клубный дом, 14 резиденций<br>Дом полностью сдан</div></div>
+        <div class="sitelink-card"><div class="st">Запись на просмотр</div><div class="sl">Индивидуальный показ<br>Свяжитесь с нами</div></div>
+        <div class="sitelink-card"><div class="st">Автономность дома</div><div class="sl">Генератор + запас воды<br>Охрана 24/7</div></div>
+      </div>
+
+      <div class="kw-label">Уточнения</div>
+      <div class="chip-row">
+        <span class="chip">14 резиденций</span><span class="chip">Дом полностью сдан</span><span class="chip">Охрана 24/7</span><span class="chip">Подземный паркинг</span><span class="chip">Лифты KONE</span><span class="chip">Своя крыша и джакузи</span><span class="chip">Автономный генератор</span><span class="chip">Звукоизоляция 300 мм</span>
+      </div>
+
+      <div class="callout">Структурированные сниппеты — заголовок «Удобства»: подземный паркинг, джакузи на крыше, фитнес-зона, барбекю-зона, ландшафтный сад. Номер телефона: +995 322 05 38 78 (указан на сайте).</div>
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-head"><span class="chapter-tag">[03]</span><h2>Google Ads — EN</h2></div>
+      <p class="lede">Campaign <b>ELYSIUM Tbilisi — Premium EN</b>, two ad groups: Generic and Investment.</p>
+
+      <div class="ad-group-block">
+        <div class="ag-title">Ad Group 1 <span class="ag-tag">Generic</span></div>
+        <div class="chip-row">
+          <span class="chip">luxury apartments tbilisi</span>
+          <span class="chip">[buy apartment tbilisi]</span>
+          <span class="chip">"premium real estate tbilisi"</span>
+          <span class="chip">club residence tbilisi</span>
+          <span class="chip">new luxury development tbilisi</span>
+          <span class="chip">luxury real estate georgia</span>
+          <span class="chip">premium apartments georgia</span>
+          <span class="chip">new development tbilisi</span>
+          <span class="chip">tbilisi residences</span>
+          <span class="chip">penthouse tbilisi</span>
+        </div>
+      </div>
+
+      <div class="ad-group-block">
+        <div class="ag-title">Ad Group 2 <span class="ag-tag">Investment</span></div>
+        <div class="chip-row">
+          <span class="chip">real estate investment georgia</span>
+          <span class="chip">[invest in tbilisi real estate]</span>
+          <span class="chip">"buy property georgia investment"</span>
+          <span class="chip">tbilisi property for investors</span>
+          <span class="chip">property investment georgia roi</span>
+        </div>
+      </div>
+
+      <div class="subsection-label">Negative keywords</div>
+      <div class="chip-row">
+        <span class="chip">rent</span><span class="chip">cheap</span><span class="chip">jobs</span><span class="chip">careers</span><span class="chip">free mortgage</span><span class="chip">second-hand</span><span class="chip">renovation</span>
+      </div>
+
+      <div class="kw-label">RSA headlines · 15 · ≤30 chars</div>
       <div class="headline-list">
         <div class="headline-pill">Luxury Real Estate Tbilisi</div>
         <div class="headline-pill">ELYSIUM — Club Residence</div>
         <div class="headline-pill">Premium Apartments Tbilisi</div>
         <div class="headline-pill">Fully Completed Residence</div>
+        <div class="headline-pill">Business-Class Real Estate</div>
+        <div class="headline-pill">Apartments in Tbilisi</div>
+        <div class="headline-pill">ELYSIUM Residences</div>
         <div class="headline-pill">Real Estate Investment</div>
+        <div class="headline-pill">Premium Residential Complex</div>
         <div class="headline-pill">Buy Apartment in Tbilisi</div>
+        <div class="headline-pill">New Development Tbilisi</div>
+        <div class="headline-pill">138-191 sqm Apartments</div>
+        <div class="headline-pill">Panoramic City Views</div>
+        <div class="headline-pill">Tbilisi, Elya Hill</div>
+        <div class="headline-pill">Book a Viewing</div>
       </div>
+
+      <div class="kw-label">Descriptions · 4 · ≤90 chars</div>
+      <div class="headline-list" style="grid-template-columns:1fr 1fr;">
+        <div class="headline-pill">A club residence in Tbilisi with only 14 homes and panoramic views.</div>
+        <div class="headline-pill">Premium-class apartments. Fully completed and ready to move in.</div>
+        <div class="headline-pill">Luxury real estate in Tbilisi. Apartments from 138 to 191 sqm.</div>
+        <div class="headline-pill">Real estate investment in Georgia. ELYSIUM club residence, Elya Hill.</div>
+      </div>
+
       <div class="ad-preview">
         <div class="ad-title">Luxury Real Estate Tbilisi | ELYSIUM — Club Residence</div>
         <div class="ad-url">elysiumtbilisi.com</div>
         <div class="ad-desc">A private club residence with only 14 homes and panoramic views of Tbilisi.</div>
       </div>
+
+      <div class="kw-label">Sitelinks</div>
+      <div class="sitelink-grid">
+        <div class="sitelink-card"><div class="st">Residences & Layouts</div><div class="sl">138 to 191 sqm<br>Open-plan design</div></div>
+        <div class="sitelink-card"><div class="st">Rooftop & Amenities</div><div class="sl">Jacuzzi, BBQ, fitness area<br>For residents only</div></div>
+        <div class="sitelink-card"><div class="st">Location — Elya Hill</div><div class="sl">10 min to city center<br>Quiet and private</div></div>
+        <div class="sitelink-card"><div class="st">About ELYSIUM</div><div class="sl">Club residence, 14 homes<br>Fully completed</div></div>
+        <div class="sitelink-card"><div class="st">Book a Viewing</div><div class="sl">Private tour by request<br>Contact us today</div></div>
+        <div class="sitelink-card"><div class="st">Full Autonomy</div><div class="sl">Generator plus water reserve<br>24/7 security</div></div>
+      </div>
+
+      <div class="kw-label">Callouts</div>
+      <div class="chip-row">
+        <span class="chip">14 Residences</span><span class="chip">Fully Completed</span><span class="chip">24/7 Security</span><span class="chip">Underground Parking</span><span class="chip">KONE Elevators</span><span class="chip">Private Rooftop</span><span class="chip">Backup Generator</span><span class="chip">Soundproof Walls</span>
+      </div>
+
+      <div class="callout">Structured snippets — header "Amenities": Underground Parking, Rooftop Jacuzzi, Fitness Area, BBQ Zone, Landscaped Garden. Phone: +995 322 05 38 78.</div>
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-head"><span class="chapter-tag">[04]</span><h2>Аудитории Google (Display / PMax / Demand Gen)</h2></div>
+      <p class="lede">Это не «интересы» как в Meta, а сигналы аудитории для кампаний с более широким охватом — накладываются поверх поисковых кампаний на Display, Performance Max и Demand Gen.</p>
+      <div class="audience-grid">
+        <div class="audience-card">
+          <h4>In-Market — готовы купить сейчас</h4>
+          <ul>
+            <li>Real Estate → <b>Residential Properties</b></li>
+            <li>Real Estate → <b>Rental & Investment Services</b></li>
+            <li>Real Estate → <b>Consulting & Investment Firms</b></li>
+          </ul>
+        </div>
+        <div class="audience-card">
+          <h4>Affinity — долгосрочный интерес</h4>
+          <ul>
+            <li><b>Luxury Shoppers</b></li>
+            <li><b>Investors</b> (Banking, Finance & Insurance)</li>
+            <li><b>Home & Garden Enthusiasts</b></li>
+          </ul>
+        </div>
+        <div class="audience-card">
+          <h4>Life Events</h4>
+          <ul>
+            <li><b>Recently Moved</b></li>
+            <li><b>Upcoming Retirement</b></li>
+          </ul>
+        </div>
+        <div class="audience-card">
+          <h4>Custom Segment — по конкурентам</h4>
+          <ul>
+            <li>next-property.com</li>
+            <li>eltgroup.ge</li>
+            <li>vrkrtsanisi.com · thelake.ge · mrqz.to</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout">Custom Segment собран напрямую из вашей же выдачи по конкурентам — это прямые конкуренты ELYSIUM в поиске, логичный источник аудитории для PMax/Display. Ставки: старт на Maximize Conversions без target CPA (нет истории конверсий), переход на Target CPA через 4–6 недель или после 30+ конверсий.</div>
     </div>
 
     <div class="chapter" style="border-bottom:none;">
-      <div class="chapter-head"><span class="chapter-tag">[03]</span><h2>Яндекс.Директ</h2></div>
-      <p class="lede"><span class="channel-flag">RU</span>Ключевые фразы: элитная недвижимость тбилиси · недвижимость тбилиси купить · клубный дом тбилиси · недвижимость грузия инвестиции</p>
+      <div class="chapter-head"><span class="chapter-tag">[05]</span><h2>Яндекс.Директ — RU</h2></div>
+      <p class="lede">Кампания <b>ELYSIUM Tbilisi — РСЯ + Поиск</b>, три объявления: Generic, Локация, Инвестиции.</p>
+
+      <div class="chip-row">
+        <span class="chip">элитная недвижимость тбилиси</span><span class="chip">недвижимость тбилиси купить</span><span class="chip">квартиры премиум класса тбилиси</span><span class="chip">клубный дом тбилиси</span><span class="chip">новостройки тбилиси элитные</span><span class="chip">резиденции тбилиси</span><span class="chip">пентхаус тбилиси</span><span class="chip">недвижимость грузия инвестиции</span><span class="chip">купить квартиру в грузии инвестиции</span><span class="chip">доходная недвижимость грузия</span><span class="chip">вложить деньги в недвижимость тбилиси</span><span class="chip">жилой комплекс тбилиси премиум</span>
+      </div>
+
+      <div class="subsection-label">Минус-слова</div>
+      <div class="chip-row">
+        <span class="chip">аренда</span><span class="chip">снять</span><span class="chip">дешево</span><span class="chip">вакансии</span><span class="chip">работа</span><span class="chip">ипотека бесплатно</span><span class="chip">б/у</span><span class="chip">вторичка</span>
+      </div>
+
       <div class="kw-label">Объявления</div>
       <div class="ad-preview">
         <div class="ad-title">ELYSIUM Тбилиси — Клубный Дом · 14 Резиденций</div>
@@ -596,6 +815,39 @@
         <div class="ad-url">elysiumtbilisi.com</div>
         <div class="ad-desc">Клубный дом на 14 резиденций в Тбилиси. Запись на индивидуальный показ.</div>
       </div>
+
+      <div class="kw-label">Быстрые ссылки</div>
+      <div class="sitelink-grid" style="grid-template-columns:1fr 1fr;">
+        <div class="sitelink-card"><div class="st">Резиденции и планировки</div><div class="sl">От 138 до 191 м²</div></div>
+        <div class="sitelink-card"><div class="st">Локация — Элия Хилл</div><div class="sl">10 минут до центра</div></div>
+        <div class="sitelink-card"><div class="st">Крыша и удобства</div><div class="sl">Джакузи, барбекю, фитнес</div></div>
+        <div class="sitelink-card"><div class="st">Запись на просмотр</div><div class="sl">Индивидуальный показ</div></div>
+      </div>
+
+      <div class="kw-label">Уточнения</div>
+      <div class="chip-row">
+        <span class="chip">14 резиденций</span><span class="chip">Дом сдан</span><span class="chip">Охрана 24/7</span><span class="chip">Подземный паркинг</span><span class="chip">Лифты KONE</span>
+      </div>
+
+      <div class="audience-grid" style="margin-top:30px;">
+        <div class="audience-card">
+          <h4>Условия подбора аудитории</h4>
+          <ul>
+            <li>Долгосрочные: Недвижимость → <b>Покупка жилья</b></li>
+            <li>Долгосрочные: Недвижимость → <b>Элитная недвижимость</b></li>
+            <li>Активно ищут: <b>Собираются приобрести жильё</b></li>
+          </ul>
+        </div>
+        <div class="audience-card">
+          <h4>Визитка и ставки</h4>
+          <ul>
+            <li>ELYSIUM, Тбилиси, ул. Абули 33</li>
+            <li>+995 322 05 38 78</li>
+            <li>Look-alike от CRM через Яндекс.Аудитории</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout">Стратегия показов: старт на «Оптимизация конверсий» с ручным ограничением цены за конверсию чуть выше рыночного ориентира (CPL Грузии из Meta ~32–40$). Корректировка через 2 недели по факту данных.</div>
     </div>
 
   </div>
