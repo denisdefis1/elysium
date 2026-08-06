@@ -14,13 +14,14 @@
     --panel:#1A1C20;
     --panel-2:#202226;
     --ink:#F4F2ED;
-    --ink-muted:#8E8E88;
-    --ink-faint:#5C5D58;
+    --ink-muted:#E4E2DA;
+    --ink-faint:#8C8C83;
     --rust:#A8482F;
-    --rust-soft:#C97256;
-    --rule:#2C2E32;
-    --good:#7A9270;
-    --bad:#B3583F;
+    --rust-soft:#D0805F;
+    --rule:#2E3034;
+    --good:#8AA37E;
+    --bad:#C06A4F;
+    --ka:#7C93B0;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
@@ -28,303 +29,169 @@
     background:var(--bg);
     color:var(--ink);
     font-family:'Inter', sans-serif;
-    font-size:15.5px;
-    line-height:1.65;
+    font-size:16px;
+    line-height:1.7;
     font-feature-settings:'tnum' 1;
   }
   ::selection{background:var(--rust); color:var(--ink);}
-  .upper{text-transform:uppercase; letter-spacing:0.14em;}
 
-  /* TOPBAR */
   .topbar{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:26px 48px;
-    position:sticky;
-    top:0;
-    z-index:50;
-    background:rgba(17,18,20,0.88);
-    backdrop-filter:blur(10px);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:24px 48px; position:sticky; top:0; z-index:50;
+    background:rgba(17,18,20,0.92); backdrop-filter:blur(10px);
     border-bottom:1px solid var(--rule);
   }
   .logo{display:flex; align-items:center; gap:12px;}
-  .logo-mark{
-    width:26px; height:18px;
-    display:flex;
-    gap:3px;
-  }
-  .logo-mark span{
-    flex:1;
-    border:1.4px solid var(--ink);
-    border-right:none;
-  }
+  .logo-mark{width:26px; height:18px; display:flex; gap:3px;}
+  .logo-mark span{flex:1; border:1.4px solid var(--ink); border-right:none;}
   .logo-mark span:last-child{border-right:1.4px solid var(--ink); border-left:none;}
-  .logo-word{
-    font-family:'Manrope', sans-serif;
-    font-weight:700;
-    font-size:18px;
-    letter-spacing:0.22em;
-  }
+  .logo-word{font-family:'Manrope', sans-serif; font-weight:700; font-size:18px; letter-spacing:0.18em;}
   .switcher{display:flex; gap:28px;}
   .switch-btn{
-    all:unset;
-    cursor:pointer;
-    font-family:'Manrope', sans-serif;
-    font-weight:600;
-    font-size:12px;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    color:var(--ink-faint);
-    padding-bottom:3px;
-    border-bottom:1px solid transparent;
+    all:unset; cursor:pointer; font-family:'Manrope', sans-serif; font-weight:700;
+    font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--ink-faint); padding-bottom:3px; border-bottom:1px solid transparent;
   }
   .switch-btn.active{color:var(--ink); border-bottom:1px solid var(--rust);}
-  .topbar-meta{
-    font-family:'Manrope', sans-serif;
-    font-size:11px;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    color:var(--ink-faint);
-    text-align:right;
-    line-height:1.6;
-  }
-  .topbar-meta b{color:var(--ink); font-weight:600;}
+  .topbar-meta{font-family:'Manrope', sans-serif; font-size:11.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-faint); text-align:right; line-height:1.6;}
+  .topbar-meta b{color:var(--ink); font-weight:700;}
 
   .wrap{max-width:960px; margin:0 auto; padding:0 48px;}
 
-  /* HERO */
   .hero{
-    position:relative;
-    padding:110px 0 70px;
+    position:relative; padding:100px 0 60px;
     background:
-      radial-gradient(ellipse 900px 500px at 75% 0%, rgba(168,72,47,0.10), transparent 60%),
+      radial-gradient(ellipse 900px 500px at 75% 0%, rgba(168,72,47,0.11), transparent 60%),
       radial-gradient(ellipse 700px 600px at 10% 100%, rgba(255,255,255,0.03), transparent 60%),
       var(--bg-hero);
-    border-bottom:1px solid var(--rule);
-    overflow:hidden;
+    border-bottom:1px solid var(--rule); overflow:hidden;
   }
   .hero::after{
-    content:'';
-    position:absolute;
-    inset:0;
-    background-image:
-      linear-gradient(rgba(244,242,237,0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(244,242,237,0.035) 1px, transparent 1px);
-    background-size:64px 64px;
-    mask-image:linear-gradient(to bottom, black, transparent 85%);
-    pointer-events:none;
+    content:''; position:absolute; inset:0;
+    background-image:linear-gradient(rgba(244,242,237,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(244,242,237,0.035) 1px, transparent 1px);
+    background-size:64px 64px; mask-image:linear-gradient(to bottom, black, transparent 85%); pointer-events:none;
   }
   .hero-inner{position:relative; z-index:2;}
   .pill{
-    display:inline-block;
-    font-family:'Manrope', sans-serif;
-    font-size:11px;
-    font-weight:600;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    padding:8px 16px;
-    background:rgba(244,242,237,0.06);
-    border:1px solid var(--rule);
-    color:var(--ink-muted);
-    margin-bottom:30px;
+    display:inline-block; font-family:'Manrope', sans-serif; font-size:11.5px; font-weight:700;
+    letter-spacing:0.1em; text-transform:uppercase; padding:8px 16px;
+    background:rgba(244,242,237,0.07); border:1px solid var(--rule); color:var(--ink-muted); margin-bottom:28px;
   }
-  h1{
-    font-family:'Manrope', sans-serif;
-    font-weight:700;
-    font-size:44px;
-    line-height:1.14;
-    letter-spacing:-0.01em;
-    max-width:760px;
-  }
-  h1 .star{color:var(--rust-soft); font-weight:700;}
-  .hero-sub{
-    margin-top:26px;
-    max-width:600px;
-    color:var(--ink-muted);
-    font-size:15px;
-  }
+  h1{font-family:'Manrope', sans-serif; font-weight:800; font-size:42px; line-height:1.18; letter-spacing:-0.01em; max-width:760px;}
+  h1 .star{color:var(--rust-soft);}
+  .hero-sub{margin-top:24px; max-width:610px; color:var(--ink-muted); font-size:15.5px;}
 
-  .stat-row{
-    display:grid;
-    grid-template-columns:repeat(4, 1fr);
-    margin-top:52px;
-    border-top:1px solid var(--rule);
-    position:relative;
-    z-index:2;
-  }
-  .stat{padding:24px 22px 0 0; border-right:1px solid var(--rule);}
+  .stat-row{display:grid; grid-template-columns:repeat(4, 1fr); margin-top:48px; border-top:1px solid var(--rule); position:relative; z-index:2;}
+  .stat{padding:22px 20px 0 0; border-right:1px solid var(--rule);}
   .stat:last-child{border-right:none;}
-  .stat .v{font-family:'Manrope', sans-serif; font-weight:700; font-size:27px; color:var(--ink);}
+  .stat .v{font-family:'Manrope', sans-serif; font-weight:800; font-size:25px; color:var(--ink);}
   .stat .l{margin-top:6px; font-size:11.5px; color:var(--ink-faint); line-height:1.4;}
 
-  /* CHAPTERS */
-  .chapter{padding:64px 0; border-bottom:1px solid var(--rule);}
-  .chapter-head{display:flex; align-items:baseline; gap:16px; margin-bottom:24px;}
-  .chapter-tag{
-    font-family:'Manrope', sans-serif;
-    font-size:13px;
-    font-weight:600;
-    color:var(--rust-soft);
-  }
-  h2{
-    font-family:'Manrope', sans-serif;
-    font-weight:700;
-    font-size:26px;
-    letter-spacing:-0.005em;
-  }
-  .lede{max-width:660px; color:var(--ink-muted); margin-bottom:8px;}
+  .chapter{padding:60px 0; border-bottom:1px solid var(--rule);}
+  .chapter-head{display:flex; align-items:baseline; gap:16px; margin-bottom:22px;}
+  .chapter-tag{font-family:'Manrope', sans-serif; font-size:13.5px; font-weight:700; color:var(--rust-soft);}
+  h2{font-family:'Manrope', sans-serif; font-weight:800; font-size:25px; letter-spacing:-0.005em;}
+  .lede{max-width:660px; color:var(--ink-muted); margin-bottom:8px; font-size:15.5px;}
   .lede + .lede{margin-top:14px;}
-  .lede b{color:var(--ink); font-weight:600;}
+  .lede b{color:var(--ink); font-weight:700;}
 
   .seg-badge{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    font-family:'Manrope', sans-serif;
-    font-size:11px;
-    font-weight:600;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    padding:6px 12px;
-    background:rgba(168,72,47,0.12);
-    border:1px solid rgba(168,72,47,0.4);
-    color:var(--rust-soft);
-    margin-bottom:18px;
+    display:inline-flex; align-items:center; gap:6px; font-family:'Manrope', sans-serif; font-size:11.5px; font-weight:700;
+    letter-spacing:0.08em; text-transform:uppercase; padding:6px 12px;
+    background:rgba(168,72,47,0.13); border:1px solid rgba(168,72,47,0.45); color:var(--rust-soft); margin-bottom:16px;
   }
+  .seg-badge.ka{background:rgba(124,147,176,0.14); border-color:rgba(124,147,176,0.5); color:var(--ka);}
 
-  /* ledger */
-  .ledger{margin-top:26px; border-top:1px solid var(--rule);}
-  .ledger-row{
-    display:grid;
-    grid-template-columns:150px 1fr 84px 96px;
-    align-items:center;
-    gap:16px;
-    padding:15px 0;
-    border-bottom:1px solid var(--rule);
-  }
-  .ledger-row.excluded{opacity:.4;}
-  .ledger-country{font-family:'Manrope', sans-serif; font-size:14px; font-weight:600;}
+  .ledger{margin-top:24px; border-top:1px solid var(--rule);}
+  .ledger-row{display:grid; grid-template-columns:150px 1fr 84px 96px; align-items:center; gap:16px; padding:15px 0; border-bottom:1px solid var(--rule);}
+  .ledger-row.excluded{opacity:.42;}
+  .ledger-country{font-family:'Manrope', sans-serif; font-size:14.5px; font-weight:700;}
   .strike{text-decoration:line-through;}
   .bar-track{height:4px; background:var(--panel-2);}
   .bar-fill{height:100%; background:var(--rust);}
   .bar-fill.weak{background:var(--ink-faint);}
-  .ledger-cpl{font-family:'Manrope', sans-serif; font-size:13px; text-align:right; font-weight:600;}
-  .ledger-status{font-family:'Manrope', sans-serif; font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; text-align:right; padding:4px 8px; justify-self:end; white-space:nowrap;}
+  .ledger-cpl{font-family:'Manrope', sans-serif; font-size:13.5px; text-align:right; font-weight:700;}
+  .ledger-status{font-family:'Manrope', sans-serif; font-size:10.5px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; text-align:right; padding:4px 8px; justify-self:end; white-space:nowrap;}
   .status-core{color:var(--good); border:1px solid var(--good);}
   .status-test{color:var(--rust-soft); border:1px solid var(--rust-soft);}
   .status-kept{color:var(--bad); border:1px solid var(--bad);}
   .status-out{color:var(--ink-faint); border:1px solid var(--ink-faint);}
+  .status-new{color:var(--ka); border:1px solid var(--ka);}
 
-  .callout{
-    margin-top:24px;
-    padding:20px 24px;
-    background:var(--panel);
-    border-left:2px solid var(--rust);
-    font-size:13.5px;
-    color:var(--ink-muted);
-  }
+  .callout{margin-top:22px; padding:20px 24px; background:var(--panel); border-left:2px solid var(--rust); font-size:14px; color:var(--ink-muted);}
+  .callout.note-ka{border-left-color:var(--ka);}
 
-  /* interest logic */
-  .logic-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:30px;}
+  .logic-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:28px;}
   .logic-col{background:var(--panel); padding:26px 28px;}
-  .logic-col h3{
-    font-family:'Manrope', sans-serif;
-    font-weight:700;
-    font-size:16px;
-    margin-bottom:12px;
-    color:var(--ink);
-  }
-  .logic-col p{font-size:13.6px; color:var(--ink-muted); margin-bottom:16px;}
+  .logic-col h3{font-family:'Manrope', sans-serif; font-weight:800; font-size:16.5px; margin-bottom:12px; color:var(--ink);}
+  .logic-col p{font-size:14px; color:var(--ink-muted); margin-bottom:16px;}
   .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
-  .chip{font-family:'Manrope', sans-serif; font-size:11px; font-weight:600; letter-spacing:0.02em; padding:6px 12px; border:1px solid var(--rule); color:var(--ink-muted); background:var(--panel-2);}
+  .chip{font-family:'Manrope', sans-serif; font-size:11.5px; font-weight:700; letter-spacing:0.01em; padding:6px 12px; border:1px solid var(--rule); color:var(--ink-muted); background:var(--panel-2);}
 
-  /* creatives */
-  .creative-block{margin-top:32px;}
-  .creative-block h3{
-    font-family:'Manrope', sans-serif;
-    font-weight:700;
-    font-size:16px;
-    color:var(--ink);
-    margin-bottom:4px;
-  }
-  .creative-block .note{font-family:'Manrope', sans-serif; font-size:11.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:18px;}
+  .fact-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:26px;}
+  .fact{background:var(--panel); padding:20px 18px;}
+  .fact .fv{font-family:'Manrope', sans-serif; font-weight:800; font-size:20px; color:var(--rust-soft);}
+  .fact .fl{margin-top:6px; font-size:12px; color:var(--ink-muted); line-height:1.4;}
+
+  .creative-block{margin-top:30px;}
+  .creative-block h3{font-family:'Manrope', sans-serif; font-weight:800; font-size:16.5px; color:var(--ink); margin-bottom:4px;}
+  .creative-block .note{font-family:'Manrope', sans-serif; font-size:11.5px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:16px;}
   .igrid{display:grid; grid-template-columns:repeat(3, 1fr); gap:1px; background:var(--rule); border:1px solid var(--rule);}
-  .ig-link{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:8px;
-    padding:16px 18px;
-    background:var(--panel);
-    font-family:'Inter', sans-serif;
-    font-size:12px;
-    color:var(--ink-muted);
-    text-decoration:none;
-  }
+  .ig-link{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:16px 18px; background:var(--panel); font-family:'Inter', sans-serif; font-size:12.5px; color:var(--ink-muted); text-decoration:none;}
   .ig-link:hover{background:var(--panel-2); color:var(--ink);}
-  .ig-link .n{font-family:'Manrope', sans-serif; font-weight:700; font-size:11px; color:var(--rust-soft);}
+  .ig-link .n{font-family:'Manrope', sans-serif; font-weight:800; font-size:11.5px; color:var(--rust-soft);}
   .ig-link .arrow{color:var(--rust-soft); font-family:'Manrope', sans-serif;}
+  .ig-pending{padding:16px 18px; background:var(--panel-2); font-family:'Manrope', sans-serif; font-size:12px; font-weight:600; color:var(--ink-faint); font-style:italic;}
 
-  table.budget{width:100%; border-collapse:collapse; margin-top:26px;}
-  table.budget th, table.budget td{text-align:left; padding:14px 4px; border-bottom:1px solid var(--rule); font-size:13.5px;}
-  table.budget th{font-family:'Manrope', sans-serif; font-size:10.5px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-faint);}
-  table.budget td.num{font-family:'Manrope', sans-serif; font-weight:600; color:var(--rust-soft);}
-  table.budget tr:last-child td{border-bottom:none; border-top:1px solid var(--rust); font-weight:700; color:var(--ink);}
+  table.budget{width:100%; border-collapse:collapse; margin-top:24px;}
+  table.budget th, table.budget td{text-align:left; padding:13px 6px; border-bottom:1px solid var(--rule); font-size:13.5px;}
+  table.budget th{font-family:'Manrope', sans-serif; font-size:10.5px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint);}
+  table.budget td.num{font-family:'Manrope', sans-serif; font-weight:700; color:var(--rust-soft);}
+  table.budget tr.grp td{padding-top:22px; font-family:'Manrope', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); border-bottom:none;}
+  table.budget tr:last-child td{border-bottom:none; border-top:1px solid var(--rust); font-weight:800; color:var(--ink);}
 
-  .timeline{display:flex; gap:1px; margin-top:30px; background:var(--rule); border:1px solid var(--rule);}
+  .timeline{display:flex; gap:1px; margin-top:28px; background:var(--rule); border:1px solid var(--rule);}
   .tl-step{flex:1; padding:20px 22px; background:var(--panel);}
-  .tl-step .d{font-family:'Manrope', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--rust-soft);}
+  .tl-step .d{font-family:'Manrope', sans-serif; font-size:11px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--rust-soft);}
   .tl-step .t{margin-top:8px; font-size:13.5px; color:var(--ink-muted);}
 
-  .kw-label{font-family:'Manrope', sans-serif; font-size:10.5px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-faint); margin-top:24px; margin-bottom:12px;}
+  .kw-label{font-family:'Manrope', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:22px; margin-bottom:12px;}
   .headline-list{display:grid; grid-template-columns:1fr 1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule);}
-  .headline-pill{font-size:13px; padding:12px 14px; background:var(--panel); border-left:2px solid var(--rust);}
+  .headline-pill{font-size:13.5px; padding:12px 14px; background:var(--panel); border-left:2px solid var(--rust);}
   .ad-preview{margin-top:16px; padding:18px 20px; background:var(--panel); border:1px solid var(--rule);}
-  .ad-preview .ad-title{color:#9DBF95; font-size:14px; margin-bottom:4px; font-weight:500;}
-  .ad-preview .ad-url{color:var(--good); font-size:12px; margin-bottom:7px;}
-  .ad-preview .ad-desc{color:var(--ink-muted); font-size:13px;}
-  .channel-flag{font-family:'Manrope', sans-serif; font-weight:700; font-size:10.5px; letter-spacing:0.06em; color:var(--rust-soft); border:1px solid var(--rust-soft); padding:3px 8px; margin-right:12px;}
+  .ad-preview .ad-title{color:#A7CE9C; font-size:14.5px; margin-bottom:4px; font-weight:500;}
+  .ad-preview .ad-url{color:var(--good); font-size:12.5px; margin-bottom:7px;}
+  .ad-preview .ad-desc{color:var(--ink-muted); font-size:13.5px;}
+  .channel-flag{font-family:'Manrope', sans-serif; font-weight:800; font-size:10.5px; letter-spacing:0.04em; color:var(--rust-soft); border:1px solid var(--rust-soft); padding:3px 8px; margin-right:12px;}
 
-  .ad-group-block{margin-top:38px;}
-  .ad-group-block:first-child{margin-top:26px;}
-  .ag-title{
-    font-family:'Manrope', sans-serif; font-weight:700; font-size:15px; color:var(--ink);
-    display:flex; align-items:center; gap:10px; margin-bottom:12px;
-  }
-  .ag-title .ag-tag{font-family:'Manrope', sans-serif; font-weight:600; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); border:1px solid var(--rule); padding:3px 8px;}
+  .ad-group-block{margin-top:24px;}
+  .subsection-label{font-family:'Manrope', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--rust-soft); margin-top:26px; margin-bottom:8px;}
 
   .sitelink-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:12px;}
   .sitelink-card{background:var(--panel); padding:16px 18px;}
-  .sitelink-card .st{font-family:'Manrope', sans-serif; font-weight:700; font-size:13px; color:var(--ink); margin-bottom:8px;}
-  .sitelink-card .sl{font-size:12px; color:var(--ink-muted); line-height:1.5;}
+  .sitelink-card .st{font-family:'Manrope', sans-serif; font-weight:700; font-size:13.5px; color:var(--ink); margin-bottom:8px;}
+  .sitelink-card .sl{font-size:12.5px; color:var(--ink-muted); line-height:1.5;}
 
-  .subsection-label{
-    font-family:'Manrope', sans-serif; font-size:10.5px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase;
-    color:var(--rust-soft); margin-top:30px; margin-bottom:6px;
-  }
-  .divider-thin{height:1px; background:var(--rule); margin:34px 0;}
-
-  .audience-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:26px;}
+  .audience-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:24px;}
   .audience-card{background:var(--panel); padding:22px 24px;}
-  .audience-card h4{font-family:'Manrope', sans-serif; font-weight:700; font-size:13.5px; color:var(--ink); margin-bottom:10px; letter-spacing:0.02em;}
+  .audience-card h4{font-family:'Manrope', sans-serif; font-weight:800; font-size:14px; color:var(--ink); margin-bottom:10px;}
   .audience-card ul{list-style:none;}
-  .audience-card li{font-size:13px; color:var(--ink-muted); padding:6px 0; border-bottom:1px solid var(--rule);}
+  .audience-card li{font-size:13.5px; color:var(--ink-muted); padding:6px 0; border-bottom:1px solid var(--rule);}
   .audience-card li:last-child{border-bottom:none;}
-  .audience-card li b{color:var(--ink); font-weight:600;}
+  .audience-card li b{color:var(--ink); font-weight:700;}
 
-  footer{padding:40px 0 70px; display:flex; justify-content:space-between; font-family:'Manrope', sans-serif; font-size:11px; letter-spacing:0.04em; color:var(--ink-faint);}
+  footer{padding:36px 0 64px; display:flex; justify-content:space-between; font-family:'Manrope', sans-serif; font-size:11.5px; letter-spacing:0.03em; color:var(--ink-faint);}
   .panel-tab{display:none;}
   .panel-tab.active{display:block;}
 
   @media (max-width: 860px){
     .topbar{padding:18px 22px;}
     .wrap{padding:0 22px;}
-    .hero{padding:60px 0 44px;}
-    h1{font-size:30px;}
+    .hero{padding:56px 0 40px;}
+    h1{font-size:29px;}
     .stat-row{grid-template-columns:1fr 1fr;}
-    .stat{border-bottom:1px solid var(--rule); padding-bottom:18px;}
-    .logic-grid, .igrid, .headline-list{grid-template-columns:1fr;}
+    .stat{border-bottom:1px solid var(--rule); padding-bottom:16px;}
+    .logic-grid, .igrid, .headline-list, .fact-grid, .audience-grid, .sitelink-grid{grid-template-columns:1fr;}
     .ledger-row{grid-template-columns:1fr 70px; row-gap:6px;}
     .ledger-row .bar-track, .ledger-row .ledger-status{display:none;}
     .timeline{flex-direction:column;}
@@ -353,13 +220,13 @@
     <div class="wrap hero-inner">
       <div class="pill">Стратегия · Meta Ads</div>
       <h1>ELYSIUM<span class="star">*</span> — дом, который мы построили для себя. Поэтому важно, кто увидит объявление первым.</h1>
-      <p class="hero-sub">Два сайта — короткий и длинный. Мы не спорим, какой лучше: проверяем бюджетом. Разные интересы, разные креативы, один и тот же 14-дневный запуск — и цифры сами покажут, какая связка приводит дешёвого и качественного клиента.</p>
+      <p class="hero-sub">Три сайта, три языка — включая родной грузинский для Грузии. Разные интересы, разные креативы, один и тот же 14-дневный запуск — и цифры сами покажут, какая связка приводит дешёвого и качественного клиента.</p>
 
       <div class="stat-row">
-        <div class="stat"><div class="v">4</div><div class="l">кампании — 2 сайта × 2 языка</div></div>
-        <div class="stat"><div class="v">$3 000</div><div class="l">бюджет в месяц, всего</div></div>
-        <div class="stat"><div class="v">$375</div><div class="l">на кампанию за 14 дней запуска</div></div>
-        <div class="stat"><div class="v">$26,7</div><div class="l">в день на кампанию</div></div>
+        <div class="stat"><div class="v">9</div><div class="l">кампаний — 3 сайта × 3 языка</div></div>
+        <div class="stat"><div class="v">$2 000</div><div class="l">бюджет первых 14 дней (всего)</div></div>
+        <div class="stat"><div class="v">$222</div><div class="l">на кампанию за 14 дней (в среднем)</div></div>
+        <div class="stat"><div class="v">$1 000</div><div class="l">резерв на дни 15–30, точечно</div></div>
       </div>
     </div>
   </div>
@@ -368,22 +235,17 @@
 
     <div class="chapter">
       <div class="chapter-head"><span class="chapter-tag">[01]</span><h2>Логика теста</h2></div>
-      <p class="lede">Короткий сайт — быстрая продажа: минимум текста, статус объекта, цифры. Длинный сайт — история «мы построили дом для себя»: архитектура, инженерия, соседи, вид с крыши. Это разные продукты для разного уровня готовности купить, и показывать их одной и той же аудитории — значит терять бюджет либо на тех, кто не дочитает историю, либо на тех, кому недостаточно одного экрана, чтобы решиться.</p>
-      <p class="lede">Поэтому тест разделён сразу по двум осям: <b>сайт</b> (короткий / длинный) и <b>язык аудитории</b> (RU / ENG). Каждая из четырёх комбинаций — отдельная кампания со своим гео-пулом, интересами и креативами.</p>
+      <p class="lede">К короткому и длинному сайту добавляется третий — тоже короткий, отдельная связка интересов и креативов. И главное изменение: Грузия получает собственный язык. До сих пор её показывали в англоязычном сегменте — с этого запуска для Грузии делаем нативную грузинскую рекламу на грузинском языке, с грузинскими креативами.</p>
+      <p class="lede">Логика простая: Грузия — лучший результат всего отчёта (32,5$ за лид) уже на английском креативе. Гипотеза — на родном языке результат может быть ещё сильнее, потому что снимается барьер восприятия рекламы «не на своём языке» для локальной аудитории.</p>
+      <p class="lede">Матрица теста: <b>3 сайта</b> (короткий №1 / длинный / короткий №2) × <b>3 языка</b> (RU / ENG / KA) = 9 кампаний. Грузинский язык таргетируется только на Грузию — как дополнение к английскому сегменту, а не замена: Грузия идёт и в ENG, и в KA параллельно, с разными креативами под каждый язык.</p>
     </div>
 
     <div class="chapter">
       <div class="chapter-head"><span class="chapter-tag">[02]</span><h2>Русскоязычная аудитория</h2></div>
       <span class="seg-badge">Сегмент RU</span>
-      <p class="lede">Грузии в этом сегменте нет — она тестировалась только на англоязычной аудитории. По последнему 14-дневному периоду отчёта лучший результат у Таиланда (34,0$), но он исключён по вашему решению — поэтому ядро смещается на следующих по эффективности: Армению, Европу (Германия) и Азербайджан.</p>
+      <p class="lede">Ядро — Армения, Европа (широкий пул, подтверждённый лидер CPL — Германия) и Азербайджан. Израиль — тестовая позиция.</p>
 
       <div class="ledger">
-        <div class="ledger-row excluded">
-          <div class="ledger-country"><span class="strike">Таиланд</span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:92%"></div></div>
-          <div class="ledger-cpl">34,0 $</div>
-          <div class="ledger-status status-out">Исключён</div>
-        </div>
         <div class="ledger-row">
           <div class="ledger-country">Армения</div>
           <div class="bar-track"><div class="bar-fill" style="width:75%"></div></div>
@@ -391,7 +253,7 @@
           <div class="ledger-status status-core">Ядро</div>
         </div>
         <div class="ledger-row">
-          <div class="ledger-country">Европа (DE)</div>
+          <div class="ledger-country">Европа (широкий пул)</div>
           <div class="bar-track"><div class="bar-fill" style="width:72%"></div></div>
           <div class="ledger-cpl">47,0 $</div>
           <div class="ledger-status status-core">Ядро</div>
@@ -408,26 +270,19 @@
           <div class="ledger-cpl">88,2 $</div>
           <div class="ledger-status status-test">Тест</div>
         </div>
-        <div class="ledger-row">
-          <div class="ledger-country">Казахстан</div>
-          <div class="bar-track"><div class="bar-fill weak" style="width:34%"></div></div>
-          <div class="ledger-cpl">100,4 $</div>
-          <div class="ledger-status status-test">Тест</div>
-        </div>
-        <div class="ledger-row">
-          <div class="ledger-country">ОАЭ</div>
-          <div class="bar-track"><div class="bar-fill weak" style="width:17%"></div></div>
-          <div class="ledger-cpl">204,6 $</div>
-          <div class="ledger-status status-kept">Сохранён</div>
-        </div>
       </div>
-      <div class="callout">Более ранний период (03.06–15.06, цель — Трафик) дал предварительные корректировки бюджета: Израиль +30$, Армения +15$, Казахстан +15$, Азербайджан +15$, ОАЭ +15$, Европа +15$. Это старые трафик-данные, для CPL-решений не показательны, но объясняют, почему у части гео уже был приподнят бюджет к моменту лид-теста.</div>
+      <div class="callout">«Европа» здесь и в англоязычном сегменте — не только Германия, а весь широкий пул за вычетом стран из [03] (низкая покупательная способность / нестабильность). Германия — исторически подтверждённый лидер по CPL внутри этого пула, но таргетинг не ограничен ей одной.</div>
     </div>
 
     <div class="chapter">
       <div class="chapter-head"><span class="chapter-tag">[03]</span><h2>Англоязычная аудитория</h2></div>
       <span class="seg-badge">Сегмент ENG</span>
-      <p class="lede"><b>Грузия — доминирующий источник</b> лидов всего отчёта: 33 лида по 32,5$, дешевле и объёмнее всех остальных гео вместе взятых. Из Европы (Бельгия, Босния и Герцеговина, Северная Македония, Великобритания, Албания) исключаем Албанию, Боснию и Северную Македонию — низкая покупательная способность не соответствует профилю покупателя премиальной недвижимости; остаются Бельгия и Великобритания.</p>
+      <p class="lede">Грузия остаётся и здесь — теперь она таргетируется на двух языках сразу: английском (этот сегмент) и грузинском (новый сегмент [04]), с разными креативами под каждый. Не замена, а расширение охвата на одну и ту же страну.</p>
+      <p class="lede">По Европе — держим широкий пул, не сужаем до двух-трёх стран. Убираем только рынки, которые объективно не соответствуют профилю покупателя недвижимости от $100k+: низкий ВВП на душу населения либо валютные/политические ограничения, из-за которых сделка физически сложна.</p>
+      <div class="chip-row">
+        <span class="chip">Албания</span><span class="chip">Босния и Герцеговина</span><span class="chip">Северная Македония</span><span class="chip">Сербия</span><span class="chip">Болгария</span><span class="chip">Молдова</span><span class="chip">Косово</span><span class="chip">Черногория</span><span class="chip">Беларусь</span><span class="chip">Украина</span>
+      </div>
+      <p class="lede" style="margin-top:14px;">Беларусь и Украина — не политическое решение, а практическое: валютные ограничения и логистика трансграничных платежей делают сделку почти нереализуемой прямо сейчас. Всё остальное в Европе — Германия, Великобритания, Бельгия, Нидерланды, Франция, Австрия, Швейцария, Ирландия, страны Скандинавии, Польша, Чехия, Италия, Испания и другие — остаётся в пуле.</p>
 
       <div class="ledger">
         <div class="ledger-row">
@@ -436,23 +291,11 @@
           <div class="ledger-cpl">32,5 $</div>
           <div class="ledger-status status-core">Ядро</div>
         </div>
-        <div class="ledger-row excluded">
-          <div class="ledger-country"><span class="strike">Таиланд</span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:54%"></div></div>
-          <div class="ledger-cpl">60,1 $</div>
-          <div class="ledger-status status-out">Исключён</div>
-        </div>
         <div class="ledger-row">
-          <div class="ledger-country">Европа (BE/UK)</div>
+          <div class="ledger-country">Европа (широкий пул)</div>
           <div class="bar-track"><div class="bar-fill" style="width:51%"></div></div>
           <div class="ledger-cpl">63,6 $</div>
-          <div class="ledger-status status-core">Поддержка</div>
-        </div>
-        <div class="ledger-row">
-          <div class="ledger-country">ОАЭ</div>
-          <div class="bar-track"><div class="bar-fill weak" style="width:36%"></div></div>
-          <div class="ledger-cpl">90,2 $</div>
-          <div class="ledger-status status-kept">Сохранён</div>
+          <div class="ledger-status status-core">Ядро</div>
         </div>
         <div class="ledger-row">
           <div class="ledger-country">Израиль</div>
@@ -461,16 +304,31 @@
           <div class="ledger-status status-test">Тест</div>
         </div>
       </div>
-      <div class="callout">Ранний период (03.06–15.06, малая выборка) дал сигналы по Казахстану (28,9$/2 лида), Саудовской Аравии (64,7$/1 лид) и Индии (131,8$/1 лид) — данных мало для решения, но это кандидаты на тест при следующем расширении гео («Добавить страны» — пометка из отчёта).</div>
+      <div class="callout">После того как ОАЭ, Казахстан и Таиланд убраны по вашему решению — в сегменте не остаётся слабых тестовых гео с высоким CPL, только подтверждённое ядро и один честный тест (Израиль).</div>
     </div>
 
     <div class="chapter">
-      <div class="chapter-head"><span class="chapter-tag">[04]</span><h2>Логика интересов</h2></div>
+      <div class="chapter-head"><span class="chapter-tag">[04]</span><h2>Грузинская аудитория — новый сегмент</h2></div>
+      <span class="seg-badge ka">Сегмент KA · Грузинский язык</span>
+      <p class="lede">Грузия теперь в двух местах сразу: в англоязычном сегменте [03] как есть, и здесь — отдельной кампанией на грузинском языке с грузинскими креативами. Это расширение охвата на одну и ту же страну, а не перенос: часть аудитории лучше воспримет рекламу на родном языке, часть — на английском, проверяем оба варианта параллельно.</p>
+      <div class="ledger">
+        <div class="ledger-row">
+          <div class="ledger-country">Грузия</div>
+          <div class="bar-track"><div class="bar-fill" style="width:100%; background:var(--ka);"></div></div>
+          <div class="ledger-cpl">32,5 $*</div>
+          <div class="ledger-status status-new">Новый</div>
+        </div>
+      </div>
+      <div class="callout note-ka">*CPL — результат по Грузии на предыдущем (английском) креативе, ориентир, не гарантия для нового языка. Креативы на грузинском языке — <b>ожидаем от Тани</b>, без них кампанию не запустить. Как только придут — добавляем сюда и в раздел [07] «Креативы».</div>
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-head"><span class="chapter-tag">[05]</span><h2>Логика интересов</h2></div>
       <p class="lede">Разные интересы — не для разнообразия, а потому что короткий и длинный сайт продают на разной глубине внимания.</p>
       <div class="logic-grid">
         <div class="logic-col">
-          <h3>Короткий сайт — широкий охват</h3>
-          <p>Здесь нет истории — есть статус объекта и цифры. Такой формат не требует от человека глубокого интереса заранее: он должен зацепить за 3–5 секунд. Поэтому аудитория шире — категории, а не намерения: те, кто в целом рассматривает недвижимость или переезд, а не уже сравнивает конкретные проекты.</p>
+          <h3>Короткие сайты — широкий охват</h3>
+          <p>Здесь нет истории — есть статус объекта и цифры. Такой формат не требует от человека глубокого интереса заранее: он должен зацепить за 3–5 секунд. Поэтому аудитория шире — категории, а не намерения. Оба коротких сайта (№1 и №2) используют одну и ту же логику интересов, отличаются только креативом.</p>
           <div class="chip-row">
             <span class="chip">Real Estate</span>
             <span class="chip">Property Investment</span>
@@ -496,53 +354,94 @@
           </div>
         </div>
       </div>
-      <div class="callout">Поверх обоих наборов — дополнительный интерес «Грузия» как направление для всех не-грузинских гео (пометка из отчёта «указать доп. интересы про Грузию»): усиливает релевантность объявления для аудитории, которая уже рассматривает страну, но ещё не искала конкретный объект.</div>
+      <div class="callout">Поверх всех наборов — дополнительный интерес «Грузия» как направление для RU и ENG гео (пометка из отчёта «указать доп. интересы про Грузию»).</div>
     </div>
 
     <div class="chapter">
-      <div class="chapter-head"><span class="chapter-tag">[05]</span><h2>Креативы</h2></div>
-      <p class="lede">Набор креативов подобран под ту же логику: короткому сайту — быстрые, статусные форматы; длинному — форматы, которые уже доказали себя на сторителлинге (Андромеда).</p>
+      <div class="chapter-head"><span class="chapter-tag">[06]</span><h2>УТП: налоги и резидентство</h2></div>
+      <p class="lede">Новый акцент в текстах — низкие налоги и ВНЖ при покупке недвижимости в Грузии. Это не выдумка для рекламы, а факт налогового режима страны — работает на все три языка, но особенно сильно закрываем этим Яндекс/RU-аудиторию (раздел [05] на вкладке «Google + Яндекс»). Ниже — проверенные цифры на 2026 год.</p>
+      <div class="fact-grid">
+        <div class="fact"><div class="fv">$150 000</div><div class="fl">порог для ВНЖ при покупке недвижимости (с 1 марта 2026, ранее — $100 000)</div></div>
+        <div class="fact"><div class="fv">0%</div><div class="fl">налог на прирост капитала при продаже через 2+ года владения</div></div>
+        <div class="fact"><div class="fv">5%</div><div class="fl">налог на доход от сдачи в аренду (вместо стандартных 20%)</div></div>
+        <div class="fact"><div class="fv">0%</div><div class="fl">налог на наследство, налог на покупку, гербовый сбор</div></div>
+      </div>
+      <div class="callout">Важный нюанс для формулировок: годовой налог на владение (не на прирост капитала) зависит от дохода собственника и обнуляется только при годовом доходе ниже ~$14 900 — это не безусловные «0% на владение» для всех. В заголовках лучше использовать безусловные факты (0% прирост капитала после 2 лет, 5% аренда, ВНЖ от $150 000), а «низкие налоги на владение» — как общую формулировку без конкретной цифры, чтобы не давать недостоверное обещание.</div>
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-head"><span class="chapter-tag">[07]</span><h2>Креативы</h2></div>
+      <p class="lede">Списки обновлены: из короткого сайта убраны 4 креатива, добавлен новый; из длинного убраны зимние варианты, добавлен новый. Третий сайт и грузинский сегмент — креативы в работе.</p>
 
       <div class="creative-block">
-        <h3>Короткий сайт</h3>
-        <div class="note">7 креативов</div>
+        <h3>Короткий сайт №1</h3>
+        <div class="note">4 креатива — было 7, убраны 1 / 2 / 4 / 6, добавлен новый</div>
         <div class="igrid">
-          <a class="ig-link" href="https://www.instagram.com/p/DbU0c-djTu1/?img_index=2" target="_blank" rel="noopener"><span><span class="n">01 · </span>DbU0c-djTu1</span><span class="arrow">→</span></a>
-          <a class="ig-link" href="https://www.instagram.com/p/DbC1yozoczh/" target="_blank" rel="noopener"><span><span class="n">02 · </span>DbC1yozoczh</span><span class="arrow">→</span></a>
-          <a class="ig-link" href="https://www.instagram.com/p/Da-NFJANFTW/" target="_blank" rel="noopener"><span><span class="n">03 · </span>Da-NFJANFTW</span><span class="arrow">→</span></a>
-          <a class="ig-link" href="https://www.instagram.com/p/DZ9c3ZsoTj9/" target="_blank" rel="noopener"><span><span class="n">04 · </span>DZ9c3ZsoTj9</span><span class="arrow">→</span></a>
-          <a class="ig-link" href="https://www.instagram.com/p/DZMyUYmDVb8/?img_index=2" target="_blank" rel="noopener"><span><span class="n">05 · </span>DZMyUYmDVb8</span><span class="arrow">→</span></a>
-          <a class="ig-link" href="https://www.instagram.com/p/DYW-uK7NOs-/" target="_blank" rel="noopener"><span><span class="n">06 · </span>DYW-uK7NOs-</span><span class="arrow">→</span></a>
-          <a class="ig-link" href="https://www.instagram.com/p/DXRZlkvDe6t/?img_index=2" target="_blank" rel="noopener"><span><span class="n">07 · </span>DXRZlkvDe6t</span><span class="arrow">→</span></a>
+          <a class="ig-link" href="https://www.instagram.com/p/Da-NFJANFTW/" target="_blank" rel="noopener"><span><span class="n">01 · </span>Da-NFJANFTW</span><span class="arrow">→</span></a>
+          <a class="ig-link" href="https://www.instagram.com/p/DZMyUYmDVb8/?img_index=2" target="_blank" rel="noopener"><span><span class="n">02 · </span>DZMyUYmDVb8</span><span class="arrow">→</span></a>
+          <a class="ig-link" href="https://www.instagram.com/p/DXRZlkvDe6t/?img_index=2" target="_blank" rel="noopener"><span><span class="n">03 · </span>DXRZlkvDe6t</span><span class="arrow">→</span></a>
+          <a class="ig-link" href="https://www.instagram.com/p/DbNPvwPoYTk/" target="_blank" rel="noopener"><span><span class="n">04 · new · </span>DbNPvwPoYTk</span><span class="arrow">→</span></a>
         </div>
       </div>
 
       <div class="creative-block">
         <h3>Длинный сайт</h3>
-        <div class="note">Все прошлые ролики в формате Андромеда + 4 креатива</div>
+        <div class="note">Андромеда-ролики + 3 креатива — убраны зимние (4 и 5), добавлен новый</div>
         <div class="igrid">
-          <a class="ig-link" href="https://www.instagram.com/p/DbkTgX8Ipnu/" target="_blank" rel="noopener"><span><span class="n">02 · </span>DbkTgX8Ipnu</span><span class="arrow">→</span></a>
-          <a class="ig-link" href="https://www.instagram.com/p/DZZn1maNzph/" target="_blank" rel="noopener"><span><span class="n">03 · </span>DZZn1maNzph</span><span class="arrow">→</span></a>
-          <a class="ig-link" href="https://www.instagram.com/p/DUh1dZJjY7-/" target="_blank" rel="noopener"><span><span class="n">04 · </span>DUh1dZJjY7-</span><span class="arrow">→</span></a>
-          <a class="ig-link" href="https://www.instagram.com/p/DUXl_DjDZY7/" target="_blank" rel="noopener"><span><span class="n">05 · </span>DUXl_DjDZY7</span><span class="arrow">→</span></a>
+          <a class="ig-link" href="https://www.instagram.com/p/DbkTgX8Ipnu/" target="_blank" rel="noopener"><span><span class="n">01 · </span>DbkTgX8Ipnu</span><span class="arrow">→</span></a>
+          <a class="ig-link" href="https://www.instagram.com/p/DZZn1maNzph/" target="_blank" rel="noopener"><span><span class="n">02 · </span>DZZn1maNzph</span><span class="arrow">→</span></a>
+          <a class="ig-link" href="https://www.instagram.com/p/DThvAr6DZrV/" target="_blank" rel="noopener"><span><span class="n">03 · new · </span>DThvAr6DZrV</span><span class="arrow">→</span></a>
+        </div>
+      </div>
+
+      <div class="creative-block">
+        <h3>Короткий сайт №2 <span style="color:var(--ink-faint); font-weight:400;">(3-й сайт)</span></h3>
+        <div class="note">Логика интересов — как у короткого сайта №1</div>
+        <div class="igrid">
+          <div class="ig-pending">Креативы уточняются — добавим по готовности</div>
+        </div>
+      </div>
+
+      <div class="creative-block">
+        <h3>Грузинский сегмент (KA)</h3>
+        <div class="note">Ожидаем от Тани</div>
+        <div class="igrid">
+          <div class="ig-pending">Грузинские посты — запрошены, без них сегмент [04] не запускаем</div>
         </div>
       </div>
     </div>
 
     <div class="chapter" style="border-bottom:none;">
-      <div class="chapter-head"><span class="chapter-tag">[06]</span><h2>Бюджет и сроки</h2></div>
+      <div class="chapter-head"><span class="chapter-tag">[08]</span><h2>Бюджет и сроки</h2></div>
+      <p class="lede">Две фазы, не одна. Первые 14 дней — широкий тест на $2 000, чтобы у каждой из 9 кампаний было достаточно данных для решения. Оставшиеся ~16 дней месяца — $1 000, но уже не поровну, а точечно: докидываем в кампании и гео, которые доказали себя в фазе 1.</p>
+
+      <div class="subsection-label">Фаза 1 · дни 1–14 · $2 000 на 9 кампаний</div>
       <table class="budget">
-        <tr><th>Кампания</th><th>Бюджет / мес</th><th>Бюджет / 14 дней</th><th>Бюджет / день</th></tr>
-        <tr><td>RU — короткий сайт</td><td class="num">$750</td><td class="num">$375</td><td class="num">$26,7</td></tr>
-        <tr><td>RU — длинный сайт</td><td class="num">$750</td><td class="num">$375</td><td class="num">$26,7</td></tr>
-        <tr><td>ENG — короткий сайт</td><td class="num">$750</td><td class="num">$375</td><td class="num">$26,7</td></tr>
-        <tr><td>ENG — длинный сайт</td><td class="num">$750</td><td class="num">$375</td><td class="num">$26,7</td></tr>
-        <tr><td>Итого за 14 дней</td><td class="num">—</td><td class="num">$1 500</td><td class="num">$106,8</td></tr>
+        <tr><th>Кампания</th><th>Бюджет / 14 дней</th><th>Бюджет / день</th></tr>
+        <tr class="grp"><td colspan="3">Короткий сайт №1</td></tr>
+        <tr><td>RU</td><td class="num">$222</td><td class="num">$15,9</td></tr>
+        <tr><td>ENG</td><td class="num">$222</td><td class="num">$15,9</td></tr>
+        <tr><td>KA (Грузия)</td><td class="num">$222</td><td class="num">$15,9</td></tr>
+        <tr class="grp"><td colspan="3">Длинный сайт</td></tr>
+        <tr><td>RU</td><td class="num">$222</td><td class="num">$15,9</td></tr>
+        <tr><td>ENG</td><td class="num">$222</td><td class="num">$15,9</td></tr>
+        <tr><td>KA (Грузия)</td><td class="num">$222</td><td class="num">$15,9</td></tr>
+        <tr class="grp"><td colspan="3">Короткий сайт №2</td></tr>
+        <tr><td>RU</td><td class="num">$222</td><td class="num">$15,9</td></tr>
+        <tr><td>ENG</td><td class="num">$222</td><td class="num">$15,9</td></tr>
+        <tr><td>KA (Грузия)</td><td class="num">$222</td><td class="num">$15,9</td></tr>
+        <tr><td>Итого фаза 1</td><td class="num">$2 000</td><td class="num">$142,9</td></tr>
       </table>
+
+      <div class="subsection-label">Фаза 2 · дни 15–30 · $1 000, точечно</div>
+      <p class="lede">Не расписываю заранее по кампаниям — сумма распределяется по итогам дня 14 в пользу лучшего CPL: если грузинский сегмент подтвердит исторический результат (32,5$), логично, что основная часть резерва пойдёт туда; если нет — в РУ или ENG ядро (Армения/Азербайджан/Европа). Решение принимаем на созвоне по итогам фазы 1, не сейчас.</p>
+
+      <div class="callout">$15,9/день на кампанию в фазе 1 — всё ещё тонко для Meta на некоторых гео, алгоритм может дольше выходить из обучения. Первая неделя может быть «шумной» по CPL из-за низкого объёма показов — это ожидаемо, не повод менять курс раньше 14 дней.</div>
+
       <div class="timeline">
-        <div class="tl-step"><div class="d">День 1</div><div class="t">Запуск всех 4 кампаний одновременно</div></div>
-        <div class="tl-step"><div class="d">День 7</div><div class="t">Промежуточная проверка расхода и CPL</div></div>
-        <div class="tl-step"><div class="d">День 14</div><div class="t">Оценка результатов, перераспределение оставшихся $1 500</div></div>
+        <div class="tl-step"><div class="d">День 1</div><div class="t">Запуск RU и ENG по всем 3 сайтам (6 кампаний). KA — по готовности креативов от Тани</div></div>
+        <div class="tl-step"><div class="d">День 7</div><div class="t">Промежуточная проверка расхода и CPL, без резких решений</div></div>
+        <div class="tl-step"><div class="d">День 14</div><div class="t">Итоги фазы 1, точечное распределение $1 000 фазы 2</div></div>
       </div>
     </div>
 
@@ -556,7 +455,7 @@
     <div class="wrap hero-inner">
       <div class="pill">Стратегия · Поиск</div>
       <h1>Не нужно объяснять в заголовке всё. Достаточно сказать, <span class="star">что это</span> — и человек кликнет узнать остальное.</h1>
-      <p class="hero-sub">Заголовки — общие, понятные формулировки о категории объекта: элитная недвижимость, клубный дом, инвестиции. Детали вроде джакузи на крыше или лифтов KONE остаются там, где им и место — в быстрых ссылках и на самом сайте, а не в заголовке объявления.</p>
+      <p class="hero-sub">Заголовки — общие, понятные формулировки о категории объекта. Инвестиционная тема теперь не отдельная группа, а слой внутри общей — и в Яндексе добавлен акцент на ВНЖ и низкие налоги для российской аудитории.</p>
     </div>
   </div>
 
@@ -564,49 +463,34 @@
 
     <div class="chapter">
       <div class="chapter-head"><span class="chapter-tag">[01]</span><h2>Логика заголовков</h2></div>
-      <p class="lede">У самого elysiumtbilisi.com — ровно такая структура: сначала общее утверждение («дом, который мы построили для себя»), и только потом, шаг за шагом, — локация, архитектура, инженерия, крыша. Amenities раскрываются на 5–7 шаге истории, не на первом экране. Объявление в поиске — это первый экран. Поэтому заголовок продаёт категорию и статус объекта, а не список удобств.</p>
-      <p class="lede">Все формулировки ниже верифицированы по тексту сайта: 14 резиденций, статус «полностью сдан», площади 138–191 м², локация Элия Хилл. Ничего не придумано и не взято по шаблону.</p>
+      <p class="lede">У самого elysiumtbilisi.com — ровно такая структура: сначала общее утверждение («дом, который мы построили для себя»), и только потом, шаг за шагом, — локация, архитектура, инженерия, крыша. Объявление в поиске — это первый экран. Поэтому заголовок продаёт категорию и статус объекта, а не список удобств.</p>
+      <p class="lede">Инвестиционную тематику больше не выносим в отдельную группу объявлений — держать инвестора и обычного покупателя раздельно не давало ощутимой разницы в качестве трафика, а усложняло управление. Инвестиционные ключевые слова и один инвестиционный заголовок теперь живут внутри общей группы.</p>
     </div>
 
     <div class="chapter">
       <div class="chapter-head"><span class="chapter-tag">[02]</span><h2>Google Ads — RU</h2></div>
-      <p class="lede">Кампания <b>ELYSIUM Tbilisi — Premium RU</b>, две группы объявлений: Generic (общий спрос) и Investment (инвестиционный спрос).</p>
+      <p class="lede">Кампания <b>ELYSIUM Tbilisi — Premium RU</b>, одна объединённая группа объявлений.</p>
 
       <div class="ad-group-block">
-        <div class="ag-title">Группа 1 <span class="ag-tag">Generic</span></div>
         <div class="chip-row">
           <span class="chip">элитная недвижимость тбилиси</span>
           <span class="chip">[апартаменты тбилиси купить]</span>
           <span class="chip">"квартиры премиум класса тбилиси"</span>
           <span class="chip">клубный дом тбилиси</span>
           <span class="chip">новостройки тбилиси элитные</span>
-          <span class="chip">элитная недвижимость грузия</span>
-          <span class="chip">квартиры бизнес класса тбилиси</span>
-          <span class="chip">жилой комплекс тбилиси премиум</span>
           <span class="chip">резиденции тбилиси</span>
-          <span class="chip">новостройки грузия элитные</span>
-          <span class="chip">вилла тбилиси купить</span>
           <span class="chip">пентхаус тбилиси</span>
-        </div>
-      </div>
-
-      <div class="ad-group-block">
-        <div class="ag-title">Группа 2 <span class="ag-tag">Investment</span></div>
-        <div class="chip-row">
           <span class="chip">недвижимость грузия инвестиции</span>
           <span class="chip">[купить квартиру в грузии инвестиции]</span>
           <span class="chip">"вложить деньги в недвижимость тбилиси"</span>
-          <span class="chip">недвижимость тбилиси для инвестора</span>
-          <span class="chip">инвестиции в недвижимость тбилиси</span>
           <span class="chip">доходная недвижимость грузия</span>
-          <span class="chip">[вложить деньги в недвижимость грузия]</span>
           <span class="chip">ROI недвижимость грузия</span>
         </div>
       </div>
 
-      <div class="subsection-label">Минус-слова (уровень кампании)</div>
+      <div class="subsection-label">Минус-слова</div>
       <div class="chip-row">
-        <span class="chip">аренда</span><span class="chip">снять</span><span class="chip">дешево</span><span class="chip">вакансии</span><span class="chip">работа</span><span class="chip">ипотека бесплатно</span><span class="chip">б/у</span><span class="chip">вторичка</span><span class="chip">реновация</span><span class="chip">ремонт квартир</span>
+        <span class="chip">аренда</span><span class="chip">снять</span><span class="chip">дешево</span><span class="chip">вакансии</span><span class="chip">работа</span><span class="chip">ипотека бесплатно</span><span class="chip">б/у</span><span class="chip">вторичка</span><span class="chip">реновация</span>
       </div>
 
       <div class="kw-label">Заголовки RSA · 15 шт · ≤30 симв.</div>
@@ -628,14 +512,6 @@
         <div class="headline-pill">Записаться на Просмотр</div>
       </div>
 
-      <div class="kw-label">Описания · 4 шт · ≤90 симв.</div>
-      <div class="headline-list" style="grid-template-columns:1fr 1fr;">
-        <div class="headline-pill">Клубный дом на 14 резиденций с панорамными видами на Тбилиси.</div>
-        <div class="headline-pill">Дом полностью сдан. Автономный генератор, запас воды 70 тонн, охрана 24/7.</div>
-        <div class="headline-pill">Площади от 138 до 191 м², свободная планировка без несущих стен внутри.</div>
-        <div class="headline-pill">Элия Хилл: тишина и приватность в 10 минутах от центра Тбилиси.</div>
-      </div>
-
       <div class="ad-preview">
         <div class="ad-title">Элитная Недвижимость Тбилиси | ELYSIUM — Клубный Дом</div>
         <div class="ad-url">elysiumtbilisi.com</div>
@@ -649,51 +525,37 @@
         <div class="sitelink-card"><div class="st">Локация — Элия Хилл</div><div class="sl">10 минут до центра<br>Тишина и приватность</div></div>
         <div class="sitelink-card"><div class="st">О проекте ELYSIUM</div><div class="sl">Клубный дом, 14 резиденций<br>Дом полностью сдан</div></div>
         <div class="sitelink-card"><div class="st">Запись на просмотр</div><div class="sl">Индивидуальный показ<br>Свяжитесь с нами</div></div>
-        <div class="sitelink-card"><div class="st">Автономность дома</div><div class="sl">Генератор + запас воды<br>Охрана 24/7</div></div>
+        <div class="sitelink-card"><div class="st">ВНЖ и налоги</div><div class="sl">От $150 000 — резидентство<br>0% налог на прирост капитала</div></div>
       </div>
 
       <div class="kw-label">Уточнения</div>
       <div class="chip-row">
-        <span class="chip">14 резиденций</span><span class="chip">Дом полностью сдан</span><span class="chip">Охрана 24/7</span><span class="chip">Подземный паркинг</span><span class="chip">Лифты KONE</span><span class="chip">Своя крыша и джакузи</span><span class="chip">Автономный генератор</span><span class="chip">Звукоизоляция 300 мм</span>
+        <span class="chip">14 резиденций</span><span class="chip">Дом полностью сдан</span><span class="chip">Охрана 24/7</span><span class="chip">Подземный паркинг</span><span class="chip">ВНЖ при покупке</span><span class="chip">Низкие налоги</span>
       </div>
-
-      <div class="callout">Структурированные сниппеты — заголовок «Удобства»: подземный паркинг, джакузи на крыше, фитнес-зона, барбекю-зона, ландшафтный сад. Номер телефона: +995 322 05 38 78 (указан на сайте).</div>
     </div>
 
     <div class="chapter">
       <div class="chapter-head"><span class="chapter-tag">[03]</span><h2>Google Ads — EN</h2></div>
-      <p class="lede">Campaign <b>ELYSIUM Tbilisi — Premium EN</b>, two ad groups: Generic and Investment.</p>
+      <p class="lede">Campaign <b>ELYSIUM Tbilisi — Premium EN</b>, one merged ad group.</p>
 
       <div class="ad-group-block">
-        <div class="ag-title">Ad Group 1 <span class="ag-tag">Generic</span></div>
         <div class="chip-row">
           <span class="chip">luxury apartments tbilisi</span>
           <span class="chip">[buy apartment tbilisi]</span>
           <span class="chip">"premium real estate tbilisi"</span>
           <span class="chip">club residence tbilisi</span>
-          <span class="chip">new luxury development tbilisi</span>
-          <span class="chip">luxury real estate georgia</span>
-          <span class="chip">premium apartments georgia</span>
-          <span class="chip">new development tbilisi</span>
           <span class="chip">tbilisi residences</span>
           <span class="chip">penthouse tbilisi</span>
-        </div>
-      </div>
-
-      <div class="ad-group-block">
-        <div class="ag-title">Ad Group 2 <span class="ag-tag">Investment</span></div>
-        <div class="chip-row">
           <span class="chip">real estate investment georgia</span>
           <span class="chip">[invest in tbilisi real estate]</span>
           <span class="chip">"buy property georgia investment"</span>
-          <span class="chip">tbilisi property for investors</span>
           <span class="chip">property investment georgia roi</span>
         </div>
       </div>
 
       <div class="subsection-label">Negative keywords</div>
       <div class="chip-row">
-        <span class="chip">rent</span><span class="chip">cheap</span><span class="chip">jobs</span><span class="chip">careers</span><span class="chip">free mortgage</span><span class="chip">second-hand</span><span class="chip">renovation</span>
+        <span class="chip">rent</span><span class="chip">cheap</span><span class="chip">jobs</span><span class="chip">careers</span><span class="chip">free mortgage</span><span class="chip">second-hand</span>
       </div>
 
       <div class="kw-label">RSA headlines · 15 · ≤30 chars</div>
@@ -715,14 +577,6 @@
         <div class="headline-pill">Book a Viewing</div>
       </div>
 
-      <div class="kw-label">Descriptions · 4 · ≤90 chars</div>
-      <div class="headline-list" style="grid-template-columns:1fr 1fr;">
-        <div class="headline-pill">A club residence in Tbilisi with only 14 homes and panoramic views.</div>
-        <div class="headline-pill">Premium-class apartments. Fully completed and ready to move in.</div>
-        <div class="headline-pill">Luxury real estate in Tbilisi. Apartments from 138 to 191 sqm.</div>
-        <div class="headline-pill">Real estate investment in Georgia. ELYSIUM club residence, Elya Hill.</div>
-      </div>
-
       <div class="ad-preview">
         <div class="ad-title">Luxury Real Estate Tbilisi | ELYSIUM — Club Residence</div>
         <div class="ad-url">elysiumtbilisi.com</div>
@@ -736,35 +590,25 @@
         <div class="sitelink-card"><div class="st">Location — Elya Hill</div><div class="sl">10 min to city center<br>Quiet and private</div></div>
         <div class="sitelink-card"><div class="st">About ELYSIUM</div><div class="sl">Club residence, 14 homes<br>Fully completed</div></div>
         <div class="sitelink-card"><div class="st">Book a Viewing</div><div class="sl">Private tour by request<br>Contact us today</div></div>
-        <div class="sitelink-card"><div class="st">Full Autonomy</div><div class="sl">Generator plus water reserve<br>24/7 security</div></div>
+        <div class="sitelink-card"><div class="st">Residency & Tax</div><div class="sl">Residency from $150,000<br>0% capital gains tax</div></div>
       </div>
-
-      <div class="kw-label">Callouts</div>
-      <div class="chip-row">
-        <span class="chip">14 Residences</span><span class="chip">Fully Completed</span><span class="chip">24/7 Security</span><span class="chip">Underground Parking</span><span class="chip">KONE Elevators</span><span class="chip">Private Rooftop</span><span class="chip">Backup Generator</span><span class="chip">Soundproof Walls</span>
-      </div>
-
-      <div class="callout">Structured snippets — header "Amenities": Underground Parking, Rooftop Jacuzzi, Fitness Area, BBQ Zone, Landscaped Garden. Phone: +995 322 05 38 78.</div>
     </div>
 
     <div class="chapter">
       <div class="chapter-head"><span class="chapter-tag">[04]</span><h2>Аудитории Google (Display / PMax / Demand Gen)</h2></div>
-      <p class="lede">Это не «интересы» как в Meta, а сигналы аудитории для кампаний с более широким охватом — накладываются поверх поисковых кампаний на Display, Performance Max и Demand Gen.</p>
       <div class="audience-grid">
         <div class="audience-card">
-          <h4>In-Market — готовы купить сейчас</h4>
+          <h4>In-Market</h4>
           <ul>
             <li>Real Estate → <b>Residential Properties</b></li>
             <li>Real Estate → <b>Rental & Investment Services</b></li>
-            <li>Real Estate → <b>Consulting & Investment Firms</b></li>
           </ul>
         </div>
         <div class="audience-card">
-          <h4>Affinity — долгосрочный интерес</h4>
+          <h4>Affinity</h4>
           <ul>
             <li><b>Luxury Shoppers</b></li>
-            <li><b>Investors</b> (Banking, Finance & Insurance)</li>
-            <li><b>Home & Garden Enthusiasts</b></li>
+            <li><b>Investors</b></li>
           </ul>
         </div>
         <div class="audience-card">
@@ -775,28 +619,26 @@
           </ul>
         </div>
         <div class="audience-card">
-          <h4>Custom Segment — по конкурентам</h4>
+          <h4>Custom Segment — конкуренты</h4>
           <ul>
-            <li>next-property.com</li>
-            <li>eltgroup.ge</li>
+            <li>next-property.com · eltgroup.ge</li>
             <li>vrkrtsanisi.com · thelake.ge · mrqz.to</li>
           </ul>
         </div>
       </div>
-      <div class="callout">Custom Segment собран напрямую из вашей же выдачи по конкурентам — это прямые конкуренты ELYSIUM в поиске, логичный источник аудитории для PMax/Display. Ставки: старт на Maximize Conversions без target CPA (нет истории конверсий), переход на Target CPA через 4–6 недель или после 30+ конверсий.</div>
     </div>
 
     <div class="chapter" style="border-bottom:none;">
       <div class="chapter-head"><span class="chapter-tag">[05]</span><h2>Яндекс.Директ — RU</h2></div>
-      <p class="lede">Кампания <b>ELYSIUM Tbilisi — РСЯ + Поиск</b>, три объявления: Generic, Локация, Инвестиции.</p>
+      <p class="lede">Добавлен акцент на ВНЖ и налоги — для российской аудитории это часто решающий фактор, сильнее, чем архитектура или вид из окна.</p>
 
       <div class="chip-row">
-        <span class="chip">элитная недвижимость тбилиси</span><span class="chip">недвижимость тбилиси купить</span><span class="chip">квартиры премиум класса тбилиси</span><span class="chip">клубный дом тбилиси</span><span class="chip">новостройки тбилиси элитные</span><span class="chip">резиденции тбилиси</span><span class="chip">пентхаус тбилиси</span><span class="chip">недвижимость грузия инвестиции</span><span class="chip">купить квартиру в грузии инвестиции</span><span class="chip">доходная недвижимость грузия</span><span class="chip">вложить деньги в недвижимость тбилиси</span><span class="chip">жилой комплекс тбилиси премиум</span>
+        <span class="chip">элитная недвижимость тбилиси</span><span class="chip">недвижимость тбилиси купить</span><span class="chip">клубный дом тбилиси</span><span class="chip">недвижимость грузия инвестиции</span><span class="chip">внж при покупке недвижимости</span><span class="chip">резидентство грузия недвижимость</span><span class="chip">низкие налоги на недвижимость грузия</span>
       </div>
 
       <div class="subsection-label">Минус-слова</div>
       <div class="chip-row">
-        <span class="chip">аренда</span><span class="chip">снять</span><span class="chip">дешево</span><span class="chip">вакансии</span><span class="chip">работа</span><span class="chip">ипотека бесплатно</span><span class="chip">б/у</span><span class="chip">вторичка</span>
+        <span class="chip">аренда</span><span class="chip">снять</span><span class="chip">дешево</span><span class="chip">вакансии</span><span class="chip">работа</span><span class="chip">ипотека бесплатно</span>
       </div>
 
       <div class="kw-label">Объявления</div>
@@ -811,6 +653,11 @@
         <div class="ad-desc">Клубный дом на 14 резиденций. Тишина, приватность, панорамные виды.</div>
       </div>
       <div class="ad-preview">
+        <div class="ad-title">ВНЖ при Покупке Недвижимости — ELYSIUM</div>
+        <div class="ad-url">elysiumtbilisi.com</div>
+        <div class="ad-desc">Резидентство Грузии от $150 000. Низкие налоги, клубный дом на 14 резиденций.</div>
+      </div>
+      <div class="ad-preview">
         <div class="ad-title">Инвестиции в Недвижимость Тбилиси — ELYSIUM</div>
         <div class="ad-url">elysiumtbilisi.com</div>
         <div class="ad-desc">Клубный дом на 14 резиденций в Тбилиси. Запись на индивидуальный показ.</div>
@@ -819,35 +666,17 @@
       <div class="kw-label">Быстрые ссылки</div>
       <div class="sitelink-grid" style="grid-template-columns:1fr 1fr;">
         <div class="sitelink-card"><div class="st">Резиденции и планировки</div><div class="sl">От 138 до 191 м²</div></div>
-        <div class="sitelink-card"><div class="st">Локация — Элия Хилл</div><div class="sl">10 минут до центра</div></div>
+        <div class="sitelink-card"><div class="st">ВНЖ при покупке</div><div class="sl">От $150 000</div></div>
         <div class="sitelink-card"><div class="st">Крыша и удобства</div><div class="sl">Джакузи, барбекю, фитнес</div></div>
         <div class="sitelink-card"><div class="st">Запись на просмотр</div><div class="sl">Индивидуальный показ</div></div>
       </div>
 
       <div class="kw-label">Уточнения</div>
       <div class="chip-row">
-        <span class="chip">14 резиденций</span><span class="chip">Дом сдан</span><span class="chip">Охрана 24/7</span><span class="chip">Подземный паркинг</span><span class="chip">Лифты KONE</span>
+        <span class="chip">14 резиденций</span><span class="chip">Дом сдан</span><span class="chip">ВНЖ при покупке</span><span class="chip">Низкие налоги</span><span class="chip">Охрана 24/7</span>
       </div>
 
-      <div class="audience-grid" style="margin-top:30px;">
-        <div class="audience-card">
-          <h4>Условия подбора аудитории</h4>
-          <ul>
-            <li>Долгосрочные: Недвижимость → <b>Покупка жилья</b></li>
-            <li>Долгосрочные: Недвижимость → <b>Элитная недвижимость</b></li>
-            <li>Активно ищут: <b>Собираются приобрести жильё</b></li>
-          </ul>
-        </div>
-        <div class="audience-card">
-          <h4>Визитка и ставки</h4>
-          <ul>
-            <li>ELYSIUM, Тбилиси, ул. Абули 33</li>
-            <li>+995 322 05 38 78</li>
-            <li>Look-alike от CRM через Яндекс.Аудитории</li>
-          </ul>
-        </div>
-      </div>
-      <div class="callout">Стратегия показов: старт на «Оптимизация конверсий» с ручным ограничением цены за конверсию чуть выше рыночного ориентира (CPL Грузии из Meta ~32–40$). Корректировка через 2 недели по факту данных.</div>
+      <div class="callout">Формулировка «низкие налоги» — намеренно без конкретного процента в заголовках (кроме проверенных 0% на прирост капитала после 2 лет и 5% на аренду) — см. пояснение в разделе [06] на вкладке Meta Ads про нюанс с налогом на владение.</div>
     </div>
 
   </div>
@@ -855,7 +684,7 @@
 
 <div class="wrap"><footer>
   <span>ELYSIUM RESIDENTIAL COMPLEX — внутренний документ команды</span>
-  <span>Отчёт: 16.06–16.07</span>
+  <span>Отчёт: 16.06–16.07 · Налоги/ВНЖ: данные на 2026</span>
 </footer></div>
 
 <script>
