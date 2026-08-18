@@ -1,0 +1,21 @@
+{
+  "last_updated": "ещё не запускался — данные появятся после первого прогона fetch_report.py",
+  "fetched_range": {"since": "2025-07-01", "until": "2025-07-01"},
+  "plan": {
+    "monthly_budget": 3000,
+    "monthly_leads": 55,
+    "target_cpl": 54.55,
+    "per_objective_budget": 3000
+  },
+  "objectives": [],
+  "account_daily": [],
+  "campaigns": [],
+  "adsets": [],
+  "creatives": [],
+  "age_groups": [],
+  "devices": [],
+  "geo": [],
+  "reach_by_preset": {
+    "all": {"7d": 0, "14d": 0, "30d": 0, "month": 0, "all": 0}
+  }
+}

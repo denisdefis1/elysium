@@ -3,703 +3,784 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ELYSIUM — Стратегия перформанс-маркетинга</title>
+<title>ELYSIUM — рекламный дашборд</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <style>
-  :root{
-    --bg:#111214;
-    --bg-hero:#15171B;
-    --panel:#1A1C20;
-    --panel-2:#202226;
-    --ink:#F4F2ED;
-    --ink-muted:#E4E2DA;
-    --ink-faint:#8C8C83;
-    --rust:#A8482F;
-    --rust-soft:#D0805F;
-    --rule:#2E3034;
-    --good:#8AA37E;
-    --bad:#C06A4F;
-    --ka:#7C93B0;
+  :root {
+    --cream: #111214;
+    --card: #1A1C20;
+    --sand: #262931;
+    --taupe: #2E3034;
+    --forest: #A8482F;
+    --forest-2: #D0805F;
+    --brown: #8C6A3C;
+    --umber: #D0805F;
+    --text: #F4F2ED;
+    --muted: #8C8C83;
+    --border: #2E3034;
+    --good: #8AA37E;
+    --bad: #C06A4F;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
-  body{
-    background:var(--bg);
-    color:var(--ink);
-    font-family:'Inter', sans-serif;
-    font-size:16px;
-    line-height:1.7;
-    font-feature-settings:'tnum' 1;
+  * { box-sizing: border-box; }
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    padding: 40px;
+    max-width: 1280px;
+    margin: 0 auto;
   }
-  ::selection{background:var(--rust); color:var(--ink);}
-
-  .topbar{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:24px 48px; position:sticky; top:0; z-index:50;
-    background:rgba(17,18,20,0.92); backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--rule);
+  h1 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    font-size: 34px;
+    letter-spacing: -0.01em;
+    margin: 0 0 2px;
+    color: var(--text);
   }
-  .logo{display:flex; align-items:center; gap:12px;}
-  .logo-mark{width:26px; height:18px; display:flex; gap:3px;}
-  .logo-mark span{flex:1; border:1.4px solid var(--ink); border-right:none;}
-  .logo-mark span:last-child{border-right:1.4px solid var(--ink); border-left:none;}
-  .logo-word{font-family:'Manrope', sans-serif; font-weight:700; font-size:18px; letter-spacing:0.18em;}
-  .switcher{display:flex; gap:28px;}
-  .switch-btn{
-    all:unset; cursor:pointer; font-family:'Manrope', sans-serif; font-weight:700;
-    font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase;
-    color:var(--ink-faint); padding-bottom:3px; border-bottom:1px solid transparent;
+  .sub { color: var(--muted); font-size: 13px; margin-bottom: 4px; }
+  .updated { color: var(--muted); font-size: 12px; margin-bottom: 24px; font-family: 'JetBrains Mono', monospace; }
+  h2.section-title {
+    font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 21px;
+    margin: 52px 0 4px; color: var(--text); display: flex; align-items: baseline; gap: 10px;
   }
-  .switch-btn.active{color:var(--ink); border-bottom:1px solid var(--rust);}
-  .topbar-meta{font-family:'Manrope', sans-serif; font-size:11.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-faint); text-align:right; line-height:1.6;}
-  .topbar-meta b{color:var(--ink); font-weight:700;}
+  h2.section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); margin-left: 6px; }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
 
-  .wrap{max-width:960px; margin:0 auto; padding:0 48px;}
-
-  .hero{
-    position:relative; padding:100px 0 60px;
-    background:
-      radial-gradient(ellipse 900px 500px at 75% 0%, rgba(168,72,47,0.11), transparent 60%),
-      radial-gradient(ellipse 700px 600px at 10% 100%, rgba(255,255,255,0.03), transparent 60%),
-      var(--bg-hero);
-    border-bottom:1px solid var(--rule); overflow:hidden;
+  /* Переключатель целей кампаний */
+  .obj-switch { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+  .obj-tab {
+    background: var(--card); border: 1px solid var(--border); color: var(--muted);
+    padding: 9px 18px; border-radius: 2px; font-size: 13px; font-family: 'Manrope', sans-serif; font-weight: 600;
+    cursor: pointer; transition: all .15s;
   }
-  .hero::after{
-    content:''; position:absolute; inset:0;
-    background-image:linear-gradient(rgba(244,242,237,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(244,242,237,0.035) 1px, transparent 1px);
-    background-size:64px 64px; mask-image:linear-gradient(to bottom, black, transparent 85%); pointer-events:none;
+  .obj-tab.active { background: var(--forest); border-color: var(--forest); color: #fff; font-weight: 700; }
+  .obj-tab:hover:not(.active) { border-color: var(--umber); color: var(--text); }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 28px; }
+  .preset-btn {
+    background: var(--card); border: 1px solid var(--border); color: var(--muted);
+    padding: 7px 14px; border-radius: 2px; font-size: 13px; cursor: pointer; transition: all .15s;
+    font-family: 'Manrope', sans-serif; font-weight: 600;
   }
-  .hero-inner{position:relative; z-index:2;}
-  .pill{
-    display:inline-block; font-family:'Manrope', sans-serif; font-size:11.5px; font-weight:700;
-    letter-spacing:0.1em; text-transform:uppercase; padding:8px 16px;
-    background:rgba(244,242,237,0.07); border:1px solid var(--rule); color:var(--ink-muted); margin-bottom:28px;
+  .preset-btn:hover { border-color: var(--umber); color: var(--text); }
+  .preset-btn.active { background: var(--sand); border-color: var(--forest); color: var(--text); box-shadow: inset 0 -2px 0 var(--forest); }
+  .date-input { background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 6px 9px; border-radius: 2px; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+
+  .cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  @media (max-width: 1000px) { .cards { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 620px) { .cards { grid-template-columns: repeat(2, 1fr); } }
+  .card {
+    background: var(--card); padding: 16px 18px; transition: background .15s;
   }
-  h1{font-family:'Manrope', sans-serif; font-weight:800; font-size:42px; line-height:1.18; letter-spacing:-0.01em; max-width:760px;}
-  h1 .star{color:var(--rust-soft);}
-  .hero-sub{margin-top:24px; max-width:610px; color:var(--ink-muted); font-size:15.5px;}
+  .card:hover { background: var(--sand); }
+  .card .label { color: var(--muted); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; }
+  .card .value { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 24px; color: var(--text); }
+  .card .plan-note { color: var(--muted); font-size: 11px; margin-top: 6px; }
+  .bar-track { height: 3px; border-radius: 2px; background: var(--sand); margin-top: 9px; overflow: hidden; }
+  .bar-fill { height: 100%; background: var(--forest); }
+  .delta { font-size: 10px; font-weight: 700; margin-left: 6px; font-family: 'JetBrains Mono', monospace; }
+  .delta.good { color: var(--good); }
+  .delta.bad { color: var(--bad); }
 
-  .stat-row{display:grid; grid-template-columns:repeat(4, 1fr); margin-top:48px; border-top:1px solid var(--rule); position:relative; z-index:2;}
-  .stat{padding:22px 20px 0 0; border-right:1px solid var(--rule);}
-  .stat:last-child{border-right:none;}
-  .stat .v{font-family:'Manrope', sans-serif; font-weight:800; font-size:25px; color:var(--ink);}
-  .stat .l{margin-top:6px; font-size:11.5px; color:var(--ink-faint); line-height:1.4;}
+  .chart-card { background: var(--card); border: 1px solid var(--border); border-radius: 2px; padding: 20px; margin-top: 14px; }
+  .chart-title { font-size: 13px; color: var(--muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+  @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
 
-  .chapter{padding:60px 0; border-bottom:1px solid var(--rule);}
-  .chapter-head{display:flex; align-items:baseline; gap:16px; margin-bottom:22px;}
-  .chapter-tag{font-family:'Manrope', sans-serif; font-size:13.5px; font-weight:700; color:var(--rust-soft);}
-  h2{font-family:'Manrope', sans-serif; font-weight:800; font-size:25px; letter-spacing:-0.005em;}
-  .lede{max-width:660px; color:var(--ink-muted); margin-bottom:8px; font-size:15.5px;}
-  .lede + .lede{margin-top:14px;}
-  .lede b{color:var(--ink); font-weight:700;}
+  .toggle-row { display: flex; gap: 8px; margin-bottom: 14px; }
+  .toggle-btn { background: var(--card); border: 1px solid var(--border); color: var(--muted); padding: 6px 14px; border-radius: 2px; font-size: 12px; cursor: pointer; font-family: 'Manrope', sans-serif; font-weight: 600; }
+  .toggle-btn.active { background: var(--forest); border-color: var(--forest); color: #fff; }
 
-  .seg-badge{
-    display:inline-flex; align-items:center; gap:6px; font-family:'Manrope', sans-serif; font-size:11.5px; font-weight:700;
-    letter-spacing:0.08em; text-transform:uppercase; padding:6px 12px;
-    background:rgba(168,72,47,0.13); border:1px solid rgba(168,72,47,0.45); color:var(--rust-soft); margin-bottom:16px;
+  /* Дерево кампания -> аудитория -> креатив */
+  .tree { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+  .tree-row {
+    display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    border-bottom: 1px solid var(--border); cursor: pointer; background: var(--card);
+    font-size: 13px;
   }
-  .seg-badge.ka{background:rgba(124,147,176,0.14); border-color:rgba(124,147,176,0.5); color:var(--ka);}
-
-  .ledger{margin-top:24px; border-top:1px solid var(--rule);}
-  .ledger-row{display:grid; grid-template-columns:150px 1fr 84px 96px; align-items:center; gap:16px; padding:15px 0; border-bottom:1px solid var(--rule);}
-  .ledger-row.excluded{opacity:.42;}
-  .ledger-country{font-family:'Manrope', sans-serif; font-size:14.5px; font-weight:700;}
-  .strike{text-decoration:line-through;}
-  .bar-track{height:4px; background:var(--panel-2);}
-  .bar-fill{height:100%; background:var(--rust);}
-  .bar-fill.weak{background:var(--ink-faint);}
-  .ledger-cpl{font-family:'Manrope', sans-serif; font-size:13.5px; text-align:right; font-weight:700;}
-  .ledger-status{font-family:'Manrope', sans-serif; font-size:10.5px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; text-align:right; padding:4px 8px; justify-self:end; white-space:nowrap;}
-  .status-core{color:var(--good); border:1px solid var(--good);}
-  .status-test{color:var(--rust-soft); border:1px solid var(--rust-soft);}
-  .status-kept{color:var(--bad); border:1px solid var(--bad);}
-  .status-out{color:var(--ink-faint); border:1px solid var(--ink-faint);}
-  .status-new{color:var(--ka); border:1px solid var(--ka);}
-
-  .callout{margin-top:22px; padding:20px 24px; background:var(--panel); border-left:2px solid var(--rust); font-size:14px; color:var(--ink-muted);}
-  .callout.note-ka{border-left-color:var(--ka);}
-
-  .logic-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:28px;}
-  .logic-col{background:var(--panel); padding:26px 28px;}
-  .logic-col h3{font-family:'Manrope', sans-serif; font-weight:800; font-size:16.5px; margin-bottom:12px; color:var(--ink);}
-  .logic-col p{font-size:14px; color:var(--ink-muted); margin-bottom:16px;}
-  .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
-  .chip{font-family:'Manrope', sans-serif; font-size:11.5px; font-weight:700; letter-spacing:0.01em; padding:6px 12px; border:1px solid var(--rule); color:var(--ink-muted); background:var(--panel-2);}
-
-  .fact-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:26px;}
-  .fact{background:var(--panel); padding:20px 18px;}
-  .fact .fv{font-family:'Manrope', sans-serif; font-weight:800; font-size:20px; color:var(--rust-soft);}
-  .fact .fl{margin-top:6px; font-size:12px; color:var(--ink-muted); line-height:1.4;}
-
-  .creative-block{margin-top:30px;}
-  .creative-block h3{font-family:'Manrope', sans-serif; font-weight:800; font-size:16.5px; color:var(--ink); margin-bottom:4px;}
-  .creative-block .note{font-family:'Manrope', sans-serif; font-size:11.5px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:16px;}
-  .igrid{display:grid; grid-template-columns:repeat(3, 1fr); gap:1px; background:var(--rule); border:1px solid var(--rule);}
-  .ig-link{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:16px 18px; background:var(--panel); font-family:'Inter', sans-serif; font-size:12.5px; color:var(--ink-muted); text-decoration:none;}
-  .ig-link:hover{background:var(--panel-2); color:var(--ink);}
-  .ig-link .n{font-family:'Manrope', sans-serif; font-weight:800; font-size:11.5px; color:var(--rust-soft);}
-  .ig-link .arrow{color:var(--rust-soft); font-family:'Manrope', sans-serif;}
-  .ig-pending{padding:16px 18px; background:var(--panel-2); font-family:'Manrope', sans-serif; font-size:12px; font-weight:600; color:var(--ink-faint); font-style:italic;}
-
-  table.budget{width:100%; border-collapse:collapse; margin-top:24px;}
-  table.budget th, table.budget td{text-align:left; padding:13px 6px; border-bottom:1px solid var(--rule); font-size:13.5px;}
-  table.budget th{font-family:'Manrope', sans-serif; font-size:10.5px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint);}
-  table.budget td.num{font-family:'Manrope', sans-serif; font-weight:700; color:var(--rust-soft);}
-  table.budget tr.grp td{padding-top:22px; font-family:'Manrope', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); border-bottom:none;}
-  table.budget tr:last-child td{border-bottom:none; border-top:1px solid var(--rust); font-weight:800; color:var(--ink);}
-
-  .timeline{display:flex; gap:1px; margin-top:28px; background:var(--rule); border:1px solid var(--rule);}
-  .tl-step{flex:1; padding:20px 22px; background:var(--panel);}
-  .tl-step .d{font-family:'Manrope', sans-serif; font-size:11px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--rust-soft);}
-  .tl-step .t{margin-top:8px; font-size:13.5px; color:var(--ink-muted);}
-
-  .kw-label{font-family:'Manrope', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:22px; margin-bottom:12px;}
-  .headline-list{display:grid; grid-template-columns:1fr 1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule);}
-  .headline-pill{font-size:13.5px; padding:12px 14px; background:var(--panel); border-left:2px solid var(--rust);}
-  .ad-preview{margin-top:16px; padding:18px 20px; background:var(--panel); border:1px solid var(--rule);}
-  .ad-preview .ad-title{color:#A7CE9C; font-size:14.5px; margin-bottom:4px; font-weight:500;}
-  .ad-preview .ad-url{color:var(--good); font-size:12.5px; margin-bottom:7px;}
-  .ad-preview .ad-desc{color:var(--ink-muted); font-size:13.5px;}
-  .channel-flag{font-family:'Manrope', sans-serif; font-weight:800; font-size:10.5px; letter-spacing:0.04em; color:var(--rust-soft); border:1px solid var(--rust-soft); padding:3px 8px; margin-right:12px;}
-
-  .ad-group-block{margin-top:24px;}
-  .subsection-label{font-family:'Manrope', sans-serif; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--rust-soft); margin-top:26px; margin-bottom:8px;}
-
-  .sitelink-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:12px;}
-  .sitelink-card{background:var(--panel); padding:16px 18px;}
-  .sitelink-card .st{font-family:'Manrope', sans-serif; font-weight:700; font-size:13.5px; color:var(--ink); margin-bottom:8px;}
-  .sitelink-card .sl{font-size:12.5px; color:var(--ink-muted); line-height:1.5;}
-
-  .audience-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:24px;}
-  .audience-card{background:var(--panel); padding:22px 24px;}
-  .audience-card h4{font-family:'Manrope', sans-serif; font-weight:800; font-size:14px; color:var(--ink); margin-bottom:10px;}
-  .audience-card ul{list-style:none;}
-  .audience-card li{font-size:13.5px; color:var(--ink-muted); padding:6px 0; border-bottom:1px solid var(--rule);}
-  .audience-card li:last-child{border-bottom:none;}
-  .audience-card li b{color:var(--ink); font-weight:700;}
-
-  footer{padding:36px 0 64px; display:flex; justify-content:space-between; font-family:'Manrope', sans-serif; font-size:11.5px; letter-spacing:0.03em; color:var(--ink-faint);}
-  .panel-tab{display:none;}
-  .panel-tab.active{display:block;}
-
-  @media (max-width: 860px){
-    .topbar{padding:18px 22px;}
-    .wrap{padding:0 22px;}
-    .hero{padding:56px 0 40px;}
-    h1{font-size:29px;}
-    .stat-row{grid-template-columns:1fr 1fr;}
-    .stat{border-bottom:1px solid var(--rule); padding-bottom:16px;}
-    .logic-grid, .igrid, .headline-list, .fact-grid, .audience-grid, .sitelink-grid{grid-template-columns:1fr;}
-    .ledger-row{grid-template-columns:1fr 70px; row-gap:6px;}
-    .ledger-row .bar-track, .ledger-row .ledger-status{display:none;}
-    .timeline{flex-direction:column;}
-    footer{flex-direction:column; gap:8px;}
+  .tree-row:last-child { border-bottom: none; }
+  .tree-row:hover { background: var(--sand); }
+  .tree-row .chevron { width: 14px; color: var(--muted); transition: transform .15s; flex-shrink: 0; }
+  .tree-row.open .chevron { transform: rotate(90deg); }
+  .tree-row .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tree-row .status-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .status-dot.ACTIVE { background: var(--good); }
+  .status-dot.other { background: var(--taupe); }
+  .tree-row .metric { color: var(--muted); font-size: 12px; white-space: nowrap; }
+  .tree-row .metric b { color: var(--text); font-weight: 500; }
+  .tree-children { display: none; background: var(--cream); }
+  .tree-children.open { display: block; }
+  .tree-row.level-1 { padding-left: 40px; background: var(--card); }
+  .tree-row.level-1:hover { background: var(--sand); }
+  .creative-row-list { padding: 10px 16px 14px 64px; background: var(--cream); }
+  .creative-chip {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 3px; padding: 6px 10px 6px 6px;
+    margin: 3px 6px 3px 0; font-size: 12px; cursor: pointer;
   }
+  .creative-chip img { width: 28px; height: 28px; object-fit: cover; border-radius: 2px; }
+  .creative-chip .no-thumb { width: 28px; height: 28px; background: var(--sand); border-radius: 2px; }
+  .empty { color: var(--muted); font-size: 13px; padding: 18px; text-align: center; }
+
+  .creatives-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  @media (max-width: 1000px) { .creatives-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 620px) { .creatives-grid { grid-template-columns: repeat(2, 1fr); } }
+  .creative-card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; cursor: pointer; transition: border-color .15s; }
+  .creative-card:hover { border-color: var(--umber); }
+  .creative-thumb { width: 100%; aspect-ratio: 4/3; background: var(--sand) center/cover no-repeat; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 11px; }
+  .creative-info { padding: 9px 10px; }
+  .creative-name { font-size: 11px; color: var(--muted); margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .creative-stats { display: flex; justify-content: space-between; font-size: 12px; }
+  .creative-stats .msg { color: var(--good); font-weight: 500; }
+
+  .show-more-btn { width: 100%; margin-top: 10px; padding: 9px; border-radius: 4px; background: var(--card); border: 1px dashed var(--border); color: var(--muted); font-size: 13px; cursor: pointer; }
+  .show-more-btn:hover { color: var(--text); border-color: var(--umber); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 400; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+  td.num, th.num { text-align: right; }
+  .clickable-row { cursor: pointer; }
+  .clickable-row:hover { background: var(--sand); }
+
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); z-index: 100; align-items: center; justify-content: center; padding: 24px; }
+  .modal-overlay.open { display: flex; }
+  .modal-box { background: var(--card); border-radius: 6px; max-width: 700px; width: 100%; max-height: 88vh; overflow-y: auto; display: grid; grid-template-columns: 260px 1fr; }
+  @media (max-width: 640px) { .modal-box { grid-template-columns: 1fr; } }
+  .modal-img { background: var(--sand) center/cover no-repeat; min-height: 260px; }
+  .modal-content { padding: 24px; position: relative; }
+  .modal-close { position: absolute; top: 14px; right: 14px; background: var(--cream); border: 1px solid var(--border); color: var(--muted); width: 28px; height: 28px; border-radius: 3px; cursor: pointer; }
+  .modal-title { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 18px; margin: 0 0 4px; padding-right: 30px; color: var(--text); }
+  .modal-sub { color: var(--muted); font-size: 12px; margin-bottom: 16px; }
+  .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .modal-stat { background: var(--cream); border-radius: 3px; padding: 9px 11px; }
+  .modal-stat .l { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .modal-stat .v { font-size: 15px; font-weight: 500; margin-top: 2px; }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="logo">
-    <div class="logo-mark"><span></span><span></span></div>
-    <div class="logo-word">ELYSIUM</div>
+  <h1>ELYSIUM</h1>
+  <div class="sub" id="sub">Meta Ads · Facebook / Instagram · загрузка...</div>
+  <div class="updated" id="updated"></div>
+
+  <div class="obj-switch" id="obj-switch"></div>
+  <div class="obj-switch" id="lang-switch"></div>
+  <div class="controls" id="controls"></div>
+
+  <div class="cards" id="main-cards"></div>
+
+  <h2 class="section-title">Динамика по дням</h2>
+  <div class="chart-card">
+    <div class="chart-title">Расход и начатые лиды</div>
+    <canvas id="chart-spend-msg" height="90"></canvas>
   </div>
-  <div class="switcher">
-    <button class="switch-btn active" data-tab="meta">Meta Ads</button>
-    <button class="switch-btn" data-tab="search">Google + Яндекс</button>
-  </div>
-  <div class="topbar-meta">Запуск<br><b>14 дней</b></div>
-</div>
-
-<!-- ============ META TAB ============ -->
-<section class="panel-tab active" id="meta">
-
-  <div class="hero">
-    <div class="wrap hero-inner">
-      <div class="pill">Стратегия · Meta Ads</div>
-      <h1>ELYSIUM<span class="star">*</span> — дом, который мы построили для себя. Поэтому важно, кто увидит объявление первым.</h1>
-      <p class="hero-sub">Три сайта, три языка — включая родной грузинский для Грузии. Разные интересы, разные креативы, один и тот же 14-дневный запуск — и цифры сами покажут, какая связка приводит дешёвого и качественного клиента.</p>
-
-      <div class="stat-row">
-        <div class="stat"><div class="v">9</div><div class="l">кампаний — 3 сайта × 3 языка</div></div>
-        <div class="stat"><div class="v">$2 000</div><div class="l">бюджет первых 14 дней (всего)</div></div>
-        <div class="stat"><div class="v">$222</div><div class="l">на кампанию за 14 дней (в среднем)</div></div>
-        <div class="stat"><div class="v">$1 000</div><div class="l">резерв на дни 15–30, точечно</div></div>
-      </div>
+  <div class="grid-2">
+    <div class="chart-card">
+      <div class="chart-title">Цена за лид</div>
+      <canvas id="chart-cpm-msg" height="110"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">CTR</div>
+      <canvas id="chart-ctr" height="110"></canvas>
     </div>
   </div>
 
-  <div class="wrap">
+  <h2 class="section-title">Кампании</h2>
+  <div class="section-sub" id="campaigns-sub">Раскрывай кампанию — увидишь аудитории, дальше креативы внутри каждой</div>
+  <div class="toggle-row" id="campaigns-toggle"></div>
+  <div class="tree" id="campaigns-tree"></div>
+  <button class="show-more-btn" id="campaigns-more"></button>
 
-    <div class="chapter">
-      <div class="chapter-head"><span class="chapter-tag">[01]</span><h2>Логика теста</h2></div>
-      <p class="lede">К короткому и длинному сайту добавляется третий — тоже короткий, отдельная связка интересов и креативов. И главное изменение: Грузия получает собственный язык. До сих пор её показывали в англоязычном сегменте — с этого запуска для Грузии делаем нативную грузинскую рекламу на грузинском языке, с грузинскими креативами.</p>
-      <p class="lede">Логика простая: Грузия — лучший результат всего отчёта (32,5$ за лид) уже на английском креативе. Гипотеза — на родном языке результат может быть ещё сильнее, потому что снимается барьер восприятия рекламы «не на своём языке» для локальной аудитории.</p>
-      <p class="lede">Матрица теста: <b>3 сайта</b> (короткий №1 / длинный / короткий №2) × <b>3 языка</b> (RU / ENG / KA) = 9 кампаний. Грузинский язык таргетируется только на Грузию — как дополнение к английскому сегменту, а не замена: Грузия идёт и в ENG, и в KA параллельно, с разными креативами под каждый язык.</p>
-    </div>
+  <h2 class="section-title">Демография</h2>
+  <div class="section-sub">Возраст и пол</div>
+  <div class="toggle-row" id="demo-toggle"></div>
+  <div class="chart-card" style="padding:8px 12px;">
+    <table>
+      <thead><tr><th>Возраст / пол</th><th class="num">Расход</th><th class="num">Лиды</th><th class="num">Цена</th><th class="num">CTR</th></tr></thead>
+      <tbody id="demo-body"></tbody>
+    </table>
+    <button class="show-more-btn" id="demo-more"></button>
+  </div>
 
-    <div class="chapter">
-      <div class="chapter-head"><span class="chapter-tag">[02]</span><h2>Русскоязычная аудитория</h2></div>
-      <span class="seg-badge">Сегмент RU</span>
-      <p class="lede">Ядро — Армения, Европа (широкий пул, подтверждённый лидер CPL — Германия) и Азербайджан. Израиль — тестовая позиция.</p>
+  <h2 class="section-title">Страны</h2>
+  <div class="section-sub">У Meta нет разбивки по городам — country это доступный уровень гео</div>
+  <div class="toggle-row" id="geo-toggle"></div>
+  <div class="chart-card" style="padding:8px 12px;">
+    <table>
+      <thead><tr><th>Страна</th><th class="num">Расход</th><th class="num">Лиды</th><th class="num">Цена</th></tr></thead>
+      <tbody id="geo-body"></tbody>
+    </table>
+    <button class="show-more-btn" id="geo-more"></button>
+  </div>
 
-      <div class="ledger">
-        <div class="ledger-row">
-          <div class="ledger-country">Армения</div>
-          <div class="bar-track"><div class="bar-fill" style="width:75%"></div></div>
-          <div class="ledger-cpl">45,3 $</div>
-          <div class="ledger-status status-core">Ядро</div>
-        </div>
-        <div class="ledger-row">
-          <div class="ledger-country">Европа (широкий пул)</div>
-          <div class="bar-track"><div class="bar-fill" style="width:72%"></div></div>
-          <div class="ledger-cpl">47,0 $</div>
-          <div class="ledger-status status-core">Ядро</div>
-        </div>
-        <div class="ledger-row">
-          <div class="ledger-country">Азербайджан</div>
-          <div class="bar-track"><div class="bar-fill" style="width:63%"></div></div>
-          <div class="ledger-cpl">53,5 $</div>
-          <div class="ledger-status status-core">Ядро</div>
-        </div>
-        <div class="ledger-row">
-          <div class="ledger-country">Израиль</div>
-          <div class="bar-track"><div class="bar-fill weak" style="width:39%"></div></div>
-          <div class="ledger-cpl">88,2 $</div>
-          <div class="ledger-status status-test">Тест</div>
-        </div>
+  <h2 class="section-title">Устройства</h2>
+  <div class="toggle-row" id="devices-toggle"></div>
+  <div class="chart-card" style="padding:8px 12px;">
+    <table>
+      <thead><tr><th>Устройство</th><th class="num">Расход</th><th class="num">Лиды</th><th class="num">Цена</th><th class="num">CTR</th></tr></thead>
+      <tbody id="devices-body"></tbody>
+    </table>
+    <button class="show-more-btn" id="devices-more"></button>
+  </div>
+
+  <h2 class="section-title">Все креативы</h2>
+  <div class="section-sub" id="creatives-sub">Клик по карточке — детали</div>
+  <div class="creatives-grid" id="creatives-grid"></div>
+  <button class="show-more-btn" id="creatives-more"></button>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-img" id="modal-img"></div>
+      <div class="modal-content">
+        <button class="modal-close" id="modal-close">✕</button>
+        <div class="modal-title" id="modal-title"></div>
+        <div class="modal-sub" id="modal-sub"></div>
+        <div class="modal-grid" id="modal-grid"></div>
       </div>
-      <div class="callout">«Европа» здесь и в англоязычном сегменте — не только Германия, а весь широкий пул за вычетом стран из [03] (низкая покупательная способность / нестабильность). Германия — исторически подтверждённый лидер по CPL внутри этого пула, но таргетинг не ограничен ей одной.</div>
     </div>
+  </div>
 
-    <div class="chapter">
-      <div class="chapter-head"><span class="chapter-tag">[03]</span><h2>Англоязычная аудитория</h2></div>
-      <span class="seg-badge">Сегмент ENG</span>
-      <p class="lede">Грузия остаётся и здесь — теперь она таргетируется на двух языках сразу: английском (этот сегмент) и грузинском (новый сегмент [04]), с разными креативами под каждый. Не замена, а расширение охвата на одну и ту же страну.</p>
-      <p class="lede">По Европе — держим широкий пул, не сужаем до двух-трёх стран. Убираем только рынки, которые объективно не соответствуют профилю покупателя недвижимости от $100k+: низкий ВВП на душу населения либо валютные/политические ограничения, из-за которых сделка физически сложна.</p>
-      <div class="chip-row">
-        <span class="chip">Албания</span><span class="chip">Босния и Герцеговина</span><span class="chip">Северная Македония</span><span class="chip">Сербия</span><span class="chip">Болгария</span><span class="chip">Молдова</span><span class="chip">Косово</span><span class="chip">Черногория</span><span class="chip">Беларусь</span><span class="chip">Украина</span>
-      </div>
-      <p class="lede" style="margin-top:14px;">Беларусь и Украина — не политическое решение, а практическое: валютные ограничения и логистика трансграничных платежей делают сделку почти нереализуемой прямо сейчас. Всё остальное в Европе — Германия, Великобритания, Бельгия, Нидерланды, Франция, Австрия, Швейцария, Ирландия, страны Скандинавии, Польша, Чехия, Италия, Испания и другие — остаётся в пуле.</p>
+  <script>
+    const fmtMoney = (v) => v === null || v === undefined ? '—' : '$' + v.toLocaleString('ru-RU', {maximumFractionDigits: 2});
+    const fmtNum = (v) => v === null || v === undefined ? '—' : v.toLocaleString('ru-RU');
+    const fmtPct = (v) => v === null || v === undefined ? '—' : v.toFixed(2) + '%';
 
-      <div class="ledger">
-        <div class="ledger-row">
-          <div class="ledger-country">Грузия</div>
-          <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
-          <div class="ledger-cpl">32,5 $</div>
-          <div class="ledger-status status-core">Ядро</div>
-        </div>
-        <div class="ledger-row">
-          <div class="ledger-country">Европа (широкий пул)</div>
-          <div class="bar-track"><div class="bar-fill" style="width:51%"></div></div>
-          <div class="ledger-cpl">63,6 $</div>
-          <div class="ledger-status status-core">Ядро</div>
-        </div>
-        <div class="ledger-row">
-          <div class="ledger-country">Израиль</div>
-          <div class="bar-track"><div class="bar-fill weak" style="width:23%"></div></div>
-          <div class="ledger-cpl">138,9 $</div>
-          <div class="ledger-status status-test">Тест</div>
-        </div>
-      </div>
-      <div class="callout">После того как ОАЭ, Казахстан и Таиланд убраны по вашему решению — в сегменте не остаётся слабых тестовых гео с высоким CPL, только подтверждённое ядро и один честный тест (Израиль).</div>
-    </div>
+    function toLocalISO(d) {
+      const y = d.getFullYear(), m = String(d.getMonth() + 1).padStart(2, '0'), day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+    function addDays(dateStr, delta) {
+      const d = new Date(dateStr + 'T00:00:00');
+      d.setDate(d.getDate() + delta);
+      return toLocalISO(d);
+    }
+    function filterDaily(daily, since, until) { return daily.filter(d => d.date >= since && d.date <= until); }
 
-    <div class="chapter">
-      <div class="chapter-head"><span class="chapter-tag">[04]</span><h2>Грузинская аудитория — новый сегмент</h2></div>
-      <span class="seg-badge ka">Сегмент KA · Грузинский язык</span>
-      <p class="lede">Грузия теперь в двух местах сразу: в англоязычном сегменте [03] как есть, и здесь — отдельной кампанией на грузинском языке с грузинскими креативами. Это расширение охвата на одну и ту же страну, а не перенос: часть аудитории лучше воспримет рекламу на родном языке, часть — на английском, проверяем оба варианта параллельно.</p>
-      <div class="ledger">
-        <div class="ledger-row">
-          <div class="ledger-country">Грузия</div>
-          <div class="bar-track"><div class="bar-fill" style="width:100%; background:var(--ka);"></div></div>
-          <div class="ledger-cpl">32,5 $*</div>
-          <div class="ledger-status status-new">Новый</div>
-        </div>
-      </div>
-      <div class="callout note-ka">*CPL — результат по Грузии на предыдущем (английском) креативе, ориентир, не гарантия для нового языка. Креативы на грузинском языке — <b>ожидаем от Тани</b>, без них кампанию не запустить. Как только придут — добавляем сюда и в раздел [07] «Креативы».</div>
-    </div>
+    function sumDaily(rows) {
+      const spend = rows.reduce((s, d) => s + d.spend, 0);
+      const leads = rows.reduce((s, d) => s + d.leads, 0);
+      const clicks = rows.reduce((s, d) => s + d.clicks, 0);
+      const linkClicks = rows.reduce((s, d) => s + (d.link_clicks || 0), 0);
+      const impressions = rows.reduce((s, d) => s + d.impressions, 0);
+      return {
+        spend: Math.round(spend * 100) / 100, leads, clicks, linkClicks, impressions,
+        costPerLead: leads ? Math.round(spend / leads * 100) / 100 : null,
+        cpm: impressions ? Math.round(spend / impressions * 1000 * 100) / 100 : null,
+        cpc: clicks ? Math.round(spend / clicks * 100) / 100 : null,
+        ctr: impressions ? Math.round(clicks / impressions * 100 * 100) / 100 : 0,
+        linkCtr: impressions ? Math.round(linkClicks / impressions * 100 * 100) / 100 : 0,
+      };
+    }
 
-    <div class="chapter">
-      <div class="chapter-head"><span class="chapter-tag">[05]</span><h2>Логика интересов</h2></div>
-      <p class="lede">Разные интересы — не для разнообразия, а потому что короткий и длинный сайт продают на разной глубине внимания.</p>
-      <div class="logic-grid">
-        <div class="logic-col">
-          <h3>Короткие сайты — широкий охват</h3>
-          <p>Здесь нет истории — есть статус объекта и цифры. Такой формат не требует от человека глубокого интереса заранее: он должен зацепить за 3–5 секунд. Поэтому аудитория шире — категории, а не намерения. Оба коротких сайта (№1 и №2) используют одну и ту же логику интересов, отличаются только креативом.</p>
-          <div class="chip-row">
-            <span class="chip">Real Estate</span>
-            <span class="chip">Property Investment</span>
-            <span class="chip">Home Buying</span>
-            <span class="chip">Real Estate Agency</span>
-            <span class="chip">Expatriates</span>
-            <span class="chip">Digital Nomad</span>
-            <span class="chip">Relocation</span>
-            <span class="chip">Интерес к Тбилиси</span>
+    function deltaPct(cur, prev) {
+      if (!prev || cur === null || cur === undefined) return null;
+      return Math.round((cur - prev) / prev * 1000) / 10;
+    }
+    function deltaBadge(pct, higherIsBad) {
+      if (pct === null) return '';
+      if (Math.abs(pct) < 0.5) return '';
+      const isUp = pct > 0;
+      const good = higherIsBad ? !isUp : isUp;
+      return `<span class="delta ${good ? 'good' : 'bad'}">${isUp ? '↑' : '↓'} ${Math.abs(pct)}%</span>`;
+    }
+
+    let REPORT = null;
+    let charts = {};
+    let currentObjective = 'all';
+    let currentLanguage = 'all';
+    let campaignObjectiveById = {};
+    let campaignLanguageById = {};
+    let currentSince = null, currentUntil = null, currentPresetKey = '30d';
+    let campaignsStatusFilter = 'all';
+    let campaignsExpanded = false;
+    let openCampaigns = new Set();
+    let openAdsets = new Set();
+    let geoExpanded = false;
+    let creativesExpanded = false;
+
+    async function loadAll() {
+      const res = await fetch('data/report.json?t=' + Date.now());
+      if (!res.ok) throw new Error('report.json недоступен (' + res.status + ')');
+      REPORT = await res.json();
+
+      document.getElementById('updated').textContent = 'данные на ' + REPORT.last_updated;
+
+      REPORT.campaigns.forEach(c => { campaignObjectiveById[c.id] = c.objective; campaignLanguageById[c.id] = c.language; });
+
+      renderCampSwitch();
+      renderLangSwitch();
+      const lastDate = toLocalISO(new Date());
+      renderControls(lastDate);
+      selectPreset('all', lastDate);
+    }
+
+    function renderCampSwitch() {
+      const objs = ['all', ...REPORT.objectives];
+      document.getElementById('obj-switch').innerHTML = objs.map(c => `
+        <button class="obj-tab ${c === currentObjective ? 'active' : ''}" data-obj="${c}">${c === 'all' ? 'Все цели' : c}</button>
+      `).join('');
+      document.querySelectorAll('.obj-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          currentObjective = btn.dataset.obj;
+          renderCampSwitch();
+          applyRange(currentSince, currentUntil, currentPresetKey);
+        });
+      });
+    }
+
+    function renderLangSwitch() {
+      const langs = [
+        { key: 'all', label: 'Все языки' },
+        { key: 'RU', label: 'RU' },
+        { key: 'EN', label: 'EN' },
+        { key: 'KA', label: 'KA' },
+      ];
+      document.getElementById('lang-switch').innerHTML = langs.map(l => `
+        <button class="obj-tab ${l.key === currentLanguage ? 'active' : ''}" data-lang="${l.key}">${l.label}</button>
+      `).join('');
+      document.querySelectorAll('#lang-switch .obj-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          currentLanguage = btn.dataset.lang;
+          renderLangSwitch();
+          applyRange(currentSince, currentUntil, currentPresetKey);
+        });
+      });
+    }
+
+    function renderControls(lastDate) {
+      const presets = [
+        { key: '7d', label: '7 дней' }, { key: '14d', label: '14 дней' }, { key: '30d', label: '30 дней' },
+        { key: 'month', label: 'Этот месяц' }, { key: 'all', label: 'Всё время' },
+      ];
+      document.getElementById('controls').innerHTML =
+        presets.map(p => `<button class="preset-btn" data-preset="${p.key}">${p.label}</button>`).join('')
+        + `<input type="date" class="date-input" id="date-since">`
+        + `<span style="color:var(--muted)">–</span>`
+        + `<input type="date" class="date-input" id="date-until">`;
+      document.querySelectorAll('.preset-btn').forEach(btn => btn.addEventListener('click', () => selectPreset(btn.dataset.preset, lastDate)));
+      document.getElementById('date-since').addEventListener('change', onCustomDateChange);
+      document.getElementById('date-until').addEventListener('change', onCustomDateChange);
+    }
+
+    function selectPreset(key, lastDate) {
+      let since;
+      const until = lastDate;
+      if (key === '7d') since = addDays(lastDate, -6);
+      else if (key === '14d') since = addDays(lastDate, -13);
+      else if (key === '30d') since = addDays(lastDate, -29);
+      else if (key === 'month') since = lastDate.slice(0, 8) + '01';
+      else since = REPORT.fetched_range.since;
+
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.toggle('active', b.dataset.preset === key));
+      document.getElementById('date-since').value = since;
+      document.getElementById('date-until').value = until;
+      applyRange(since, until, key);
+    }
+
+    function onCustomDateChange() {
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      const since = document.getElementById('date-since').value;
+      const until = document.getElementById('date-until').value;
+      if (since && until) applyRange(since, until, null);
+    }
+
+    function campaignsForObjective() {
+      return REPORT.campaigns.filter(c =>
+        (currentObjective === 'all' || c.objective === currentObjective) &&
+        (currentLanguage === 'all' || c.language === currentLanguage)
+      );
+    }
+    function adsetsForCampaign(campaignId) { return REPORT.adsets.filter(a => a.campaign_id === campaignId); }
+    function creativesForAdset(adsetId) { return REPORT.creatives.filter(c => c.adset_id === adsetId); }
+
+    function mergedDaily(entities) {
+      const byDate = {};
+      entities.forEach(e => e.daily.forEach(d => {
+        const acc = byDate[d.date] || { date: d.date, spend: 0, leads: 0, clicks: 0, link_clicks: 0, impressions: 0 };
+        acc.spend += d.spend; acc.leads += d.leads;
+        acc.clicks += d.clicks; acc.link_clicks += (d.link_clicks || 0); acc.impressions += d.impressions;
+        byDate[d.date] = acc;
+      }));
+      return Object.values(byDate).sort((a, b) => a.date.localeCompare(b.date));
+    }
+
+    function previousRangeTotals(since, until, daily) {
+      const days = Math.round((new Date(until + 'T00:00:00') - new Date(since + 'T00:00:00')) / 86400000) + 1;
+      const prevUntil = addDays(since, -1);
+      const prevSince = addDays(prevUntil, -(days - 1));
+      return sumDaily(filterDaily(daily, prevSince, prevUntil));
+    }
+
+    function applyRange(since, until, presetKey) {
+      currentSince = since; currentUntil = until; currentPresetKey = presetKey;
+
+      const objCampaigns = campaignsForObjective();
+      const daily = (currentObjective === 'all' && currentLanguage === 'all') ? REPORT.account_daily : mergedDaily(objCampaigns);
+      const accDaily = filterDaily(daily, since, until);
+      const totals = sumDaily(accDaily);
+      const prevTotals = previousRangeTotals(since, until, daily);
+      const reach = presetKey ? (REPORT.reach_by_preset[currentObjective] || REPORT.reach_by_preset['all'])[presetKey] : null;
+
+      const objLabel = (currentObjective === 'all' ? '' : ` · ${currentObjective}`) + (currentLanguage === 'all' ? '' : ` · ${currentLanguage}`);
+      document.getElementById('sub').textContent = `Meta Ads · Facebook / Instagram · ${since} – ${until}${objLabel}`;
+
+      renderMainCards(totals, prevTotals, reach, presetKey);
+      try { renderDailyCharts(accDaily, presetKey); } catch (e) { console.error('Графики не отрисовались:', e); }
+      renderCampaignsTree();
+      renderDemo();
+      renderGeo();
+      renderDevices();
+      renderCreatives();
+    }
+
+    function renderMainCards(t, prevT, reach, presetKey) {
+      const isAllTime = presetKey === 'all';
+      const planTarget = currentObjective === 'all' ? (REPORT.objectives.length * REPORT.plan.per_objective_budget || REPORT.plan.monthly_budget) : REPORT.plan.per_objective_budget;
+      const budgetPct = planTarget ? Math.min(100, (t.spend / planTarget) * 100) : 0;
+
+      const cards = [
+        { label: 'Расход', value: fmtMoney(t.spend), delta: isAllTime ? '' : deltaBadge(deltaPct(t.spend, prevT.spend), true),
+          note: `бюджет ${fmtMoney(planTarget)} · ${budgetPct.toFixed(1)}%`, barPct: budgetPct },
+        { label: 'Охват', value: reach !== null ? fmtNum(reach) : '—', note: reach === null ? 'точно только на кнопках периода' : '' },
+        { label: 'Показы', value: fmtNum(t.impressions), delta: isAllTime ? '' : deltaBadge(deltaPct(t.impressions, prevT.impressions), false) },
+        { label: 'Клики', value: fmtNum(t.clicks), delta: isAllTime ? '' : deltaBadge(deltaPct(t.clicks, prevT.clicks), false) },
+        { label: 'CTR', value: fmtPct(t.ctr) },
+        { label: 'Клики по ссылке', value: fmtNum(t.linkClicks) },
+        { label: 'CTR по ссылке', value: fmtPct(t.linkCtr) },
+        { label: 'CPM', value: fmtMoney(t.cpm) },
+        { label: 'Лиды', value: fmtNum(t.leads), delta: isAllTime ? '' : deltaBadge(deltaPct(t.leads, prevT.leads), false) },
+        { label: 'Цена за лид', value: fmtMoney(t.costPerLead), delta: isAllTime ? '' : deltaBadge(deltaPct(t.costPerLead, prevT.costPerLead), true) },
+      ];
+
+      document.getElementById('main-cards').innerHTML = cards.map(c => `
+        <div class="card">
+          <div class="label">${c.label}</div>
+          <div class="value">${c.value} ${c.delta || ''}</div>
+          ${c.note ? `<div class="plan-note">${c.note}</div>` : ''}
+          ${c.barPct !== undefined ? `<div class="bar-track"><div class="bar-fill" style="width:${c.barPct}%"></div></div>` : ''}
+        </div>`).join('');
+    }
+
+    function destroyCharts() { Object.values(charts).forEach(c => c && c.destroy()); charts = {}; }
+
+    function renderDailyCharts(daily, presetKey) {
+      destroyCharts();
+      const labels = daily.map(d => d.date.slice(5).split('-').reverse().join('.'));
+      const gridColor = '#2E3034';
+      const scalesX = { grid: { color: gridColor }, ticks: { color: '#8C8C83', font: { size: 11 } } };
+
+      charts.spendMsg = new Chart(document.getElementById('chart-spend-msg'), {
+        data: {
+          labels,
+          datasets: [
+            { type: 'bar', label: 'Лиды', data: daily.map(d => d.leads), backgroundColor: '#A8482F', yAxisID: 'y1', borderRadius: 3, maxBarThickness: 24 },
+            { type: 'line', label: 'Расход', data: daily.map(d => d.spend), borderColor: '#D0805F', backgroundColor: 'rgba(168,72,47,0.12)', fill: true, tension: 0.35, yAxisID: 'y', pointRadius: 0 },
+          ],
+        },
+        options: { responsive: true, plugins: { legend: { display: false } },
+          scales: { x: scalesX, y: { position: 'left', grid: { color: gridColor }, ticks: { color: '#8C8C83', callback: v => '$' + v } }, y1: { position: 'right', grid: { display: false }, ticks: { color: '#8C8C83' } } } },
+      });
+
+      charts.cpm = new Chart(document.getElementById('chart-cpm-msg'), {
+        type: 'line',
+        data: { labels, datasets: [{ data: daily.map(d => d.leads ? Math.round(d.spend / d.leads * 100) / 100 : null), borderColor: '#D0805F', tension: 0.35, pointRadius: 0, spanGaps: true }] },
+        options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: scalesX, y: { grid: { color: gridColor }, ticks: { color: '#8C8C83', callback: v => '$' + v } } } },
+      });
+
+      charts.ctr = new Chart(document.getElementById('chart-ctr'), {
+        type: 'line',
+        data: { labels, datasets: [{ data: daily.map(d => d.impressions ? Math.round(d.clicks / d.impressions * 100 * 100) / 100 : 0), borderColor: '#8AA37E', tension: 0.35, pointRadius: 0 }] },
+        options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: scalesX, y: { grid: { color: gridColor }, ticks: { color: '#8C8C83', callback: v => v + '%' } } } },
+      });
+    }
+
+    function campaignRow(c) {
+      const t = sumDaily(filterDaily(c.daily, currentSince, currentUntil));
+      return { ...c, ...t };
+    }
+
+    function renderCampaignsTree() {
+      const toggleEl = document.getElementById('campaigns-toggle');
+      toggleEl.innerHTML = `
+        <button class="toggle-btn ${campaignsStatusFilter === 'all' ? 'active' : ''}" data-f="all">Все</button>
+        <button class="toggle-btn ${campaignsStatusFilter === 'active' ? 'active' : ''}" data-f="active">Активные</button>`;
+      toggleEl.querySelectorAll('.toggle-btn').forEach(b => b.addEventListener('click', () => { campaignsStatusFilter = b.dataset.f; renderCampaignsTree(); }));
+
+      let rows = campaignsForObjective().map(campaignRow).filter(r => r.spend > 0 || r.leads > 0);
+      if (campaignsStatusFilter === 'active') rows = rows.filter(r => r.status === 'ACTIVE');
+      rows.sort((a, b) => b.spend - a.spend);
+
+      document.getElementById('campaigns-sub').textContent = `${rows.length} кампаний · раскрывай — увидишь аудитории, дальше креативы`;
+
+      const visible = campaignsExpanded ? rows : rows.slice(0, 10);
+      const tree = document.getElementById('campaigns-tree');
+      const moreBtn = document.getElementById('campaigns-more');
+
+      if (!rows.length) {
+        tree.innerHTML = `<div class="empty">Нет кампаний за выбранный период</div>`;
+        moreBtn.style.display = 'none';
+        return;
+      }
+
+      tree.innerHTML = visible.map(c => {
+        const isOpen = openCampaigns.has(c.id);
+        return `
+          <div>
+            <div class="tree-row level-0 ${isOpen ? 'open' : ''}" data-campaign="${c.id}">
+              <span class="chevron">▶</span>
+              <span class="status-dot ${c.status === 'ACTIVE' ? 'ACTIVE' : 'other'}"></span>
+              <span class="name">${c.name}</span>
+              <span class="metric">${fmtMoney(c.spend)}</span>
+              <span class="metric"><b>${fmtNum(c.leads)}</b> лид.</span>
+              <span class="metric">${fmtMoney(c.costPerLead)}</span>
+            </div>
+            <div class="tree-children ${isOpen ? 'open' : ''}" id="children-${c.id}"></div>
+          </div>`;
+      }).join('');
+
+      tree.querySelectorAll('[data-campaign]').forEach(el => {
+        el.addEventListener('click', () => {
+          const id = el.dataset.campaign;
+          if (openCampaigns.has(id)) openCampaigns.delete(id); else openCampaigns.add(id);
+          renderCampaignsTree();
+        });
+      });
+
+      visible.forEach(c => { if (openCampaigns.has(c.id)) renderAdsetsFor(c.id); });
+
+      if (rows.length > 10) {
+        moreBtn.style.display = 'block';
+        moreBtn.textContent = campaignsExpanded ? 'Свернуть' : `Показать ещё ${rows.length - 10}`;
+        moreBtn.onclick = () => { campaignsExpanded = !campaignsExpanded; renderCampaignsTree(); };
+      } else {
+        moreBtn.style.display = 'none';
+      }
+    }
+
+    function renderAdsetsFor(campaignId) {
+      const container = document.getElementById('children-' + campaignId);
+      if (!container) return;
+      const rows = adsetsForCampaign(campaignId).map(campaignRow).filter(r => r.spend > 0 || r.leads > 0).sort((a, b) => b.spend - a.spend);
+
+      if (!rows.length) {
+        container.innerHTML = `<div class="empty">Нет активности по аудиториям за период</div>`;
+        return;
+      }
+
+      container.innerHTML = rows.map(a => {
+        const isOpen = openAdsets.has(a.id);
+        return `
+          <div>
+            <div class="tree-row level-1 ${isOpen ? 'open' : ''}" data-adset="${a.id}">
+              <span class="chevron">▶</span>
+              <span class="name">${a.name}</span>
+              <span class="metric">${fmtMoney(a.spend)}</span>
+              <span class="metric"><b>${fmtNum(a.leads)}</b> лид.</span>
+              <span class="metric">${fmtMoney(a.costPerLead)}</span>
+            </div>
+            <div class="creative-row-list" id="creatives-${a.id}" style="display:${isOpen ? 'block' : 'none'}"></div>
+          </div>`;
+      }).join('');
+
+      container.querySelectorAll('[data-adset]').forEach(el => {
+        el.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const id = el.dataset.adset;
+          if (openAdsets.has(id)) openAdsets.delete(id); else openAdsets.add(id);
+          renderAdsetsFor(campaignId);
+        });
+      });
+
+      rows.forEach(a => { if (openAdsets.has(a.id)) renderCreativesFor(a.id); });
+    }
+
+    function renderCreativesFor(adsetId) {
+      const container = document.getElementById('creatives-' + adsetId);
+      if (!container) return;
+      const rows = creativesForAdset(adsetId).map(campaignRow).filter(r => r.spend > 0 || r.leads > 0).sort((a, b) => b.leads - a.leads);
+
+      if (!rows.length) {
+        container.innerHTML = `<div class="empty" style="text-align:left;padding:6px 0;">Нет активных креативов в этой аудитории за период</div>`;
+        return;
+      }
+
+      container.innerHTML = rows.map((c, i) => `
+        <span class="creative-chip" data-idx="${i}">
+          ${c.thumbnail_url ? `<img src="${c.thumbnail_url}">` : `<span class="no-thumb"></span>`}
+          <span>${c.name} · <b>${fmtNum(c.leads)}</b> лид. · ${fmtMoney(c.costPerLead)}</span>
+        </span>`).join('');
+
+      container.querySelectorAll('.creative-chip').forEach(el => {
+        el.addEventListener('click', (e) => { e.stopPropagation(); openCreativeModal(rows[+el.dataset.idx]); });
+      });
+    }
+
+    function openCreativeModal(c) {
+      const campaign = REPORT.campaigns.find(x => x.id === c.objectiveaign_id);
+      const adset = REPORT.adsets.find(x => x.id === c.adset_id);
+      document.getElementById('modal-img').style.backgroundImage = c.thumbnail_url ? `url('${c.thumbnail_url}')` : '';
+      document.getElementById('modal-title').textContent = c.name;
+      document.getElementById('modal-sub').textContent = `Кампания: ${campaign ? campaign.name : '—'} · Аудитория: ${adset ? adset.name : '—'}`;
+      const stats = [
+        { l: 'Расход', v: fmtMoney(c.spend) }, { l: 'Показы', v: fmtNum(c.impressions) },
+        { l: 'Клики', v: fmtNum(c.clicks) }, { l: 'Клики по ссылке', v: fmtNum(c.linkClicks) },
+        { l: 'CTR', v: fmtPct(c.ctr) }, { l: 'Лиды', v: fmtNum(c.leads) },
+        { l: 'Цена за лид', v: fmtMoney(c.costPerLead) },
+      ];
+      document.getElementById('modal-grid').innerHTML = stats.map(s => `<div class="modal-stat"><div class="l">${s.l}</div><div class="v">${s.v}</div></div>`).join('');
+      document.getElementById('modal-overlay').classList.add('open');
+    }
+    document.getElementById('modal-close').addEventListener('click', () => document.getElementById('modal-overlay').classList.remove('open'));
+    document.getElementById('modal-overlay').addEventListener('click', (e) => { if (e.target.id === 'modal-overlay') document.getElementById('modal-overlay').classList.remove('open'); });
+
+    function groupByObjAndBucket(entries, keyFn) {
+      const filtered = entries.filter(e =>
+        (currentObjective === 'all' || campaignObjectiveById[e.campaign_id] === currentObjective) &&
+        (currentLanguage === 'all' || campaignLanguageById[e.campaign_id] === currentLanguage)
+      );
+      const byKey = {};
+      filtered.forEach(e => {
+        const key = keyFn(e);
+        if (!byKey[key]) byKey[key] = { key, daily: [] };
+        byKey[key].daily = byKey[key].daily.concat(e.daily);
+      });
+      return Object.values(byKey);
+    }
+
+    function sortByMode(rows, mode) {
+      if (mode === 'cost') {
+        const withMsg = rows.filter(r => r.leads > 0).sort((a, b) => a.costPerLead - b.costPerLead);
+        const withoutMsg = rows.filter(r => r.leads === 0).sort((a, b) => b.spend - a.spend);
+        return [...withMsg, ...withoutMsg];
+      }
+      return [...rows].sort((a, b) => b.leads - a.leads);
+    }
+
+    function renderRateToggle(elId, mode, onSelect) {
+      document.getElementById(elId).innerHTML = `
+        <button class="toggle-btn ${mode === 'leads' ? 'active' : ''}" data-k="leads">По количеству</button>
+        <button class="toggle-btn ${mode === 'cost' ? 'active' : ''}" data-k="cost">По цене</button>`;
+      document.querySelectorAll(`#${elId} .toggle-btn`).forEach(b => b.addEventListener('click', () => onSelect(b.dataset.k)));
+    }
+
+    let demoSortMode = 'leads', demoExpanded = false;
+    let geoSortMode = 'leads';
+    let devicesSortMode = 'leads', devicesExpanded = false;
+
+    function renderDemo() {
+      renderRateToggle('demo-toggle', demoSortMode, (k) => { demoSortMode = k; renderDemo(); });
+
+      const grouped = groupByObjAndBucket(REPORT.age_groups, e => `${e.age}|${e.gender}`);
+      let rows = grouped.map(g => {
+        const [age, gender] = g.key.split('|');
+        const t = sumDaily(filterDaily(g.daily, currentSince, currentUntil));
+        const genderLabel = gender === 'male' ? 'муж' : gender === 'female' ? 'жен' : gender;
+        return { name: `${age} · ${genderLabel}`, ...t };
+      }).filter(r => r.spend > 0 || r.leads > 0);
+      rows = sortByMode(rows, demoSortMode);
+
+      const visible = demoExpanded ? rows : rows.slice(0, 8);
+      document.getElementById('demo-body').innerHTML = visible.length
+        ? visible.map(r => `<tr><td>${r.name}</td><td class="num">${fmtMoney(r.spend)}</td><td class="num">${fmtNum(r.leads)}</td><td class="num">${fmtMoney(r.costPerLead)}</td><td class="num">${fmtPct(r.ctr)}</td></tr>`).join('')
+        : `<tr><td colspan="5" class="empty">Нет данных за выбранный период</td></tr>`;
+
+      const moreBtn = document.getElementById('demo-more');
+      if (rows.length > 8) {
+        moreBtn.style.display = 'block';
+        moreBtn.textContent = demoExpanded ? 'Показать меньше' : `Показать ещё ${rows.length - 8}`;
+        moreBtn.onclick = () => { demoExpanded = !demoExpanded; renderDemo(); };
+      } else { moreBtn.style.display = 'none'; }
+    }
+
+    function renderGeo() {
+      renderRateToggle('geo-toggle', geoSortMode, (k) => { geoSortMode = k; renderGeo(); });
+
+      const grouped = groupByObjAndBucket(REPORT.geo, e => e.country);
+      let rows = grouped.map(g => {
+        const t = sumDaily(filterDaily(g.daily, currentSince, currentUntil));
+        return { name: g.key, ...t };
+      }).filter(r => r.spend > 0 || r.leads > 0);
+      rows = sortByMode(rows, geoSortMode);
+
+      const visible = geoExpanded ? rows : rows.slice(0, 10);
+      document.getElementById('geo-body').innerHTML = visible.length
+        ? visible.map(r => `<tr><td>${r.name}</td><td class="num">${fmtMoney(r.spend)}</td><td class="num">${fmtNum(r.leads)}</td><td class="num">${fmtMoney(r.costPerLead)}</td></tr>`).join('')
+        : `<tr><td colspan="4" class="empty">Нет данных за выбранный период</td></tr>`;
+
+      const moreBtn = document.getElementById('geo-more');
+      if (rows.length > 10) {
+        moreBtn.style.display = 'block';
+        moreBtn.textContent = geoExpanded ? 'Показать меньше' : `Показать ещё ${rows.length - 10}`;
+        moreBtn.onclick = () => { geoExpanded = !geoExpanded; renderGeo(); };
+      } else { moreBtn.style.display = 'none'; }
+    }
+
+    const DEVICE_LABELS = { mobile_app: 'Mobile App', desktop: 'Desktop', tablet: 'Tablet', connected_tv: 'Connected TV', unknown: 'Другое' };
+
+    function renderDevices() {
+      renderRateToggle('devices-toggle', devicesSortMode, (k) => { devicesSortMode = k; renderDevices(); });
+
+      const grouped = groupByObjAndBucket(REPORT.devices, e => e.device);
+      let rows = grouped.map(g => {
+        const t = sumDaily(filterDaily(g.daily, currentSince, currentUntil));
+        return { name: DEVICE_LABELS[g.key] || g.key, ...t };
+      }).filter(r => r.spend > 0 || r.leads > 0);
+      rows = sortByMode(rows, devicesSortMode);
+
+      const visible = devicesExpanded ? rows : rows.slice(0, 8);
+      document.getElementById('devices-body').innerHTML = visible.length
+        ? visible.map(r => `<tr><td>${r.name}</td><td class="num">${fmtMoney(r.spend)}</td><td class="num">${fmtNum(r.leads)}</td><td class="num">${fmtMoney(r.costPerLead)}</td><td class="num">${fmtPct(r.ctr)}</td></tr>`).join('')
+        : `<tr><td colspan="5" class="empty">Нет данных за выбранный период</td></tr>`;
+
+      const moreBtn = document.getElementById('devices-more');
+      if (rows.length > 8) {
+        moreBtn.style.display = 'block';
+        moreBtn.textContent = devicesExpanded ? 'Показать меньше' : `Показать ещё ${rows.length - 8}`;
+        moreBtn.onclick = () => { devicesExpanded = !devicesExpanded; renderDevices(); };
+      } else { moreBtn.style.display = 'none'; }
+    }
+
+    function renderCreatives() {
+      let rows = REPORT.creatives.map(campaignRow).filter(r => r.spend > 0 || r.leads > 0);
+      const activeCampaignIds = new Set(campaignsForObjective().map(c => c.id));
+      rows = rows.filter(r => activeCampaignIds.has(r.campaign_id));
+      rows.sort((a, b) => b.leads - a.leads);
+
+      document.getElementById('creatives-sub').textContent = `${rows.length} объявлений за период · клик — детали`;
+      const visible = creativesExpanded ? rows : rows.slice(0, 10);
+      const grid = document.getElementById('creatives-grid');
+      const moreBtn = document.getElementById('creatives-more');
+
+      if (!rows.length) {
+        grid.innerHTML = `<div class="empty">Нет данных за выбранный период</div>`;
+        moreBtn.style.display = 'none';
+        return;
+      }
+
+      grid.innerHTML = visible.map((c, i) => `
+        <div class="creative-card" data-idx="${i}">
+          <div class="creative-thumb" style="${c.thumbnail_url ? `background-image:url('${c.thumbnail_url}')` : ''}">${c.thumbnail_url ? '' : 'нет превью'}</div>
+          <div class="creative-info">
+            <div class="creative-name" title="${c.name}">${c.name}</div>
+            <div class="creative-stats"><span class="msg">${fmtNum(c.leads)} лид.</span><span>${fmtMoney(c.costPerLead)}</span></div>
           </div>
-        </div>
-        <div class="logic-col">
-          <h3>Длинный сайт — высокий intent</h3>
-          <p>Это сторителлинг: «мы построили дом для себя», архитектура, инженерия, соседи, крыша. Человек должен провести на странице не секунды, а минуты. Показывать это широкой аудитории — тратить бюджет на тех, кто не дочитает. Поэтому аудитория узкая: уже рядом с решением или уже похожая на купивших.</p>
-          <div class="chip-row">
-            <span class="chip">Luxury Real Estate</span>
-            <span class="chip">Wealth Management</span>
-            <span class="chip">Private Banking</span>
-            <span class="chip">Investment</span>
-            <span class="chip">Residency by Investment</span>
-            <span class="chip">Lookalike 1% CRM</span>
-            <span class="chip">Подписчики премиальных застройщиков</span>
-          </div>
-        </div>
-      </div>
-      <div class="callout">Поверх всех наборов — дополнительный интерес «Грузия» как направление для RU и ENG гео (пометка из отчёта «указать доп. интересы про Грузию»).</div>
-    </div>
+        </div>`).join('');
+      grid.querySelectorAll('.creative-card').forEach(el => el.addEventListener('click', () => openCreativeModal(visible[+el.dataset.idx])));
 
-    <div class="chapter">
-      <div class="chapter-head"><span class="chapter-tag">[06]</span><h2>УТП: налоги и резидентство</h2></div>
-      <p class="lede">Новый акцент в текстах — низкие налоги и ВНЖ при покупке недвижимости в Грузии. Это не выдумка для рекламы, а факт налогового режима страны — работает на все три языка, но особенно сильно закрываем этим Яндекс/RU-аудиторию (раздел [05] на вкладке «Google + Яндекс»). Ниже — проверенные цифры на 2026 год.</p>
-      <div class="fact-grid">
-        <div class="fact"><div class="fv">$150 000</div><div class="fl">порог для ВНЖ при покупке недвижимости (с 1 марта 2026, ранее — $100 000)</div></div>
-        <div class="fact"><div class="fv">0%</div><div class="fl">налог на прирост капитала при продаже через 2+ года владения</div></div>
-        <div class="fact"><div class="fv">5%</div><div class="fl">налог на доход от сдачи в аренду (вместо стандартных 20%)</div></div>
-        <div class="fact"><div class="fv">0%</div><div class="fl">налог на наследство, налог на покупку, гербовый сбор</div></div>
-      </div>
-      <div class="callout">Важный нюанс для формулировок: годовой налог на владение (не на прирост капитала) зависит от дохода собственника и обнуляется только при годовом доходе ниже ~$14 900 — это не безусловные «0% на владение» для всех. В заголовках лучше использовать безусловные факты (0% прирост капитала после 2 лет, 5% аренда, ВНЖ от $150 000), а «низкие налоги на владение» — как общую формулировку без конкретной цифры, чтобы не давать недостоверное обещание.</div>
-    </div>
+      if (rows.length > 10) {
+        moreBtn.style.display = 'block';
+        moreBtn.textContent = creativesExpanded ? 'Свернуть' : `Показать ещё ${rows.length - 10}`;
+        moreBtn.onclick = () => { creativesExpanded = !creativesExpanded; renderCreatives(); };
+      } else { moreBtn.style.display = 'none'; }
+    }
 
-    <div class="chapter">
-      <div class="chapter-head"><span class="chapter-tag">[07]</span><h2>Креативы</h2></div>
-      <p class="lede">Списки обновлены: из короткого сайта убраны 4 креатива, добавлен новый; из длинного убраны зимние варианты, добавлен новый. Третий сайт и грузинский сегмент — креативы в работе.</p>
-
-      <div class="creative-block">
-        <h3>Короткий сайт №1</h3>
-        <div class="note">4 креатива — было 7, убраны 1 / 2 / 4 / 6, добавлен новый</div>
-        <div class="igrid">
-          <a class="ig-link" href="https://www.instagram.com/p/Da-NFJANFTW/" target="_blank" rel="noopener"><span><span class="n">01 · </span>Da-NFJANFTW</span><span class="arrow">→</span></a>
-          <a class="ig-link" href="https://www.instagram.com/p/DZMyUYmDVb8/?img_index=2" target="_blank" rel="noopener"><span><span class="n">02 · </span>DZMyUYmDVb8</span><span class="arrow">→</span></a>
-          <a class="ig-link" href="https://www.instagram.com/p/DXRZlkvDe6t/?img_index=2" target="_blank" rel="noopener"><span><span class="n">03 · </span>DXRZlkvDe6t</span><span class="arrow">→</span></a>
-          <a class="ig-link" href="https://www.instagram.com/p/DbNPvwPoYTk/" target="_blank" rel="noopener"><span><span class="n">04 · new · </span>DbNPvwPoYTk</span><span class="arrow">→</span></a>
-        </div>
-      </div>
-
-      <div class="creative-block">
-        <h3>Длинный сайт</h3>
-        <div class="note">Андромеда-ролики + 3 креатива — убраны зимние (4 и 5), добавлен новый</div>
-        <div class="igrid">
-          <a class="ig-link" href="https://www.instagram.com/p/DbkTgX8Ipnu/" target="_blank" rel="noopener"><span><span class="n">01 · </span>DbkTgX8Ipnu</span><span class="arrow">→</span></a>
-          <a class="ig-link" href="https://www.instagram.com/p/DZZn1maNzph/" target="_blank" rel="noopener"><span><span class="n">02 · </span>DZZn1maNzph</span><span class="arrow">→</span></a>
-          <a class="ig-link" href="https://www.instagram.com/p/DThvAr6DZrV/" target="_blank" rel="noopener"><span><span class="n">03 · new · </span>DThvAr6DZrV</span><span class="arrow">→</span></a>
-        </div>
-      </div>
-
-      <div class="creative-block">
-        <h3>Короткий сайт №2 <span style="color:var(--ink-faint); font-weight:400;">(3-й сайт)</span></h3>
-        <div class="note">Логика интересов — как у короткого сайта №1</div>
-        <div class="igrid">
-          <div class="ig-pending">Креативы уточняются — добавим по готовности</div>
-        </div>
-      </div>
-
-      <div class="creative-block">
-        <h3>Грузинский сегмент (KA)</h3>
-        <div class="note">Ожидаем от Тани</div>
-        <div class="igrid">
-          <div class="ig-pending">Грузинские посты — запрошены, без них сегмент [04] не запускаем</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="chapter" style="border-bottom:none;">
-      <div class="chapter-head"><span class="chapter-tag">[08]</span><h2>Бюджет и сроки</h2></div>
-      <p class="lede">Две фазы, не одна. Первые 14 дней — широкий тест на $2 000, чтобы у каждой из 9 кампаний было достаточно данных для решения. Оставшиеся ~16 дней месяца — $1 000, но уже не поровну, а точечно: докидываем в кампании и гео, которые доказали себя в фазе 1.</p>
-
-      <div class="subsection-label">Фаза 1 · дни 1–14 · $2 000 на 9 кампаний</div>
-      <table class="budget">
-        <tr><th>Кампания</th><th>Бюджет / 14 дней</th><th>Бюджет / день</th></tr>
-        <tr class="grp"><td colspan="3">Короткий сайт №1</td></tr>
-        <tr><td>RU</td><td class="num">$222</td><td class="num">$15,9</td></tr>
-        <tr><td>ENG</td><td class="num">$222</td><td class="num">$15,9</td></tr>
-        <tr><td>KA (Грузия)</td><td class="num">$222</td><td class="num">$15,9</td></tr>
-        <tr class="grp"><td colspan="3">Длинный сайт</td></tr>
-        <tr><td>RU</td><td class="num">$222</td><td class="num">$15,9</td></tr>
-        <tr><td>ENG</td><td class="num">$222</td><td class="num">$15,9</td></tr>
-        <tr><td>KA (Грузия)</td><td class="num">$222</td><td class="num">$15,9</td></tr>
-        <tr class="grp"><td colspan="3">Короткий сайт №2</td></tr>
-        <tr><td>RU</td><td class="num">$222</td><td class="num">$15,9</td></tr>
-        <tr><td>ENG</td><td class="num">$222</td><td class="num">$15,9</td></tr>
-        <tr><td>KA (Грузия)</td><td class="num">$222</td><td class="num">$15,9</td></tr>
-        <tr><td>Итого фаза 1</td><td class="num">$2 000</td><td class="num">$142,9</td></tr>
-      </table>
-
-      <div class="subsection-label">Фаза 2 · дни 15–30 · $1 000, точечно</div>
-      <p class="lede">Не расписываю заранее по кампаниям — сумма распределяется по итогам дня 14 в пользу лучшего CPL: если грузинский сегмент подтвердит исторический результат (32,5$), логично, что основная часть резерва пойдёт туда; если нет — в РУ или ENG ядро (Армения/Азербайджан/Европа). Решение принимаем на созвоне по итогам фазы 1, не сейчас.</p>
-
-      <div class="callout">$15,9/день на кампанию в фазе 1 — всё ещё тонко для Meta на некоторых гео, алгоритм может дольше выходить из обучения. Первая неделя может быть «шумной» по CPL из-за низкого объёма показов — это ожидаемо, не повод менять курс раньше 14 дней.</div>
-
-      <div class="timeline">
-        <div class="tl-step"><div class="d">День 1</div><div class="t">Запуск RU и ENG по всем 3 сайтам (6 кампаний). KA — по готовности креативов от Тани</div></div>
-        <div class="tl-step"><div class="d">День 7</div><div class="t">Промежуточная проверка расхода и CPL, без резких решений</div></div>
-        <div class="tl-step"><div class="d">День 14</div><div class="t">Итоги фазы 1, точечное распределение $1 000 фазы 2</div></div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ============ GOOGLE + YANDEX TAB ============ -->
-<section class="panel-tab" id="search">
-
-  <div class="hero">
-    <div class="wrap hero-inner">
-      <div class="pill">Стратегия · Поиск</div>
-      <h1>Не нужно объяснять в заголовке всё. Достаточно сказать, <span class="star">что это</span> — и человек кликнет узнать остальное.</h1>
-      <p class="hero-sub">Заголовки — общие, понятные формулировки о категории объекта. Инвестиционная тема теперь не отдельная группа, а слой внутри общей — и в Яндексе добавлен акцент на ВНЖ и низкие налоги для российской аудитории.</p>
-    </div>
-  </div>
-
-  <div class="wrap">
-
-    <div class="chapter">
-      <div class="chapter-head"><span class="chapter-tag">[01]</span><h2>Логика заголовков</h2></div>
-      <p class="lede">У самого elysiumtbilisi.com — ровно такая структура: сначала общее утверждение («дом, который мы построили для себя»), и только потом, шаг за шагом, — локация, архитектура, инженерия, крыша. Объявление в поиске — это первый экран. Поэтому заголовок продаёт категорию и статус объекта, а не список удобств.</p>
-      <p class="lede">Инвестиционную тематику больше не выносим в отдельную группу объявлений — держать инвестора и обычного покупателя раздельно не давало ощутимой разницы в качестве трафика, а усложняло управление. Инвестиционные ключевые слова и один инвестиционный заголовок теперь живут внутри общей группы.</p>
-    </div>
-
-    <div class="chapter">
-      <div class="chapter-head"><span class="chapter-tag">[02]</span><h2>Google Ads — RU</h2></div>
-      <p class="lede">Кампания <b>ELYSIUM Tbilisi — Premium RU</b>, одна объединённая группа объявлений.</p>
-
-      <div class="ad-group-block">
-        <div class="chip-row">
-          <span class="chip">элитная недвижимость тбилиси</span>
-          <span class="chip">[апартаменты тбилиси купить]</span>
-          <span class="chip">"квартиры премиум класса тбилиси"</span>
-          <span class="chip">клубный дом тбилиси</span>
-          <span class="chip">новостройки тбилиси элитные</span>
-          <span class="chip">резиденции тбилиси</span>
-          <span class="chip">пентхаус тбилиси</span>
-          <span class="chip">недвижимость грузия инвестиции</span>
-          <span class="chip">[купить квартиру в грузии инвестиции]</span>
-          <span class="chip">"вложить деньги в недвижимость тбилиси"</span>
-          <span class="chip">доходная недвижимость грузия</span>
-          <span class="chip">ROI недвижимость грузия</span>
-        </div>
-      </div>
-
-      <div class="subsection-label">Минус-слова</div>
-      <div class="chip-row">
-        <span class="chip">аренда</span><span class="chip">снять</span><span class="chip">дешево</span><span class="chip">вакансии</span><span class="chip">работа</span><span class="chip">ипотека бесплатно</span><span class="chip">б/у</span><span class="chip">вторичка</span><span class="chip">реновация</span>
-      </div>
-
-      <div class="kw-label">Заголовки RSA · 15 шт · ≤30 симв.</div>
-      <div class="headline-list">
-        <div class="headline-pill">Элитная Недвижимость Тбилиси</div>
-        <div class="headline-pill">ELYSIUM — Клубный Дом</div>
-        <div class="headline-pill">Апартаменты Премиум-Класса</div>
-        <div class="headline-pill">Дом Полностью Сдан</div>
-        <div class="headline-pill">Недвижимость Бизнес-Класса</div>
-        <div class="headline-pill">Квартиры в Тбилиси</div>
-        <div class="headline-pill">Резиденции ELYSIUM</div>
-        <div class="headline-pill">Инвестиции в Недвижимость</div>
-        <div class="headline-pill">Жилой Комплекс Премиум</div>
-        <div class="headline-pill">Купить Квартиру в Тбилиси</div>
-        <div class="headline-pill">Новостройка в Тбилиси</div>
-        <div class="headline-pill">Апартаменты 138–191 м²</div>
-        <div class="headline-pill">Панорамные Виды на Город</div>
-        <div class="headline-pill">Тбилиси, Элия Хилл</div>
-        <div class="headline-pill">Записаться на Просмотр</div>
-      </div>
-
-      <div class="ad-preview">
-        <div class="ad-title">Элитная Недвижимость Тбилиси | ELYSIUM — Клубный Дом</div>
-        <div class="ad-url">elysiumtbilisi.com</div>
-        <div class="ad-desc">Клубный дом на 14 резиденций с панорамными видами на Тбилиси. Дом полностью сдан.</div>
-      </div>
-
-      <div class="kw-label">Быстрые ссылки</div>
-      <div class="sitelink-grid">
-        <div class="sitelink-card"><div class="st">Резиденции и планировки</div><div class="sl">От 138 до 191 м²<br>Свободная планировка</div></div>
-        <div class="sitelink-card"><div class="st">Крыша и удобства</div><div class="sl">Джакузи, барбекю, фитнес<br>Только для резидентов</div></div>
-        <div class="sitelink-card"><div class="st">Локация — Элия Хилл</div><div class="sl">10 минут до центра<br>Тишина и приватность</div></div>
-        <div class="sitelink-card"><div class="st">О проекте ELYSIUM</div><div class="sl">Клубный дом, 14 резиденций<br>Дом полностью сдан</div></div>
-        <div class="sitelink-card"><div class="st">Запись на просмотр</div><div class="sl">Индивидуальный показ<br>Свяжитесь с нами</div></div>
-        <div class="sitelink-card"><div class="st">ВНЖ и налоги</div><div class="sl">От $150 000 — резидентство<br>0% налог на прирост капитала</div></div>
-      </div>
-
-      <div class="kw-label">Уточнения</div>
-      <div class="chip-row">
-        <span class="chip">14 резиденций</span><span class="chip">Дом полностью сдан</span><span class="chip">Охрана 24/7</span><span class="chip">Подземный паркинг</span><span class="chip">ВНЖ при покупке</span><span class="chip">Низкие налоги</span>
-      </div>
-    </div>
-
-    <div class="chapter">
-      <div class="chapter-head"><span class="chapter-tag">[03]</span><h2>Google Ads — EN</h2></div>
-      <p class="lede">Campaign <b>ELYSIUM Tbilisi — Premium EN</b>, one merged ad group.</p>
-
-      <div class="ad-group-block">
-        <div class="chip-row">
-          <span class="chip">luxury apartments tbilisi</span>
-          <span class="chip">[buy apartment tbilisi]</span>
-          <span class="chip">"premium real estate tbilisi"</span>
-          <span class="chip">club residence tbilisi</span>
-          <span class="chip">tbilisi residences</span>
-          <span class="chip">penthouse tbilisi</span>
-          <span class="chip">real estate investment georgia</span>
-          <span class="chip">[invest in tbilisi real estate]</span>
-          <span class="chip">"buy property georgia investment"</span>
-          <span class="chip">property investment georgia roi</span>
-        </div>
-      </div>
-
-      <div class="subsection-label">Negative keywords</div>
-      <div class="chip-row">
-        <span class="chip">rent</span><span class="chip">cheap</span><span class="chip">jobs</span><span class="chip">careers</span><span class="chip">free mortgage</span><span class="chip">second-hand</span>
-      </div>
-
-      <div class="kw-label">RSA headlines · 15 · ≤30 chars</div>
-      <div class="headline-list">
-        <div class="headline-pill">Luxury Real Estate Tbilisi</div>
-        <div class="headline-pill">ELYSIUM — Club Residence</div>
-        <div class="headline-pill">Premium Apartments Tbilisi</div>
-        <div class="headline-pill">Fully Completed Residence</div>
-        <div class="headline-pill">Business-Class Real Estate</div>
-        <div class="headline-pill">Apartments in Tbilisi</div>
-        <div class="headline-pill">ELYSIUM Residences</div>
-        <div class="headline-pill">Real Estate Investment</div>
-        <div class="headline-pill">Premium Residential Complex</div>
-        <div class="headline-pill">Buy Apartment in Tbilisi</div>
-        <div class="headline-pill">New Development Tbilisi</div>
-        <div class="headline-pill">138-191 sqm Apartments</div>
-        <div class="headline-pill">Panoramic City Views</div>
-        <div class="headline-pill">Tbilisi, Elya Hill</div>
-        <div class="headline-pill">Book a Viewing</div>
-      </div>
-
-      <div class="ad-preview">
-        <div class="ad-title">Luxury Real Estate Tbilisi | ELYSIUM — Club Residence</div>
-        <div class="ad-url">elysiumtbilisi.com</div>
-        <div class="ad-desc">A private club residence with only 14 homes and panoramic views of Tbilisi.</div>
-      </div>
-
-      <div class="kw-label">Sitelinks</div>
-      <div class="sitelink-grid">
-        <div class="sitelink-card"><div class="st">Residences & Layouts</div><div class="sl">138 to 191 sqm<br>Open-plan design</div></div>
-        <div class="sitelink-card"><div class="st">Rooftop & Amenities</div><div class="sl">Jacuzzi, BBQ, fitness area<br>For residents only</div></div>
-        <div class="sitelink-card"><div class="st">Location — Elya Hill</div><div class="sl">10 min to city center<br>Quiet and private</div></div>
-        <div class="sitelink-card"><div class="st">About ELYSIUM</div><div class="sl">Club residence, 14 homes<br>Fully completed</div></div>
-        <div class="sitelink-card"><div class="st">Book a Viewing</div><div class="sl">Private tour by request<br>Contact us today</div></div>
-        <div class="sitelink-card"><div class="st">Residency & Tax</div><div class="sl">Residency from $150,000<br>0% capital gains tax</div></div>
-      </div>
-    </div>
-
-    <div class="chapter">
-      <div class="chapter-head"><span class="chapter-tag">[04]</span><h2>Аудитории Google (Display / PMax / Demand Gen)</h2></div>
-      <div class="audience-grid">
-        <div class="audience-card">
-          <h4>In-Market</h4>
-          <ul>
-            <li>Real Estate → <b>Residential Properties</b></li>
-            <li>Real Estate → <b>Rental & Investment Services</b></li>
-          </ul>
-        </div>
-        <div class="audience-card">
-          <h4>Affinity</h4>
-          <ul>
-            <li><b>Luxury Shoppers</b></li>
-            <li><b>Investors</b></li>
-          </ul>
-        </div>
-        <div class="audience-card">
-          <h4>Life Events</h4>
-          <ul>
-            <li><b>Recently Moved</b></li>
-            <li><b>Upcoming Retirement</b></li>
-          </ul>
-        </div>
-        <div class="audience-card">
-          <h4>Custom Segment — конкуренты</h4>
-          <ul>
-            <li>next-property.com · eltgroup.ge</li>
-            <li>vrkrtsanisi.com · thelake.ge · mrqz.to</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="chapter" style="border-bottom:none;">
-      <div class="chapter-head"><span class="chapter-tag">[05]</span><h2>Яндекс.Директ — RU</h2></div>
-      <p class="lede">Добавлен акцент на ВНЖ и налоги — для российской аудитории это часто решающий фактор, сильнее, чем архитектура или вид из окна.</p>
-
-      <div class="chip-row">
-        <span class="chip">элитная недвижимость тбилиси</span><span class="chip">недвижимость тбилиси купить</span><span class="chip">клубный дом тбилиси</span><span class="chip">недвижимость грузия инвестиции</span><span class="chip">внж при покупке недвижимости</span><span class="chip">резидентство грузия недвижимость</span><span class="chip">низкие налоги на недвижимость грузия</span>
-      </div>
-
-      <div class="subsection-label">Минус-слова</div>
-      <div class="chip-row">
-        <span class="chip">аренда</span><span class="chip">снять</span><span class="chip">дешево</span><span class="chip">вакансии</span><span class="chip">работа</span><span class="chip">ипотека бесплатно</span>
-      </div>
-
-      <div class="kw-label">Объявления</div>
-      <div class="ad-preview">
-        <div class="ad-title">ELYSIUM Тбилиси — Клубный Дом · 14 Резиденций</div>
-        <div class="ad-url">elysiumtbilisi.com</div>
-        <div class="ad-desc">Панорамные виды, полная автономность, охрана 24/7. Дом сдан, от 138 м².</div>
-      </div>
-      <div class="ad-preview">
-        <div class="ad-title">Тбилиси, Элия Хилл — ELYSIUM · 10 Минут до Центра</div>
-        <div class="ad-url">elysiumtbilisi.com</div>
-        <div class="ad-desc">Клубный дом на 14 резиденций. Тишина, приватность, панорамные виды.</div>
-      </div>
-      <div class="ad-preview">
-        <div class="ad-title">ВНЖ при Покупке Недвижимости — ELYSIUM</div>
-        <div class="ad-url">elysiumtbilisi.com</div>
-        <div class="ad-desc">Резидентство Грузии от $150 000. Низкие налоги, клубный дом на 14 резиденций.</div>
-      </div>
-      <div class="ad-preview">
-        <div class="ad-title">Инвестиции в Недвижимость Тбилиси — ELYSIUM</div>
-        <div class="ad-url">elysiumtbilisi.com</div>
-        <div class="ad-desc">Клубный дом на 14 резиденций в Тбилиси. Запись на индивидуальный показ.</div>
-      </div>
-
-      <div class="kw-label">Быстрые ссылки</div>
-      <div class="sitelink-grid" style="grid-template-columns:1fr 1fr;">
-        <div class="sitelink-card"><div class="st">Резиденции и планировки</div><div class="sl">От 138 до 191 м²</div></div>
-        <div class="sitelink-card"><div class="st">ВНЖ при покупке</div><div class="sl">От $150 000</div></div>
-        <div class="sitelink-card"><div class="st">Крыша и удобства</div><div class="sl">Джакузи, барбекю, фитнес</div></div>
-        <div class="sitelink-card"><div class="st">Запись на просмотр</div><div class="sl">Индивидуальный показ</div></div>
-      </div>
-
-      <div class="kw-label">Уточнения</div>
-      <div class="chip-row">
-        <span class="chip">14 резиденций</span><span class="chip">Дом сдан</span><span class="chip">ВНЖ при покупке</span><span class="chip">Низкие налоги</span><span class="chip">Охрана 24/7</span>
-      </div>
-
-      <div class="callout">Формулировка «низкие налоги» — намеренно без конкретного процента в заголовках (кроме проверенных 0% на прирост капитала после 2 лет и 5% на аренду) — см. пояснение в разделе [06] на вкладке Meta Ads про нюанс с налогом на владение.</div>
-    </div>
-
-  </div>
-</section>
-
-<div class="wrap"><footer>
-  <span>ELYSIUM RESIDENTIAL COMPLEX — внутренний документ команды</span>
-  <span>Отчёт: 16.06–16.07 · Налоги/ВНЖ: данные на 2026</span>
-</footer></div>
-
-<script>
-  const buttons = document.querySelectorAll('.switch-btn');
-  const panels = document.querySelectorAll('.panel-tab');
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      buttons.forEach(b => b.classList.remove('active'));
-      panels.forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById(btn.dataset.tab).classList.add('active');
-      window.scrollTo({top:0, behavior:'smooth'});
+    loadAll().catch(err => {
+      document.getElementById('sub').textContent = 'Ошибка загрузки данных: ' + err.message;
     });
-  });
-</script>
-
+  </script>
 </body>
 </html>
