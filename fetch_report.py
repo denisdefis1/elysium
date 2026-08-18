@@ -16,7 +16,7 @@ PLAN_MONTHLY_BUDGET = PLAN_DAILY_BUDGET * DAYS_IN_MONTH
 TARGET_CPL = round(PLAN_MONTHLY_BUDGET / PLAN_MONTHLY_LEADS, 2)
 
 FETCH_SINCE = '2025-07-01'       # тянем историю с июля 2025, как просили
-CHUNK_DAYS = 30
+CHUNK_DAYS = 7  # уменьшено с 30 — на 13+ месяцах daily-level истории широкий чанк даёт стабильный 5xx от Meta
 API_VERSION = 'v25.0'
 LEAD_ACTION_TYPES = {'lead'}      # см. checklist — проверить по факту через диагностику action_type
 
@@ -47,6 +47,8 @@ OBJECTIVE_LABELS = {
     'OUTCOME_SALES': 'Продажи',
     'CONVERSIONS': 'Продажи',
     'OUTCOME_APP_PROMOTION': 'Приложение',
+    'PAGE_LIKES': 'Подписчики',
+    'LIKES': 'Подписчики',
 }
 
 
@@ -58,6 +60,10 @@ def date_chunks(since_str, until_str, chunk_days):
         chunk_end = min(cur + timedelta(days=chunk_days - 1), until)
         yield cur.strftime('%Y-%m-%d'), chunk_end.strftime('%Y-%m-%d')
         cur = chunk_end + timedelta(days=1)
+
+
+class MetaAPIError(Exception):
+    pass
 
 
 def api_get(path, params):
@@ -76,24 +82,21 @@ def api_get(path, params):
                 if resp.status_code >= 400:
                     print(f"Meta API вернул {resp.status_code} на {path}: {resp.text}")
                     if attempt == 2:
-                        sys.exit(1)
+                        raise MetaAPIError(f"{resp.status_code} на {path}")
                     time.sleep(30 * (attempt + 1))
                     continue
                 resp.raise_for_status()
                 break
             except requests.exceptions.RequestException as e:
                 if attempt == 2:
-                    print(f"Ошибка запроса к {path}: {e}")
-                    sys.exit(1)
+                    raise MetaAPIError(f"Ошибка запроса к {path}: {e}")
                 time.sleep(2 ** attempt)
         else:
-            print(f"Meta API стабильно возвращает 5xx на {path}")
-            sys.exit(1)
+            raise MetaAPIError(f"Meta API стабильно возвращает 5xx на {path}")
 
         payload = resp.json()
         if 'error' in payload:
-            print(f"Meta API вернул ошибку на {path}: {payload['error']}")
-            sys.exit(1)
+            raise MetaAPIError(f"Meta API вернул ошибку на {path}: {payload['error']}")
 
         all_data.extend(payload.get('data', []))
         url = payload.get('paging', {}).get('next')
@@ -119,9 +122,20 @@ def count_leads(actions):
 
 
 def parse_language(name):
-    # Naming convention кампании должно содержать сегмент языка через "_"
-    # поддерживаются оба варианта именования: латиница (RU/EN) и кириллица (ру/англ)
-    for p in re.split(r'[_\s]+', name or ''):
+    # Реальный формат имён кампаний Elysium — тег в квадратных скобках в начале строки:
+    # "[RU] [Трафик] Реклама в Instagram..." / "[EN] [Лиды] Leads | ..."
+    name = name or ''
+    bracket_match = re.search(r'\[([A-Za-zА-Яа-я]+)\]', name)
+    if bracket_match:
+        tag = bracket_match.group(1).upper()
+        if tag in ('EN', 'ENG', 'ENGLISH'):
+            return 'EN'
+        if tag in ('RU', 'RUS', 'RUSSIAN'):
+            return 'RU'
+        if tag in ('KA', 'GEO', 'GEORGIAN', 'KAT'):
+            return 'KA'
+    # Фолбэк — старый формат через "_", на случай будущих кампаний с другим неймингом
+    for p in re.split(r'[_\s]+', name):
         upper = p.upper()
         low = p.lower()
         if upper in ('EN', 'ENG', 'ENGLISH') or low in ('англ', 'английский'):
@@ -131,6 +145,16 @@ def parse_language(name):
         if upper in ('KA', 'GEO', 'GEORGIAN', 'KAT') or low in ('гео', 'груз', 'грузинский'):
             return 'KA'
     return 'RU'
+
+
+def parse_objective_tag(name):
+    # Второй тег в скобках часто дублирует цель кампании прямо в названии —
+    # используем как fallback/сверку, если поле objective из API вернёт что-то неожиданное
+    name = name or ''
+    tags = re.findall(r'\[([^\]]+)\]', name)
+    for t in tags[1:2]:
+        return t
+    return None
 
 
 def day_metrics(raw):
@@ -243,77 +267,90 @@ for c in creatives:
     c["thumbnail_url"] = thumb_by_ad_id.get(c["id"])
 
 # ============================================================
-# 4. Демография, устройства, гео
+# 4. Демография, устройства, гео — необязательные разбивки:
+#    если Meta стабильно отдаёт 5xx на какой-то из них (тяжёлый запрос
+#    на длинной истории) — не роняем весь скрипт, просто оставляем пустым
 # ============================================================
-age_raw = api_get_chunked(f"{ACCOUNT_ID}/insights", {
-    'time_increment': 1,
-    'breakdowns': 'age,gender',
-    'fields': 'spend,clicks,inline_link_clicks,impressions,actions',
-    'limit': 500,
-}, start_date, end_date)
-
-demo_by_bucket = {}
-for r in age_raw:
-    bucket = (r.get('age', 'unknown'), r.get('gender', 'unknown'))
-    demo_by_bucket.setdefault(bucket, {})[r['date_start']] = r
-
 age_groups = []
-for (age, gender), by_date in demo_by_bucket.items():
-    daily = []
-    for date, r in sorted(by_date.items()):
-        spend, leads, clicks, link_clicks, impressions = day_metrics(r)
-        daily.append({"date": date, "spend": round(spend, 2), "leads": leads, "clicks": clicks, "link_clicks": link_clicks, "impressions": impressions})
-    age_groups.append({"age": age, "gender": gender, "daily": daily})
+try:
+    age_raw = api_get_chunked(f"{ACCOUNT_ID}/insights", {
+        'time_increment': 1,
+        'breakdowns': 'age,gender',
+        'fields': 'spend,clicks,inline_link_clicks,impressions,actions',
+        'limit': 500,
+    }, start_date, end_date)
 
-device_raw = api_get_chunked(f"{ACCOUNT_ID}/insights", {
-    'time_increment': 1,
-    'breakdowns': 'impression_device',
-    'fields': 'spend,clicks,inline_link_clicks,impressions,actions',
-    'limit': 500,
-}, start_date, end_date)
+    demo_by_bucket = {}
+    for r in age_raw:
+        bucket = (r.get('age', 'unknown'), r.get('gender', 'unknown'))
+        demo_by_bucket.setdefault(bucket, {})[r['date_start']] = r
 
-device_by_bucket = {}
-for r in device_raw:
-    device_by_bucket.setdefault(r.get('impression_device', 'unknown'), {})[r['date_start']] = r
+    for (age, gender), by_date in demo_by_bucket.items():
+        daily = []
+        for date, r in sorted(by_date.items()):
+            spend, leads, clicks, link_clicks, impressions = day_metrics(r)
+            daily.append({"date": date, "spend": round(spend, 2), "leads": leads, "clicks": clicks, "link_clicks": link_clicks, "impressions": impressions})
+        age_groups.append({"age": age, "gender": gender, "daily": daily})
+except MetaAPIError as e:
+    print(f"Пропускаю демографию — {e}")
 
 devices = []
-for device, by_date in device_by_bucket.items():
-    daily = []
-    for date, r in sorted(by_date.items()):
-        spend, leads, clicks, link_clicks, impressions = day_metrics(r)
-        daily.append({"date": date, "spend": round(spend, 2), "leads": leads, "clicks": clicks, "link_clicks": link_clicks, "impressions": impressions})
-    devices.append({"device": device, "daily": daily})
+try:
+    device_raw = api_get_chunked(f"{ACCOUNT_ID}/insights", {
+        'time_increment': 1,
+        'breakdowns': 'impression_device',
+        'fields': 'spend,clicks,inline_link_clicks,impressions,actions',
+        'limit': 500,
+    }, start_date, end_date)
 
-geo_raw = api_get_chunked(f"{ACCOUNT_ID}/insights", {
-    'time_increment': 1,
-    'level': 'campaign',
-    'breakdowns': 'country',
-    'fields': 'campaign_id,spend,clicks,inline_link_clicks,impressions,actions',
-    'limit': 500,
-}, start_date, end_date)
+    device_by_bucket = {}
+    for r in device_raw:
+        device_by_bucket.setdefault(r.get('impression_device', 'unknown'), {})[r['date_start']] = r
 
-geo_by_bucket = {}
-for r in geo_raw:
-    bucket = (r.get('campaign_id'), r.get('country', 'unknown'))
-    geo_by_bucket.setdefault(bucket, {})[r['date_start']] = r
+    for device, by_date in device_by_bucket.items():
+        daily = []
+        for date, r in sorted(by_date.items()):
+            spend, leads, clicks, link_clicks, impressions = day_metrics(r)
+            daily.append({"date": date, "spend": round(spend, 2), "leads": leads, "clicks": clicks, "link_clicks": link_clicks, "impressions": impressions})
+        devices.append({"device": device, "daily": daily})
+except MetaAPIError as e:
+    print(f"Пропускаю устройства — {e}")
 
 geo = []
-for (campaign_id, country), by_date in geo_by_bucket.items():
-    daily = []
-    for date, r in sorted(by_date.items()):
-        spend, leads, clicks, link_clicks, impressions = day_metrics(r)
-        daily.append({"date": date, "spend": round(spend, 2), "leads": leads, "clicks": clicks, "link_clicks": link_clicks, "impressions": impressions})
-    geo.append({"campaign_id": campaign_id, "country": country, "daily": daily})
+try:
+    geo_raw = api_get_chunked(f"{ACCOUNT_ID}/insights", {
+        'time_increment': 1,
+        'level': 'campaign',
+        'breakdowns': 'country',
+        'fields': 'campaign_id,spend,clicks,inline_link_clicks,impressions,actions',
+        'limit': 500,
+    }, start_date, end_date)
+
+    geo_by_bucket = {}
+    for r in geo_raw:
+        bucket = (r.get('campaign_id'), r.get('country', 'unknown'))
+        geo_by_bucket.setdefault(bucket, {})[r['date_start']] = r
+
+    for (campaign_id, country), by_date in geo_by_bucket.items():
+        daily = []
+        for date, r in sorted(by_date.items()):
+            spend, leads, clicks, link_clicks, impressions = day_metrics(r)
+            daily.append({"date": date, "spend": round(spend, 2), "leads": leads, "clicks": clicks, "link_clicks": link_clicks, "impressions": impressions})
+        geo.append({"campaign_id": campaign_id, "country": country, "daily": daily})
+except MetaAPIError as e:
+    print(f"Пропускаю гео — {e}")
 
 
 def fetch_reach(since, until, campaign_ids=None):
     params = {'time_range': json.dumps({'since': since, 'until': until}), 'fields': 'reach', 'limit': 1}
     if campaign_ids:
         params['filtering'] = json.dumps([{'field': 'campaign.id', 'operator': 'IN', 'value': campaign_ids}])
+    try:
         raw = api_get(f"{ACCOUNT_ID}/insights", params)
-    else:
-        raw = api_get(f"{ACCOUNT_ID}/insights", params)
-    return int(raw[0].get('reach', 0)) if raw else 0
+        return int(raw[0].get('reach', 0)) if raw else 0
+    except MetaAPIError as e:
+        print(f"Пропускаю охват за {since}-{until} — {e}")
+        return 0
 
 
 end_dt = datetime.strptime(end_date, '%Y-%m-%d')
