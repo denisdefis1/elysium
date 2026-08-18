@@ -93,6 +93,9 @@
   .toggle-row { display: flex; gap: 8px; margin-bottom: 14px; }
   .toggle-btn { background: var(--card); border: 1px solid var(--border); color: var(--muted); padding: 6px 14px; border-radius: 2px; font-size: 12px; cursor: pointer; font-family: 'Manrope', sans-serif; font-weight: 600; }
   .toggle-btn.active { background: var(--forest); border-color: var(--forest); color: #fff; }
+  .summary-para { font-size: 14px; color: var(--text); line-height: 1.7; margin-bottom: 10px; }
+  .summary-para:last-child { margin-bottom: 0; }
+  .summary-para b { color: var(--forest-2); }
 
   /* Дерево кампания -> аудитория -> креатив */
   .tree { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
@@ -163,6 +166,7 @@
 </head>
 <body>
 
+  <a href="strategy/index.html" style="display:inline-block; margin-bottom:10px; font-family:'Manrope',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); text-decoration:none;">← Стратегия</a>
   <h1>ELYSIUM</h1>
   <div class="sub" id="sub">Meta Ads · Facebook / Instagram · загрузка...</div>
   <div class="updated" id="updated"></div>
@@ -172,6 +176,9 @@
   <div class="controls" id="controls"></div>
 
   <div class="cards" id="main-cards"></div>
+
+  <h2 class="section-title">Резюме периода</h2>
+  <div class="chart-card" id="summary-card"></div>
 
   <h2 class="section-title">Динамика по дням</h2>
   <div class="chart-card">
@@ -323,7 +330,7 @@
       document.getElementById('obj-switch').innerHTML = objs.map(c => `
         <button class="obj-tab ${c === currentObjective ? 'active' : ''}" data-obj="${c}">${c === 'all' ? 'Все цели' : c}</button>
       `).join('');
-      document.querySelectorAll('.obj-tab').forEach(btn => {
+      document.querySelectorAll('#obj-switch .obj-tab').forEach(btn => {
         btn.addEventListener('click', () => {
           currentObjective = btn.dataset.obj;
           renderCampSwitch();
@@ -429,12 +436,46 @@
       document.getElementById('sub').textContent = `Meta Ads · Facebook / Instagram · ${since} – ${until}${objLabel}`;
 
       renderMainCards(totals, prevTotals, reach, presetKey);
+      renderSummary(totals, prevTotals);
       try { renderDailyCharts(accDaily, presetKey); } catch (e) { console.error('Графики не отрисовались:', e); }
       renderCampaignsTree();
       renderDemo();
       renderGeo();
       renderDevices();
       renderCreatives();
+    }
+
+    function renderSummary(t, prevT) {
+      const p = REPORT.plan;
+      const card = document.getElementById('summary-card');
+      const paras = [];
+
+      if (!t.spend && !t.leads) {
+        card.innerHTML = `<div class="summary-para">Нет данных за выбранный период — либо кампании ещё не запускались, либо данные не дошли из отчёта.</div>`;
+        return;
+      }
+
+      const cplWord = t.costPerLead !== null && t.costPerLead > p.target_cpl
+        ? `выше цели (${fmtMoney(p.target_cpl)})`
+        : `в рамках цели (${fmtMoney(p.target_cpl)})`;
+      paras.push(`За период <b>${currentSince} – ${currentUntil}</b> потрачено <b>${fmtMoney(t.spend)}</b>, получено <b>${fmtNum(t.leads)}</b> лидов по цене <b>${fmtMoney(t.costPerLead)}</b> — это ${cplWord}.`);
+
+      const spendD = deltaPct(t.spend, prevT.spend);
+      const leadsD = deltaPct(t.leads, prevT.leads);
+      if (spendD !== null && leadsD !== null) {
+        paras.push(`По сравнению с предыдущим периодом такой же длины расход ${spendD >= 0 ? 'вырос' : 'снизился'} на <b>${Math.abs(spendD)}%</b>, лиды ${leadsD >= 0 ? 'выросли' : 'упали'} на <b>${Math.abs(leadsD)}%</b>.`);
+      }
+
+      const campRows = campaignsForObjective().map(campaignRow).filter(r => r.spend > 0);
+      if (campRows.length) {
+        const withLeads = campRows.filter(r => r.leads > 0);
+        if (withLeads.length) {
+          const best = [...withLeads].sort((a, b) => a.cpl - b.cpl)[0];
+          paras.push(`Лучшая кампания периода — <b>${best.name}</b>, цена лида <b>${fmtMoney(best.cpl)}</b>.`);
+        }
+      }
+
+      card.innerHTML = paras.map(x => `<div class="summary-para">${x}</div>`).join('');
     }
 
     function renderMainCards(t, prevT, reach, presetKey) {

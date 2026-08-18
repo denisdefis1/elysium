@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELYSIUM — Стратегия перформанс-маркетинга</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#111214; --panel:#1A1C20; --panel-2:#202226;
+    --ink:#F4F2ED; --ink-muted:#E4E2DA; --ink-faint:#8C8C83;
+    --rust:#A8482F; --rust-soft:#D0805F;
+    --rule:#2E3034; --good:#8AA37E; --bad:#C06A4F; --ka:#7C93B0; --warn:#C9A24A;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; font-size:16px; line-height:1.7;}
+  ::selection{background:var(--rust); color:var(--ink);}
+
+  .topbar{display:flex; align-items:center; justify-content:space-between; padding:24px 48px; position:sticky; top:0; z-index:50; background:rgba(17,18,20,0.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--rule);}
+  .logo{display:flex; align-items:center; gap:10px;}
+  .logo-mark{width:22px; height:16px; display:flex; gap:2px;}
+  .logo-mark span{flex:1; border:1.3px solid var(--ink); border-right:none;}
+  .logo-mark span:last-child{border-right:1.3px solid var(--ink); border-left:none;}
+  .logo-word{font-family:'Manrope',sans-serif; font-weight:800; font-size:17px; letter-spacing:0.16em;}
+  .switcher{display:flex; gap:28px;}
+  .switch-btn{all:unset; cursor:pointer; font-family:'Manrope',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); padding-bottom:3px; border-bottom:1px solid transparent;}
+  .switch-btn.active{color:var(--ink); border-bottom:1px solid var(--rust);}
+  .topbar-meta{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink-faint); text-align:right; line-height:1.6;}
+  .topbar-meta b{color:var(--ink); font-weight:700;}
+
+  .wrap{max-width:960px; margin:0 auto; padding:0 48px;}
+
+  .hero{padding:70px 0 40px; border-bottom:1px solid var(--rule);}
+  .pill{display:inline-block; font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; padding:7px 14px; background:rgba(244,242,237,0.06); border:1px solid var(--rule); color:var(--ink-faint); margin-bottom:22px;}
+  h1{font-family:'Manrope',sans-serif; font-weight:800; font-size:36px; line-height:1.2; letter-spacing:-0.01em; max-width:760px;}
+  h1 .star{color:var(--rust-soft);}
+  .hero-sub{margin-top:20px; max-width:620px; color:var(--ink-muted); font-size:15.5px;}
+
+  .subswitch{display:flex; gap:1px; background:var(--rule); border:1px solid var(--rule); margin:28px 0 0; width:fit-content;}
+  .subswitch-btn{all:unset; cursor:pointer; padding:11px 22px; font-family:'Manrope',sans-serif; font-weight:700; font-size:13px; color:var(--ink-faint); background:var(--panel);}
+  .subswitch-btn.active{color:var(--ink); background:var(--panel-2); box-shadow:inset 0 -2px 0 var(--rust);}
+
+  .chapter{padding:52px 0; border-bottom:1px solid var(--rule);}
+  .chapter-head{display:flex; align-items:baseline; gap:16px; margin-bottom:20px;}
+  .chapter-tag{font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; color:var(--rust-soft);}
+  h2{font-family:'Manrope',sans-serif; font-weight:800; font-size:24px; letter-spacing:-0.005em;}
+  .lede{max-width:680px; color:var(--ink-muted); margin-bottom:8px; font-size:15px;}
+  .lede + .lede{margin-top:12px;}
+  .lede b{color:var(--ink); font-weight:700;}
+
+  .callout{margin-top:20px; padding:18px 22px; background:var(--panel); border-left:2px solid var(--rust); font-size:13.5px; color:var(--ink-muted);}
+  .callout.warn{border-left-color:var(--warn);}
+  .callout.good{border-left-color:var(--good);}
+
+  table.grid{width:100%; border-collapse:collapse; margin:16px 0;}
+  table.grid th, table.grid td{text-align:left; padding:10px 8px; border-bottom:1px solid var(--rule); font-size:13px; vertical-align:top;}
+  table.grid th{font-family:'JetBrains Mono',monospace; font-size:9.5px; font-weight:500; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink-faint);}
+  table.grid td.num{font-family:'JetBrains Mono',monospace; color:var(--rust-soft);}
+  .tblwrap{overflow-x:auto;}
+  .flag-clean{color:var(--good); font-family:'JetBrains Mono',monospace; font-size:11px;}
+  .flag-warn{color:var(--warn); font-family:'JetBrains Mono',monospace; font-size:11px;}
+
+  .chip-row{display:flex; flex-wrap:wrap; gap:7px; margin-top:10px;}
+  .chip{font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:5px 10px; background:var(--panel-2); border:1px solid var(--rule); color:var(--ink-muted);}
+
+  .headline-list{display:grid; grid-template-columns:1fr 1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:14px;}
+  .headline-pill{font-size:13px; padding:11px 13px; background:var(--panel); border-left:2px solid var(--rust);}
+
+  .ledger{margin-top:20px; border-top:1px solid var(--rule);}
+  .ledger-row{display:grid; grid-template-columns:150px 1fr 90px 100px; align-items:center; gap:14px; padding:13px 0; border-bottom:1px solid var(--rule);}
+  .ledger-row.excluded{opacity:.42;}
+  .ledger-country{font-family:'Manrope',sans-serif; font-size:13.5px; font-weight:700;}
+  .strike{text-decoration:line-through;}
+  .bar-track{height:4px; background:var(--panel-2);}
+  .bar-fill{height:100%; background:var(--rust);}
+  .bar-fill.weak{background:var(--ink-faint);}
+  .ledger-cpl{font-family:'JetBrains Mono',monospace; font-size:12.5px; text-align:right; font-weight:600;}
+  .ledger-status{font-family:'Manrope',sans-serif; font-size:10px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; text-align:right; padding:3px 7px; justify-self:end; white-space:nowrap;}
+  .status-core{color:var(--good); border:1px solid var(--good);}
+  .status-test{color:var(--rust-soft); border:1px solid var(--rust-soft);}
+  .status-kept{color:var(--bad); border:1px solid var(--bad);}
+  .status-out{color:var(--ink-faint); border:1px solid var(--ink-faint);}
+  .status-new{color:var(--ka); border:1px solid var(--ka);}
+  .seg-badge{display:inline-flex; font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; padding:5px 11px; background:rgba(168,72,47,0.13); border:1px solid rgba(168,72,47,0.45); color:var(--rust-soft); margin-bottom:14px;}
+  .seg-badge.ka{background:rgba(124,147,176,0.14); border-color:rgba(124,147,176,0.5); color:var(--ka);}
+
+  .logic-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:22px;}
+  .logic-col{background:var(--panel); padding:22px 24px;}
+  .logic-col h3{font-family:'Manrope',sans-serif; font-weight:700; font-size:15px; margin-bottom:10px; color:var(--ink);}
+  .logic-col p{font-size:13px; color:var(--ink-muted); margin-bottom:12px;}
+
+  table.budget{width:100%; border-collapse:collapse; margin-top:18px;}
+  table.budget th, table.budget td{text-align:left; padding:11px 4px; border-bottom:1px solid var(--rule); font-size:13px;}
+  table.budget th{font-family:'JetBrains Mono',monospace; font-size:9.5px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-faint);}
+  table.budget td.num{font-family:'JetBrains Mono',monospace; color:var(--rust-soft);}
+  table.budget tr.grp td{padding-top:18px; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-faint); border-bottom:none;}
+
+  .igrid{display:grid; grid-template-columns:repeat(3, 1fr); gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:12px;}
+  .ig-link{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:14px 16px; background:var(--panel); font-family:'Inter',sans-serif; font-size:12px; color:var(--ink-muted); text-decoration:none;}
+  .ig-link:hover{background:var(--panel-2); color:var(--ink);}
+  .ig-pending{padding:14px 16px; background:var(--panel-2); font-family:'Manrope',sans-serif; font-size:11.5px; font-weight:600; color:var(--ink-faint); font-style:italic;}
+
+  .ad-preview{margin-top:14px; padding:16px 18px; background:var(--panel); border:1px solid var(--rule);}
+  .ad-preview .ad-title{color:#A7CE9C; font-size:14px; margin-bottom:4px;}
+  .ad-preview .ad-url{color:var(--good); font-size:12px; margin-bottom:6px;}
+  .ad-preview .ad-desc{color:var(--ink-muted); font-size:13px;}
+
+  .sitelink-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:12px;}
+  .sitelink-card{background:var(--panel); padding:14px 16px;}
+  .sitelink-card .st{font-family:'Manrope',sans-serif; font-weight:700; font-size:13px; color:var(--ink); margin-bottom:6px;}
+  .sitelink-card .sl{font-size:12px; color:var(--ink-muted);}
+
+  .panel-tab{display:none;} .panel-tab.active{display:block;}
+  .card-grid{display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule); margin:18px 0;}
+  .card-grid.c4{grid-template-columns:1fr 1fr 1fr 1fr;}
+  .card{background:var(--panel); padding:18px 20px;}
+  .card .fv{font-family:'Manrope',sans-serif; font-weight:800; font-size:22px; color:var(--rust-soft);}
+  .card .fl{margin-top:6px; font-size:12px; color:var(--ink-muted); line-height:1.4;}
+
+  .pipeline{border-left:2px solid var(--rule); margin:20px 0 20px 8px; padding-left:24px;}
+  .pipeline-step{position:relative; padding-bottom:20px;}
+  .pipeline-step:last-child{padding-bottom:0;}
+  .pipeline-step::before{content:''; position:absolute; left:-29px; top:4px; width:8px; height:8px; border-radius:50%; background:var(--rust); border:2px solid var(--bg);}
+  .pipeline-step .pt{font-family:'Manrope',sans-serif; font-weight:700; font-size:13.5px; color:var(--ink);}
+  .pipeline-step .pd{font-size:12.5px; color:var(--ink-muted); margin-top:3px;}
+
+  .flow{display:flex; flex-wrap:wrap; align-items:center; gap:0; margin:16px 0;}
+  .flow-step{font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:8px 12px; background:var(--panel); border:1px solid var(--rule); color:var(--ink-muted);}
+  .flow-arrow{color:var(--rust-soft); padding:0 6px; font-family:'JetBrains Mono',monospace;}
+
+  .dash-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--rule); border:1px solid var(--rule); margin:16px 0;}
+  .dash-tile{background:var(--panel); padding:16px 18px;}
+  .dash-tile .dl{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-faint);}
+  .dash-tile .dv{font-family:'Manrope',sans-serif; font-weight:800; font-size:20px; color:var(--ink); margin-top:6px;}
+  .dash-tile .dd{font-size:11px; color:var(--good); margin-top:4px;}
+  .dash-tabs{display:flex; gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:22px; flex-wrap:wrap;}
+  .dash-tab{padding:9px 16px; background:var(--panel-2); font-family:'Manrope',sans-serif; font-size:12px; font-weight:600; color:var(--ink-faint);}
+  .dash-tab.on{color:var(--ink); background:var(--panel); box-shadow:inset 0 -2px 0 var(--rust);}
+  .mock-note{font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--warn); margin-top:10px;}
+
+  .sub-panel{display:none;} .sub-panel.active{display:block;}
+  .lang-panel{display:none;} .lang-panel.active{display:block;}
+  .langswitch-btn{all:unset; cursor:pointer; padding:11px 22px; font-family:'Manrope',sans-serif; font-weight:700; font-size:13px; color:var(--ink-faint); background:var(--panel);}
+  .langswitch-btn.active{color:var(--ink); background:var(--panel-2); box-shadow:inset 0 -2px 0 var(--rust);}
+
+  footer{padding:36px 0 70px; display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink-faint);}
+
+  @media (max-width: 860px){
+    .topbar{padding:16px 20px;} .wrap{padding:0 20px;}
+    h1{font-size:27px;}
+    .logic-grid, .igrid, .headline-list, .sitelink-grid{grid-template-columns:1fr;}
+    .ledger-row{grid-template-columns:1fr 70px; row-gap:6px;}
+    .ledger-row .bar-track, .ledger-row .ledger-status{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo"><div class="logo-mark"><span></span><span></span></div><div class="logo-word">ELYSIUM</div></div>
+  <div class="switcher">
+    <button class="switch-btn active" data-tab="search">Google + Яндекс</button>
+    <button class="switch-btn" data-tab="meta">Meta Ads</button>
+    <a class="switch-btn" href="../index.html" style="text-decoration:none;">Дашборд</a>
+  </div>
+  <div class="topbar-meta">Приоритет<br><b>Поиск → Соцсети</b></div>
+</div>
+
+<!-- ============ GOOGLE + YANDEX (PRIMARY) ============ -->
+<section class="panel-tab active" id="search">
+  <div class="wrap">
+    <div class="hero">
+      <div class="pill">Приоритетный канал</div>
+      <h1>Поиск строится на реальных цифрах Планировщика и Wordstat, а не на догадках.</h1>
+      <p class="hero-sub">Google и Yandex — сейчас основной канал, Meta — второй по приоритету. Внутри — переключатель между двумя стратегиями, у каждой своя специфика гео и языка.</p>
+
+      <div class="subswitch">
+        <button class="subswitch-btn active" data-sub="google-sub">Google Ads</button>
+        <button class="subswitch-btn" data-sub="yandex-sub">Yandex Direct</button>
+      </div>
+    </div>
+
+    <!-- ===== GOOGLE SUB-PANEL ===== -->
+    <div class="sub-panel active" id="google-sub">
+
+      <div class="chapter">
+        <div class="chapter-head"><span class="chapter-tag">[00]</span><h2>Резюме стратегии</h2></div>
+        <p class="lede">ELYSIUM — клубный дом на 14 резиденций на Elya Hill в Тбилиси, полностью сдан, премиальный сегмент. Google Ads — часть общего бюджета $1400/мес ($500 сюда), задача — приводить заявки от покупателей и инвесторов, готовых к разговору, а не просто трафик.</p>
+        <div class="card-grid c4">
+          <div class="card"><div class="fv">$500</div><div class="fl">бюджет в месяц на Google Ads</div></div>
+          <div class="card"><div class="fv">4</div><div class="fl">кампании: Покупка (RU+EN), Премиум-формат, Сравнение с конкурентами</div></div>
+          <div class="card"><div class="fv">87</div><div class="fl">ключевых слова с реальными данными Планировщика (29 EN + 58 RU)</div></div>
+          <div class="card"><div class="fv">4</div><div class="fl">гео-ядра: Грузия, Украина+Беларусь, Израиль, Германия</div></div>
+        </div>
+        <p class="lede" style="margin-top:16px;"><b>Позиционирование:</b> не «недвижимость в Тбилиси вообще», а конкретный, проверяемый факт — клубный формат (14 домов, не сотни), инженерная автономность, локация Elya Hill, статус «полностью сдан». Каждое объявление ниже опирается на один из этих фактов, не на общие фразы.</p>
+        <p class="lede">Яндекс.Директ ведём отдельным треком — как только подключим Wordstat API и получим реальные частотности по русскому ядру, построим такую же стратегию, что и здесь.</p>
+      </div>
+
+      <div class="chapter">
+        <div class="chapter-head"><span class="chapter-tag">[01]</span><h2>Как устроена реклама</h2></div>
+        <p class="lede">Четыре рекламные кампании, у каждой своя задача — вместе они покрывают весь путь покупателя, от первого поиска «квартиры в Тбилиси» до сравнения с конкретными застройщиками.</p>
+        <table class="grid">
+          <tr><th>#</th><th>Кампания</th><th>Кому показываем</th><th>Доля бюджета</th></tr>
+          <tr><td class="num">1</td><td>Покупка — Английский</td><td>Тем, кто ищет квартиру/дом в Тбилиси на английском</td><td class="num">35%</td></tr>
+          <tr><td class="num">2</td><td>Покупка — Русский</td><td>Тем, кто ищет на русском</td><td class="num">30%</td></tr>
+          <tr><td class="num">3</td><td>Премиум-формат</td><td>Тем, кто ищет конкретно пентхаус/резиденцию — уже более узкий, «горячий» запрос</td><td class="num">15%</td></tr>
+          <tr><td class="num">4</td><td>Сравнение с конкурентами</td><td>Тем, кто уже присматривается к другим застройщикам Тбилиси</td><td class="num">5%</td></tr>
+        </table>
+        <p class="lede" style="margin-top:14px;">Оставшиеся 15% бюджета — резерв на тестирование новых запросов, которые появятся уже после запуска.</p>
+      </div>
+
+      <div class="chapter">
+        <div class="chapter-head"><span class="chapter-tag">[02]</span><h2>География</h2></div>
+        <p class="lede">Реклама показывается только реальным жителям нужных стран, а не всем, кто просто упомянул страну в запросе — это защищает от показа не той аудитории.</p>
+        <div class="ledger">
+          <div class="ledger-row"><div class="ledger-country">Грузия</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="ledger-cpl">база</div><div class="ledger-status status-core">Ядро</div></div>
+          <div class="ledger-row"><div class="ledger-country">Украина+Беларусь</div><div class="bar-track"><div class="bar-fill" style="width:38%"></div></div><div class="ledger-cpl">выше</div><div class="ledger-status status-core">Ядро</div></div>
+          <div class="ledger-row"><div class="ledger-country">Израиль</div><div class="bar-track"><div class="bar-fill" style="width:28%"></div></div><div class="ledger-cpl">выше</div><div class="ledger-status status-core">Ядро</div></div>
+          <div class="ledger-row"><div class="ledger-country">Германия</div><div class="bar-track"><div class="bar-fill weak" style="width:22%"></div></div><div class="ledger-cpl">умеренно</div><div class="ledger-status status-test">Поддержка</div></div>
+        </div>
+        <div class="callout">Россия отдельно: Google не показывает статистику по запросам оттуда (ограничения показа рекламы), поэтому спрос там мы не видим через этот инструмент — не значит, что его нет. Для российской аудитории работает Яндекс.</div>
+      </div>
+
+      <div class="chapter" style="border-bottom:none; padding-bottom:0;">
+        <div class="chapter-head"><span class="chapter-tag">[03]</span><h2>Ключевые слова и объявления — по языку</h2></div>
+        <p class="lede">Дальше всё разделено по языку аудитории — переключайтесь между вкладками, это два независимых блока кампаний.</p>
+        <div class="subswitch">
+          <button class="langswitch-btn active" data-lang="lang-ru">Русский</button>
+          <button class="langswitch-btn" data-lang="lang-en">Английский</button>
+        </div>
+      </div>
+
+      <!-- ===== RUSSIAN TRACK ===== -->
+      <div class="lang-panel active" id="lang-ru">
+
+        <div class="chapter">
+          <div class="chapter-head"><span class="chapter-tag">[04]</span><h2>Все ключевые слова — русский язык</h2></div>
+          <p class="lede">58 фраз, реальные данные Планировщика.</p>
+          <div class="tblwrap">
+          <table class="grid">
+            <tr><th>Фраза</th><th>Показов/мес</th><th>Конкуренция</th><th>Кампания</th></tr>
+            <tr><td>купить квартиру в тбилиси</td><td class="num">1600</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>квартиру в тбилиси</td><td class="num">720</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>купить дом в грузии</td><td class="num">720</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>купить квартиру в грузии</td><td class="num">720</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>купить квартиру тбилиси</td><td class="num">590</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>квартиры тбилиси</td><td class="num">480</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>недвижимость в грузии</td><td class="num">480</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>дом в грузии</td><td class="num">320</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>недвижимость тбилиси</td><td class="num">320</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>квартиры в грузии</td><td class="num">260</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>купить дом в тбилиси</td><td class="num">260</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>куплю дом в тбилиси</td><td class="num">260</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>недвижимость грузии</td><td class="num">210</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>дом тбилиси</td><td class="num">170</td><td>Низкая</td><td>Покупка</td></tr>
+            <tr><td>купить квартиру грузия</td><td class="num">170</td><td>Высокая</td><td>Покупка</td></tr>
+            <tr><td>купить недвижимость в грузии</td><td class="num">170</td><td>Высокая</td><td>Покупка</td></tr>
+            <tr><td>недвижимость в тбилиси</td><td class="num">170</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>тбилиси квартиры</td><td class="num">170</td><td>Низкая</td><td>Покупка</td></tr>
+            <tr><td>тбилиси купить квартиру</td><td class="num">140</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>грузия купить квартиру</td><td class="num">110</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>жилье в грузии</td><td class="num">110</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>купить дом грузия</td><td class="num">110</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>апартаменты в тбилиси</td><td class="num">90</td><td>Средняя</td><td>Премиум-формат</td></tr>
+            <tr><td>грузия недвижимость</td><td class="num">90</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>дом грузии</td><td class="num">90</td><td>Низкая</td><td>Покупка</td></tr>
+            <tr><td>дом грузия</td><td class="num">90</td><td>Низкая</td><td>Покупка</td></tr>
+            <tr><td>жилье в тбилиси</td><td class="num">90</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>квартиры грузия</td><td class="num">90</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>купить дом тбилиси</td><td class="num">90</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>апартаменты тбилиси</td><td class="num">70</td><td>Высокая</td><td>Премиум-формат</td></tr>
+            <tr><td>грузия дом</td><td class="num">70</td><td>Низкая</td><td>Покупка</td></tr>
+            <tr><td>дом в тбилиси</td><td class="num">70</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>жилье тбилиси</td><td class="num">70</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>купить жилье в грузии</td><td class="num">70</td><td>Высокая</td><td>Покупка</td></tr>
+            <tr><td>тбилиси жилье</td><td class="num">70</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>тбилиси недвижимость</td><td class="num">70</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>грузия квартиры</td><td class="num">50</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>грузия купить дом</td><td class="num">50</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>куплю квартиру в тбилиси</td><td class="num">50</td><td>Низкая</td><td>Покупка</td></tr>
+            <tr><td>грузия жилье</td><td class="num">40</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>жилье грузия</td><td class="num">40</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>купить студию в тбилиси</td><td class="num">40</td><td>Высокая</td><td>Премиум-формат</td></tr>
+            <tr><td>тбилиси апартаменты</td><td class="num">40</td><td>Средняя</td><td>Премиум-формат</td></tr>
+            <tr><td>купить недвижимость в тбилиси</td><td class="num">30</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>апартаменты грузия</td><td class="num">20</td><td>Средняя</td><td>Премиум-формат</td></tr>
+            <tr><td>купить жилье в тбилиси</td><td class="num">20</td><td>Высокая</td><td>Покупка</td></tr>
+            <tr><td>тбилиси дом</td><td class="num">20</td><td>Низкая</td><td>Покупка</td></tr>
+            <tr><td>тбилиси купить дом</td><td class="num">20</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>грузия апартаменты</td><td class="num">10</td><td>Средняя</td><td>Премиум-формат</td></tr>
+            <tr><td>грузия купить жилье</td><td class="num">10</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>грузия купить недвижимость</td><td class="num">10</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>купить апартаменты в грузии</td><td class="num">10</td><td>Высокая</td><td>Премиум-формат</td></tr>
+            <tr><td>купить апартаменты в тбилиси</td><td class="num">10</td><td>Средняя</td><td>Премиум-формат</td></tr>
+            <tr><td>купить жилье грузия</td><td class="num">10</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>купить недвижимость тбилиси</td><td class="num">10</td><td>Средняя</td><td>Покупка</td></tr>
+            <tr><td>купить студию в грузии</td><td class="num">10</td><td>Высокая</td><td>Премиум-формат</td></tr>
+            <tr><td>куплю дом в грузии</td><td class="num">10</td><td>Низкая</td><td>Покупка</td></tr>
+            <tr><td>пентхаус тбилиси</td><td class="num">10</td><td>Низкая</td><td>Премиум-формат</td></tr>
+          </table>
+          </div>
+        </div>
+
+        <div class="chapter">
+          <div class="chapter-head"><span class="chapter-tag">[05]</span><h2>Минус-слова и конкуренты</h2></div>
+          <div class="chip-row"><span class="chip">аренда</span><span class="chip">снять</span><span class="chip">посуточно</span><span class="chip">дешево</span><span class="chip">участок</span><span class="chip">бюджетный</span></div>
+          <p class="lede" style="margin-top:16px;"><b>Конкуренты, по которым таргетируемся:</b> Archi (единственный, где Планировщик показал реальный объём — 90 показов/мес), а также Tbilisi Hills, GWG Development, M2, Eaglehills/EMAAR, Apart Development, Domus, Tsereteli Deluxe — их тоже включаем в кампанию сравнения. Планировщик не показывает по ним объём, но это не значит, что их не ищут — просто инструмент не всегда видит редкие брендовые запросы. Держим их в кампании, смотрим реальный CTR после запуска.</p>
+        </div>
+
+        <div class="chapter">
+          <div class="chapter-head"><span class="chapter-tag">[06]</span><h2>Объявления — Покупка</h2></div>
+          <div class="kw-label" style="font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:8px;">Заголовки (15)</div>
+          <div class="headline-list">
+            <div class="headline-pill">Купить Квартиру в Тбилиси</div>
+            <div class="headline-pill">Недвижимость в Тбилиси</div>
+            <div class="headline-pill">Купить Квартиру в Грузии</div>
+            <div class="headline-pill">Купить Дом в Тбилиси</div>
+            <div class="headline-pill">Купить Дом в Грузии</div>
+            <div class="headline-pill">ELYSIUM — Клубный Дом</div>
+            <div class="headline-pill">Только 14 Резиденций</div>
+            <div class="headline-pill">Панорамные Виды Тбилиси</div>
+            <div class="headline-pill">Апартаменты 138–191 м²</div>
+            <div class="headline-pill">Дом Полностью Сдан</div>
+            <div class="headline-pill">Клубный Дом ELYSIUM</div>
+            <div class="headline-pill">Записаться на Просмотр</div>
+            <div class="headline-pill">Планировки и Цены</div>
+            <div class="headline-pill">ВНЖ При Покупке от $150К</div>
+            <div class="headline-pill">Тбилиси, Элия Хилл</div>
+          </div>
+          <div class="kw-label" style="font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:20px; margin-bottom:8px;">Описания (4)</div>
+          <div class="headline-list" style="grid-template-columns:1fr 1fr;">
+            <div class="headline-pill">Клубный дом на 14 резиденций с панорамными видами на Тбилиси.</div>
+            <div class="headline-pill">Дом полностью сдан. Апартаменты от 138 до 191 м², свободная планировка.</div>
+            <div class="headline-pill">Охрана 24/7, полная автономность, лифты KONE — приватность и комфорт.</div>
+            <div class="headline-pill">Покупатели могут претендовать на резидентство Грузии. Запишитесь на показ.</div>
+          </div>
+          <div class="kw-label" style="font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:20px; margin-bottom:8px;">Уточнения</div>
+          <div class="chip-row"><span class="chip">Охрана 24/7</span><span class="chip">Полная Автономность</span><span class="chip">Лифты KONE</span><span class="chip">Подземный Паркинг</span><span class="chip">Только 14 Резиденций</span><span class="chip">Джакузи на Крыше</span><span class="chip">Дом Сдан</span></div>
+          <div class="ad-preview">
+            <div class="ad-title">Купить Квартиру в Тбилиси | ELYSIUM — Клубный Дом</div>
+            <div class="ad-url">elysiumtbilisi.com</div>
+            <div class="ad-desc">Клубный дом на 14 резиденций с панорамными видами на Тбилиси.</div>
+            <div class="ad-desc" style="margin-top:4px;">Дом полностью сдан. Апартаменты от 138 до 191 м², свободная планировка.</div>
+          </div>
+        </div>
+
+        <div class="chapter">
+          <div class="chapter-head"><span class="chapter-tag">[07]</span><h2>Объявления — Премиум-формат</h2></div>
+          <p class="lede">Для тех, кто ищет уже не «квартиру вообще», а конкретно пентхаус или резиденцию.</p>
+          <div class="kw-label" style="font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:8px;">Заголовки (15)</div>
+          <div class="headline-list">
+            <div class="headline-pill">Пентхаус в Тбилиси</div>
+            <div class="headline-pill">Резиденции ELYSIUM</div>
+            <div class="headline-pill">Клубный Дом, Не Комплекс</div>
+            <div class="headline-pill">Всего 2 Квартиры на Этаже</div>
+            <div class="headline-pill">Без Несущих Стен Внутри</div>
+            <div class="headline-pill">Своя Планировка Под Себя</div>
+            <div class="headline-pill">Купить Пентхаус в Грузии</div>
+            <div class="headline-pill">Элия Хилл, 10 Минут до Центра</div>
+            <div class="headline-pill">Дом Полностью Сдан</div>
+            <div class="headline-pill">Панорамные Виды на Город</div>
+            <div class="headline-pill">Записаться на Просмотр</div>
+            <div class="headline-pill">ELYSIUM — Клубный Дом</div>
+            <div class="headline-pill">Только 14 Резиденций</div>
+            <div class="headline-pill">Резиденция в Грузии</div>
+            <div class="headline-pill">Индивидуальный Показ</div>
+          </div>
+          <div class="kw-label" style="font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:20px; margin-bottom:8px;">Описания (4)</div>
+          <div class="headline-list" style="grid-template-columns:1fr 1fr;">
+            <div class="headline-pill">Резиденция на Элия Хилл — всего 14 домов, панорамные виды на город.</div>
+            <div class="headline-pill">Две квартиры на этаж. Без несущих стен — планируйте интерьер сами.</div>
+            <div class="headline-pill">Крыша с джакузи, садом и барбекю — только для резидентов дома.</div>
+            <div class="headline-pill">Дом полностью сдан. Подземный паркинг, охрана 24/7, полная автономность.</div>
+          </div>
+          <div class="kw-label" style="font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:20px; margin-bottom:8px;">Уточнения</div>
+          <div class="chip-row"><span class="chip">Джакузи на Крыше</span><span class="chip">Свой Сад</span><span class="chip">Охрана 24/7</span><span class="chip">Подземный Паркинг</span><span class="chip">2 Квартиры на Этаже</span><span class="chip">Дом Сдан</span></div>
+          <div class="ad-preview">
+            <div class="ad-title">Пентхаус в Тбилиси | Резиденции ELYSIUM</div>
+            <div class="ad-url">elysiumtbilisi.com</div>
+            <div class="ad-desc">Резиденция на Элия Хилл — всего 14 домов, панорамные виды на город.</div>
+            <div class="ad-desc" style="margin-top:4px;">Две квартиры на этаж. Без несущих стен — планируйте интерьер сами.</div>
+          </div>
+        </div>
+
+        <div class="chapter" style="border-bottom:none;">
+          <div class="chapter-head"><span class="chapter-tag">[08]</span><h2>Объявления — Сравнение с конкурентами</h2></div>
+          <p class="lede">Показываем тем, кто ищет Archi, Tbilisi Hills, GWG, M2, Eaglehills/EMAAR, Apart Development, Domus, Tsereteli Deluxe — уже сравнивает варианты. Не называем конкурентов в тексте, только в ключевых словах. Упор — на факты, которые реально отличают нас: дом уже сдан (не долгострой), клубный формат (14, не сотни), инженерная автономность.</p>
+          <div class="kw-label" style="font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:8px;">Заголовки (15)</div>
+          <div class="headline-list">
+            <div class="headline-pill">Дом Полностью Сдан</div>
+            <div class="headline-pill">Не Комплекс, а Клубный Дом</div>
+            <div class="headline-pill">Всего 14 Резиденций в Тбилиси</div>
+            <div class="headline-pill">2 Квартиры на Этаж, Не 20</div>
+            <div class="headline-pill">Элия Хилл: Приватность Рядом</div>
+            <div class="headline-pill">Апартаменты 138–191 м²</div>
+            <div class="headline-pill">Без Несущих Стен Внутри</div>
+            <div class="headline-pill">Подземный Паркинг Включён</div>
+            <div class="headline-pill">Автономность Без Перебоев</div>
+            <div class="headline-pill">Панорамный Вид у Каждого</div>
+            <div class="headline-pill">Полная Информация о Проекте</div>
+            <div class="headline-pill">Записаться на Показ Сегодня</div>
+            <div class="headline-pill">ELYSIUM — Клубный Дом</div>
+            <div class="headline-pill">Купить Квартиру в Тбилиси</div>
+            <div class="headline-pill">Недвижимость в Тбилиси</div>
+          </div>
+          <div class="kw-label" style="font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:20px; margin-bottom:8px;">Описания (4)</div>
+          <div class="headline-list" style="grid-template-columns:1fr 1fr;">
+            <div class="headline-pill">Дом полностью сдан — не долгострой. Посмотрите ELYSIUM лично.</div>
+            <div class="headline-pill">Клубный дом — всего 14 резиденций, по 2 на этаж, реальный простор.</div>
+            <div class="headline-pill">Полная автономность: генератор и 70 тонн воды. Без перебоев, никогда.</div>
+            <div class="headline-pill">Запросите полную информацию — планировки, цены и личный показ.</div>
+          </div>
+          <div class="kw-label" style="font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:20px; margin-bottom:8px;">Уточнения</div>
+          <div class="chip-row"><span class="chip">Дом Сдан</span><span class="chip">Только 14 Резиденций</span><span class="chip">Полная Автономность</span><span class="chip">Охрана 24/7</span><span class="chip">Лифты KONE</span><span class="chip">Свой Паркинг</span></div>
+          <div class="ad-preview">
+            <div class="ad-title">Дом Полностью Сдан | Не Комплекс, а Клубный Дом</div>
+            <div class="ad-url">elysiumtbilisi.com</div>
+            <div class="ad-desc">Дом полностью сдан — не долгострой. Посмотрите ELYSIUM лично.</div>
+            <div class="ad-desc" style="margin-top:4px;">Клубный дом — всего 14 резиденций, по 2 на этаж, реальный простор.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===== ENGLISH TRACK ===== -->
+      <div class="lang-panel" id="lang-en">
+
+        <div class="chapter">
+          <div class="chapter-head"><span class="chapter-tag">[04]</span><h2>All keywords — English</h2></div>
+          <p class="lede">29 phrases, real data from Google Keyword Planner.</p>
+          <div class="tblwrap">
+          <table class="grid">
+            <tr><th>Phrase</th><th>Searches/mo</th><th>Competition</th><th>Campaign</th></tr>
+            <tr><td>apartment georgia</td><td class="num">4400</td><td>Medium</td><td>Purchase</td></tr>
+            <tr><td>flat georgia</td><td class="num">4400</td><td>Medium</td><td>Purchase</td></tr>
+            <tr><td>flat in georgia</td><td class="num">4400</td><td>Medium</td><td>Purchase</td></tr>
+            <tr><td>house georgia</td><td class="num">2400</td><td>Medium</td><td>Purchase</td></tr>
+            <tr><td>apartment in tbilisi</td><td class="num">1600</td><td>Low</td><td>Purchase</td></tr>
+            <tr><td>apartment tbilisi georgia</td><td class="num">1600</td><td>Low</td><td>Purchase</td></tr>
+            <tr><td>flat in tbilisi</td><td class="num">1600</td><td>Low</td><td>Purchase</td></tr>
+            <tr><td>house in tbilisi</td><td class="num">1300</td><td>Low</td><td>Purchase</td></tr>
+            <tr><td>buy apartment in tbilisi</td><td class="num">880</td><td>Medium</td><td>Purchase</td></tr>
+            <tr><td>buy flat in tbilisi</td><td class="num">880</td><td>Medium</td><td>Purchase</td></tr>
+            <tr><td>real estate in tbilisi</td><td class="num">720</td><td>Low</td><td>Purchase</td></tr>
+            <tr><td>real estate tbilisi georgia</td><td class="num">720</td><td>Low</td><td>Purchase</td></tr>
+            <tr><td>condo georgia</td><td class="num">480</td><td>Low</td><td>Purchase</td></tr>
+            <tr><td>real estate georgia</td><td class="num">480</td><td>Medium</td><td>Purchase</td></tr>
+            <tr><td>buy apartment georgia</td><td class="num">390</td><td>Medium</td><td>Purchase</td></tr>
+            <tr><td>buy house in tbilisi</td><td class="num">390</td><td>Medium</td><td>Purchase</td></tr>
+            <tr><td>property georgia</td><td class="num">260</td><td>Medium</td><td>Purchase</td></tr>
+            <tr><td>property in tbilisi</td><td class="num">210</td><td>Medium</td><td>Purchase</td></tr>
+            <tr><td>penthouse georgia</td><td class="num">140</td><td>Medium</td><td>Premium</td></tr>
+            <tr><td>buy house georgia</td><td class="num">110</td><td>Medium</td><td>Purchase</td></tr>
+            <tr><td>buy property in tbilisi</td><td class="num">110</td><td>Medium</td><td>Purchase</td></tr>
+            <tr><td>buy property georgia</td><td class="num">70</td><td>Medium</td><td>Purchase</td></tr>
+            <tr><td>residence tbilisi</td><td class="num">70</td><td>Low</td><td>Premium</td></tr>
+            <tr><td>penthouse in tbilisi</td><td class="num">50</td><td>Medium</td><td>Premium</td></tr>
+            <tr><td>penthouse tbilisi</td><td class="num">50</td><td>Medium</td><td>Premium</td></tr>
+            <tr><td>residence georgia</td><td class="num">50</td><td>Low</td><td>Premium</td></tr>
+            <tr><td>buy flat in georgia</td><td class="num">40</td><td>Medium</td><td>Purchase</td></tr>
+            <tr><td>buy apartment tbilisi georgia</td><td class="num">10</td><td>Low</td><td>Premium</td></tr>
+            <tr><td>buy real estate in georgia</td><td class="num">10</td><td>Low</td><td>Purchase</td></tr>
+          </table>
+          </div>
+        </div>
+
+        <div class="chapter">
+          <div class="chapter-head"><span class="chapter-tag">[05]</span><h2>Negative keywords and competitors</h2></div>
+          <div class="chip-row"><span class="chip">rent</span><span class="chip">for rent</span><span class="chip">rental</span><span class="chip">flat for rent</span><span class="chip">house for rent</span><span class="chip">land</span><span class="chip">plot</span><span class="chip">cheap</span><span class="chip">budget</span></div>
+          <p class="lede" style="margin-top:16px;"><b>Competitors we target:</b> Archi (the only one Planner showed real volume for — 90 searches/mo), plus Tbilisi Hills, GWG Development, M2, Eaglehills/EMAAR, Apart Development, Domus, Tsereteli Deluxe. Planner shows no measurable volume for these, which doesn't mean nobody searches for them — the tool just doesn't always catch rare brand queries. We keep them in the campaign and watch real CTR after launch.</p>
+        </div>
+
+        <div class="chapter">
+          <div class="chapter-head"><span class="chapter-tag">[06]</span><h2>Ads — Purchase</h2></div>
+          <div class="kw-label" style="font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:8px;">Headlines (15)</div>
+          <div class="headline-list">
+            <div class="headline-pill">Apartments For Sale in Tbilisi</div>
+            <div class="headline-pill">Buy Property in Tbilisi</div>
+            <div class="headline-pill">Real Estate in Tbilisi</div>
+            <div class="headline-pill">Houses For Sale in Tbilisi</div>
+            <div class="headline-pill">Buy Apartment in Tbilisi</div>
+            <div class="headline-pill">ELYSIUM — Club Residence</div>
+            <div class="headline-pill">Only 14 Residences</div>
+            <div class="headline-pill">Panoramic Views of Tbilisi</div>
+            <div class="headline-pill">138-191 sqm Apartments</div>
+            <div class="headline-pill">Fully Completed, Ready Now</div>
+            <div class="headline-pill">Private Club Residence</div>
+            <div class="headline-pill">Book Your Viewing Today</div>
+            <div class="headline-pill">See Floor Plans Now</div>
+            <div class="headline-pill">Residency From $150K</div>
+            <div class="headline-pill">Tbilisi, Elya Hill</div>
+          </div>
+          <div class="kw-label" style="font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:20px; margin-bottom:8px;">Descriptions (4)</div>
+          <div class="headline-list" style="grid-template-columns:1fr 1fr;">
+            <div class="headline-pill">A private club residence in Tbilisi with only 14 homes and panoramic views.</div>
+            <div class="headline-pill">Fully completed and ready now. Apartments from 138 to 191 sqm, open-plan.</div>
+            <div class="headline-pill">24/7 security, full autonomy, KONE elevators — built for privacy and comfort.</div>
+            <div class="headline-pill">Buyers may qualify for Georgian residency. Book a private viewing today.</div>
+          </div>
+          <div class="kw-label" style="font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:20px; margin-bottom:8px;">Callouts</div>
+          <div class="chip-row"><span class="chip">24/7 Security</span><span class="chip">Full Autonomy</span><span class="chip">KONE Elevators</span><span class="chip">Underground Parking</span><span class="chip">Only 14 Residences</span><span class="chip">Rooftop Jacuzzi</span><span class="chip">Fully Completed</span></div>
+          <div class="ad-preview">
+            <div class="ad-title">Apartments For Sale in Tbilisi | ELYSIUM — Club Residence</div>
+            <div class="ad-url">elysiumtbilisi.com</div>
+            <div class="ad-desc">A private club residence in Tbilisi with only 14 homes and panoramic views.</div>
+            <div class="ad-desc" style="margin-top:4px;">Fully completed and ready now. Apartments from 138 to 191 sqm, open-plan.</div>
+          </div>
+        </div>
+
+        <div class="chapter">
+          <div class="chapter-head"><span class="chapter-tag">[07]</span><h2>Ads — Premium Format</h2></div>
+          <p class="lede">For people already searching specifically for a penthouse or residence, not just "an apartment."</p>
+          <div class="kw-label" style="font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:8px;">Headlines (15)</div>
+          <div class="headline-list">
+            <div class="headline-pill">Penthouse in Tbilisi</div>
+            <div class="headline-pill">ELYSIUM Residences</div>
+            <div class="headline-pill">Club Residence, Not a Complex</div>
+            <div class="headline-pill">Two Homes Per Floor Only</div>
+            <div class="headline-pill">No Load-Bearing Walls Inside</div>
+            <div class="headline-pill">Design Your Own Layout</div>
+            <div class="headline-pill">Buy Penthouse in Georgia</div>
+            <div class="headline-pill">Elya Hill, 10 Min to Center</div>
+            <div class="headline-pill">Fully Completed Residence</div>
+            <div class="headline-pill">Panoramic City Views</div>
+            <div class="headline-pill">Book a Private Viewing</div>
+            <div class="headline-pill">ELYSIUM — Club Residence</div>
+            <div class="headline-pill">Only 14 Homes Total</div>
+            <div class="headline-pill">Residence Georgia, Tbilisi</div>
+            <div class="headline-pill">Book Your Private Tour</div>
+          </div>
+          <div class="kw-label" style="font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:20px; margin-bottom:8px;">Descriptions (4)</div>
+          <div class="headline-list" style="grid-template-columns:1fr 1fr;">
+            <div class="headline-pill">A penthouse-level residence on Elya Hill — only 14 homes, panoramic views.</div>
+            <div class="headline-pill">Two residences per floor. No load-bearing walls — design your own layout.</div>
+            <div class="headline-pill">Private rooftop with jacuzzi, garden, and BBQ area, for residents only.</div>
+            <div class="headline-pill">Fully completed. Underground parking, 24/7 security, full autonomy.</div>
+          </div>
+          <div class="kw-label" style="font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:20px; margin-bottom:8px;">Callouts</div>
+          <div class="chip-row"><span class="chip">Rooftop Jacuzzi</span><span class="chip">Private Garden</span><span class="chip">24/7 Security</span><span class="chip">Underground Parking</span><span class="chip">Two Per Floor</span><span class="chip">Fully Completed</span></div>
+          <div class="ad-preview">
+            <div class="ad-title">Penthouse in Tbilisi | ELYSIUM Residences</div>
+            <div class="ad-url">elysiumtbilisi.com</div>
+            <div class="ad-desc">A penthouse-level residence on Elya Hill — only 14 homes, panoramic views.</div>
+            <div class="ad-desc" style="margin-top:4px;">Two residences per floor. No load-bearing walls — design your own layout.</div>
+          </div>
+        </div>
+
+        <div class="chapter" style="border-bottom:none;">
+          <div class="chapter-head"><span class="chapter-tag">[08]</span><h2>Ads — Competitor Comparison</h2></div>
+          <p class="lede">Shown to people searching Archi, Tbilisi Hills, GWG, M2, Eaglehills/EMAAR, Apart Development, Domus, Tsereteli Deluxe — already comparing options. Competitors are not named in the ad text, only used as target keywords. Lead with facts that genuinely set us apart: already completed (not pre-sale), club format (14 homes, not hundreds), engineering autonomy.</p>
+          <div class="kw-label" style="font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:8px;">Headlines (15)</div>
+          <div class="headline-list">
+            <div class="headline-pill">Fully Completed, Move In Now</div>
+            <div class="headline-pill">Not a Complex — A Club Home</div>
+            <div class="headline-pill">Only 14 Residences in Tbilisi</div>
+            <div class="headline-pill">Two Homes Per Floor, Not 20</div>
+            <div class="headline-pill">Elya Hill: Private, 10 Min Out</div>
+            <div class="headline-pill">138-191 sqm, Real Space</div>
+            <div class="headline-pill">No Load-Bearing Walls Inside</div>
+            <div class="headline-pill">Underground Parking Included</div>
+            <div class="headline-pill">Full Autonomy, No Outages</div>
+            <div class="headline-pill">Panoramic Views, Every Unit</div>
+            <div class="headline-pill">See the Full Project Details</div>
+            <div class="headline-pill">Book a Private Tour Today</div>
+            <div class="headline-pill">ELYSIUM — Club Residence</div>
+            <div class="headline-pill">Buy Property in Tbilisi</div>
+            <div class="headline-pill">Real Estate in Tbilisi</div>
+          </div>
+          <div class="kw-label" style="font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:20px; margin-bottom:8px;">Descriptions (4)</div>
+          <div class="headline-list" style="grid-template-columns:1fr 1fr;">
+            <div class="headline-pill">Fully completed and move-in ready — not a pre-sale. See ELYSIUM in person.</div>
+            <div class="headline-pill">A private club residence — just 14 homes, two per floor, real space.</div>
+            <div class="headline-pill">Full autonomy: backup generator, 70-ton water reserve. No outages, ever.</div>
+            <div class="headline-pill">Request full project details — layouts, pricing, and a private tour.</div>
+          </div>
+          <div class="kw-label" style="font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:20px; margin-bottom:8px;">Callouts</div>
+          <div class="chip-row"><span class="chip">Fully Completed</span><span class="chip">Only 14 Homes</span><span class="chip">Full Autonomy</span><span class="chip">24/7 Security</span><span class="chip">KONE Elevators</span><span class="chip">Own Parking</span></div>
+          <div class="ad-preview">
+            <div class="ad-title">Fully Completed, Move In Now | Not a Complex — A Club Home</div>
+            <div class="ad-url">elysiumtbilisi.com</div>
+            <div class="ad-desc">Fully completed and move-in ready — not a pre-sale. See ELYSIUM in person.</div>
+            <div class="ad-desc" style="margin-top:4px;">A private club residence — just 14 homes, two per floor, real space.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="chapter" style="border-bottom:none;">
+        <div class="chapter-head"><span class="chapter-tag">[09]</span><h2>Дополнительные ссылки и ставки</h2></div>
+        <p class="lede">Эти блоки показываются вместе с объявлением на странице поиска — одинаковые для всех кампаний, независимо от языка.</p>
+        <div class="kw-label" style="font-family:'Manrope',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:20px; margin-bottom:10px;">Дополнительные ссылки</div>
+        <div class="sitelink-grid">
+          <div class="sitelink-card"><div class="st">Резиденции и планировки</div><div class="sl">От 138 до 191 м²</div></div>
+          <div class="sitelink-card"><div class="st">Крыша и удобства</div><div class="sl">Джакузи, барбекю, фитнес</div></div>
+          <div class="sitelink-card"><div class="st">Локация — Элия Хилл</div><div class="sl">10 минут до центра</div></div>
+          <div class="sitelink-card"><div class="st">Запись на просмотр</div><div class="sl">Индивидуальный показ</div></div>
+        </div>
+        <div class="callout" style="margin-top:20px;">
+          <b>Ставки:</b> первые недели — «Максимум конверсий» без ограничения по цене (у аккаунта ещё нет истории, чтобы система понимала целевую цену). Через 4–6 недель, когда наберётся 30+ заявок, переходим на «Целевая цена за конверсию» — так система сама держит нужную стоимость лида, а не гонится просто за кликами.
+        </div>
+      </div>
+
+      <div class="chapter" style="border-bottom:none;">
+        <div class="chapter-head"><span class="chapter-tag">[10]</span><h2>Что ещё включить в настройках — расширяем результативность</h2></div>
+        <p class="lede">Помимо ключевых слов и объявлений, в Google Ads есть 5 настроек, которые реально влияют на результат. Ничего из этого не требует новых кампаний — это доп. слои поверх уже описанной структуры.</p>
+
+        <h3 style="font-family:'Manrope',sans-serif; font-weight:700; font-size:15px; margin:24px 0 10px; color:var(--ink);">1. Типы соответствия ключевых слов</h3>
+        <p class="lede">Когда вы добавляете ключ, можно выбрать, насколько точно запрос человека должен совпадать с фразой:</p>
+        <table class="grid">
+          <tr><th>Тип</th><th>Как работает</th><th>Где используем</th></tr>
+          <tr><td>Точное соответствие</td><td>Показ только на саму фразу и её явные вариации (опечатки, ед./мн. число)</td><td>Топ-10 самых денежных фраз из наших таблиц — гарантируем показ именно на них</td></tr>
+          <tr><td>Фразовое соответствие</td><td>Показ, если смысл фразы сохраняется, порядок слов может отличаться</td><td>Основная масса ключей — баланс охвата и точности</td></tr>
+          <tr><td>Широкое соответствие + автостратегия</td><td>Google сам находит похожие запросы, которых нет в нашем списке</td><td>Небольшая доля бюджета (10–15%) как разведка новых формулировок — под контролем автостратегии по цене конверсии, не бюджет вслепую</td></tr>
+        </table>
+        <p class="lede" style="margin-top:10px;">Начинаем с фразового + точного (предсказуемо), широкое подключаем через 3–4 недели, когда минус-слова уже отфильтрованы по факту первых показов — иначе широкое соответствие без истории может слить бюджет на нерелевантное.</p>
+
+        <h3 style="font-family:'Manrope',sans-serif; font-weight:700; font-size:15px; margin:24px 0 10px; color:var(--ink);">2. Аудитории как сигнал (не ограничение)</h3>
+        <p class="lede">В настройках кампании можно добавить «Наблюдение за аудиторией» — это не сужает показы, а подсказывает системе, кому наша реклама вероятнее всего интересна, ускоряя обучение алгоритма: интерес к luxury-сегменту, инвесторы, недавно переехавшие (Recently Moved).</p>
+
+        <h3 style="font-family:'Manrope',sans-serif; font-weight:700; font-size:15px; margin:24px 0 10px; color:var(--ink);">3. Форма для заявки прямо в объявлении</h3>
+        <p class="lede">Google даёт возможность прикрепить короткую форму («узнать больше», «записаться на показ») прямо к объявлению — человек оставляет контакт, не переходя на сайт. Для премиальной недвижимости это снижает барьер: не каждый готов сразу листать весь сайт, а форму в 2 клика заполнит охотнее. Добавляем как второй путь конверсии, параллельно с переходом на сайт.</p>
+
+        <h3 style="font-family:'Manrope',sans-serif; font-weight:700; font-size:15px; margin:24px 0 10px; color:var(--ink);">4. Ремаркетинг на посетителей сайта</h3>
+        <p class="lede">Как только на сайте появится код отслеживания, Google начнёт копить список людей, которые заходили, но не оставили заявку. Через 3–4 недели это становится отдельной небольшой кампанией — показываем этим людям рекламу повторно, цена клика там обычно в 2–3 раза ниже, чем у холодного поиска.</p>
+
+        <h3 style="font-family:'Manrope',sans-serif; font-weight:700; font-size:15px; margin:24px 0 10px; color:var(--ink);">5. Динамические объявления по сайту (позже)</h3>
+        <p class="lede">Google умеет сам сканировать страницы сайта и формировать объявления под запросы, которых нет в нашем списке ключей — полезно, потому что сайт elysiumtbilisi.com содержит много уникального текста (архитектура, инженерия, локация). Не включаем на старте — сначала должна накопиться история по управляемым кампаниям, чтобы было с чем сравнивать эффективность.</p>
+      </div>
+
+      <div class="chapter">
+        <div class="chapter-head"><span class="chapter-tag">[11]</span><h2>Кластеризация: от ключа до объявления</h2></div>
+        <p class="lede">Реклама строится из семантики, а не наоборот — вот как конкретный запрос превращается в конкретное объявление, шаг за шагом.</p>
+
+        <h3 style="font-family:'Manrope',sans-serif; font-weight:700; font-size:15px; margin:22px 0 10px; color:var(--ink);">Кластер «Покупка» (Broad Purchase Intent)</h3>
+        <div class="pipeline">
+          <div class="pipeline-step"><div class="pt">Keyword</div><div class="pd">buy apartment in tbilisi · купить квартиру в тбилиси</div></div>
+          <div class="pipeline-step"><div class="pt">Intent</div><div class="pd">Коммерческий, готовность купить</div></div>
+          <div class="pipeline-step"><div class="pt">Ad Group</div><div class="pd">Покупка — RU / EN</div></div>
+          <div class="pipeline-step"><div class="pt">Headline</div><div class="pd">«Apartments For Sale in Tbilisi» / «Купить Квартиру в Тбилиси»</div></div>
+          <div class="pipeline-step"><div class="pt">Description</div><div class="pd">Клубный дом на 14 резиденций с панорамными видами на Тбилиси</div></div>
+          <div class="pipeline-step"><div class="pt">Landing Page</div><div class="pd">Короткий сайт — быстрое решение, статус объекта</div></div>
+          <div class="pipeline-step"><div class="pt">CTA</div><div class="pd">Записаться на просмотр</div></div>
+        </div>
+
+        <h3 style="font-family:'Manrope',sans-serif; font-weight:700; font-size:15px; margin:22px 0 10px; color:var(--ink);">Кластер «Премиум-формат»</h3>
+        <div class="pipeline">
+          <div class="pipeline-step"><div class="pt">Keyword</div><div class="pd">penthouse in tbilisi · пентхаус тбилиси</div></div>
+          <div class="pipeline-step"><div class="pt">Intent</div><div class="pd">Узкий, более «горячий» — ищут конкретный тип</div></div>
+          <div class="pipeline-step"><div class="pt">Ad Group</div><div class="pd">Премиум-формат</div></div>
+          <div class="pipeline-step"><div class="pt">Headline</div><div class="pd">«Penthouse in Tbilisi» / «Пентхаус в Тбилиси»</div></div>
+          <div class="pipeline-step"><div class="pt">Description</div><div class="pd">Резиденция на Elya Hill — только 14 домов, панорамные виды</div></div>
+          <div class="pipeline-step"><div class="pt">Landing Page</div><div class="pd">Длинный сайт — сторителлинг, архитектура, инженерия</div></div>
+          <div class="pipeline-step"><div class="pt">CTA</div><div class="pd">Индивидуальный показ</div></div>
+        </div>
+
+        <h3 style="font-family:'Manrope',sans-serif; font-weight:700; font-size:15px; margin:22px 0 10px; color:var(--ink);">Кластер «Сравнение с конкурентами»</h3>
+        <div class="pipeline">
+          <div class="pipeline-step"><div class="pt">Keyword</div><div class="pd">archi tbilisi, tbilisi hills, gwg development и другие бренды застройщиков</div></div>
+          <div class="pipeline-step"><div class="pt">Intent</div><div class="pd">Уже сравнивает варианты, близок к решению</div></div>
+          <div class="pipeline-step"><div class="pt">Ad Group</div><div class="pd">Сравнение с конкурентами</div></div>
+          <div class="pipeline-step"><div class="pt">Headline</div><div class="pd">«Fully Completed, Move In Now» / «Дом Полностью Сдан»</div></div>
+          <div class="pipeline-step"><div class="pt">Description</div><div class="pd">Дом полностью сдан — не долгострой. Посмотрите ELYSIUM лично</div></div>
+          <div class="pipeline-step"><div class="pt">Landing Page</div><div class="pd">Длинный сайт, блок «О проекте» с фактами</div></div>
+          <div class="pipeline-step"><div class="pt">CTA</div><div class="pd">Запросить полную информацию</div></div>
+        </div>
+
+        <div class="callout" style="margin-top:20px;">Все три кластера уже полностью расписаны выше в разделах [06]–[08] на каждом языке — с 15 заголовками, 4 описаниями и уточнениями. Здесь показан только принцип, по которому это построено.</div>
+      </div>
+
+      <div class="chapter">
+        <div class="chapter-head"><span class="chapter-tag">[12]</span><h2>Бюджетная модель — $500/мес</h2></div>
+        <table class="grid">
+          <tr><th>Направление</th><th>Доля</th><th>Сумма/мес</th><th>Дневной бюджет</th></tr>
+          <tr><td>Покупка — Английский</td><td class="num">35%</td><td class="num">$175</td><td class="num">~$5,8</td></tr>
+          <tr><td>Покупка — Русский</td><td class="num">30%</td><td class="num">$150</td><td class="num">~$5,0</td></tr>
+          <tr><td>Премиум-формат (RU+EN)</td><td class="num">15%</td><td class="num">$75</td><td class="num">~$2,5</td></tr>
+          <tr><td>Сравнение с конкурентами</td><td class="num">5%</td><td class="num">$25</td><td class="num">~$0,8</td></tr>
+          <tr><td>Резерв на тест новых запросов</td><td class="num">15%</td><td class="num">$75</td><td class="num">—</td></tr>
+        </table>
+        <p class="lede" style="margin-top:14px;"><b>Как перераспределяем после первых данных:</b> недели 1–2 — бюджет фиксирован, копим данные. Неделя 3 — резерв 15% уходит в кластер с CPL заметно ниже среднего. Недели 4–6 — при 30+ конверсиях в кластере пересматриваем доли между всеми направлениями, не только резервом.</p>
+      </div>
+
+      <div class="chapter">
+        <div class="chapter-head"><span class="chapter-tag">[13]</span><h2>Воронка, KPI и путь заявки в CRM</h2></div>
+        <div class="flow">
+          <div class="flow-step">Поиск Google</div><div class="flow-arrow">→</div>
+          <div class="flow-step">Сайт</div><div class="flow-arrow">→</div>
+          <div class="flow-step">Заявка</div><div class="flow-arrow">→</div>
+          <div class="flow-step">Квалификация</div><div class="flow-arrow">→</div>
+          <div class="flow-step">Менеджер</div><div class="flow-arrow">→</div>
+          <div class="flow-step">Показ</div><div class="flow-arrow">→</div>
+          <div class="flow-step">Бронь</div><div class="flow-arrow">→</div>
+          <div class="flow-step">Сделка</div>
+        </div>
+        <div class="logic-grid">
+          <div class="logic-col">
+            <h3>Marketing KPI</h3>
+            <p>Показы, CTR, CPC, клики, просмотры сайта, конверсия в заявку, число заявок, стоимость заявки (CPL) — показывает эффективность трафика.</p>
+          </div>
+          <div class="logic-col">
+            <h3>Business KPI</h3>
+            <p>Квалифицированные заявки, стоимость квалифицированной заявки, показы объекта, брони, сделки, стоимость привлечения клиента (CAC), окупаемость (ROAS) — показывает эффективность в деньгах.</p>
+          </div>
+        </div>
+        <div class="callout warn">Дешёвая заявка не значит хорошая заявка для объекта от $100k+. Оптимизируем в итоге не по CPL, а по стоимости квалифицированной заявки и дальше — по сделкам, как только появится связь с CRM.</div>
+        <p class="lede" style="margin-top:16px;"><b>Что нужно для трекинга:</b> GA4 + Google Tag Manager на сайте, конверсии Google Ads настроены на реальные события (заявка на сайте, звонок, клик по WhatsApp), единый формат UTM-меток на каждой ссылке в объявлении, чтобы позже свести всё в CRM и видеть не просто «заявка», а «заявка → показ → сделка» по конкретному ключевому слову.</p>
+        <div class="callout good">Дашборд с реальными цифрами по Google Ads, Meta и Яндексу — теперь отдельная страница (кнопка «Дашборд» в шапке сайта), не часть этого документа.</div>
+      </div>
+
+      <div class="chapter" style="border-bottom:none;">
+        <div class="chapter-head"><span class="chapter-tag">[14]</span><h2>Автоматизация и план запуска</h2></div>
+        <p class="lede">Три уровня — от «делаем руками» до «система сама предлагает изменения», подробная техническая инструкция уже собрана отдельным документом для реализации (Google Ads API: OAuth, developer token, шаги подключения). Здесь — краткая сводка по уровням.</p>
+        <table class="grid">
+          <tr><th>Процесс</th><th>Уровень сейчас</th><th>Куда движемся</th></tr>
+          <tr><td>Исследование ключей</td><td>Вручную, Планировщик</td><td>Автоматический сбор по расписанию через API</td></tr>
+          <tr><td>Генерация объявлений</td><td>Вручную (этот документ)</td><td>AI предлагает варианты → человек утверждает</td></tr>
+          <tr><td>Публикация кампаний</td><td>Вручную в интерфейсе</td><td>Через API, после утверждения человеком</td></tr>
+          <tr><td>Минус-слова</td><td>Вручную по факту показов</td><td>Автоматическое добавление по чётким правилам</td></tr>
+          <tr><td>Изменение бюджета/ставок</td><td>Вручную</td><td>Рекомендация системы → подтверждение человеком, никогда не автоматически</td></tr>
+        </table>
+
+        <h3 style="font-family:'Manrope',sans-serif; font-weight:700; font-size:15px; margin:22px 0 10px; color:var(--ink);">Roadmap запуска</h3>
+        <div class="pipeline">
+          <div class="pipeline-step"><div class="pt">Неделя 1 — Tracking</div><div class="pd">GA4, Google Tag Manager, конверсии на реальные события</div></div>
+          <div class="pipeline-step"><div class="pt">Неделя 2 — Campaign Build</div><div class="pd">Публикация 4 кампаний по структуре из этого документа</div></div>
+          <div class="pipeline-step"><div class="pt">Неделя 2 — Launch</div><div class="pd">Запуск, без изменений первые 3–4 дня</div></div>
+          <div class="pipeline-step"><div class="pt">Неделя 3–4 — Первая оптимизация</div><div class="pd">Минус-слова по факту search terms, первая ревизия ставок</div></div>
+          <div class="pipeline-step"><div class="pt">Неделя 4–6 — Дашборд и автоматизация</div><div class="pd">Looker Studio подключён, старт работы над API-автоматизацией</div></div>
+        </div>
+
+        <div class="callout">Главный риск: $500/мес на 4 кампании — бюджет тонкий, особенно на кампанию «Сравнение с конкурентами» (~$0,8/день). Если после 3 недель окажется, что кластер работает лучше остальных — резерв 15% и часть доли «Премиум-формата» стоит перенаправить туда, а не держать распределение зафиксированным навсегда.</div>
+      </div>
+
+    </div>
+
+    <!-- ===== YANDEX SUB-PANEL ===== -->
+    <div class="sub-panel" id="yandex-sub">
+      <div class="chapter">
+        <div class="chapter-head"><span class="chapter-tag">[01]</span><h2>Статус: ждёт того же разбора, что и Google</h2></div>
+        <p class="lede">Структура ниже — рабочая версия с прошлого цикла. Точных данных по объёмам из Wordstat для неё пока нет — как только пройдём тот же процесс (реальные частотности вместо оценок), эта вкладка обновится по аналогии с Google.</p>
+        <div class="callout warn">Важно: в Wordstat есть похожая тонкость — некоторые фразы про «Грузию» могут означать не страну, а область с похожим названием в другой стране. Проверим это отдельно при обновлении, чтобы реклама не показывалась не той аудитории.</div>
+      </div>
+
+      <div class="chapter" style="border-bottom:none;">
+        <div class="chapter-head"><span class="chapter-tag">[02]</span><h2>Черновая структура (RU)</h2></div>
+        <div class="chip-row">
+          <span class="chip">элитная недвижимость тбилиси</span><span class="chip">недвижимость тбилиси купить</span><span class="chip">клубный дом тбилиси</span><span class="chip">недвижимость грузия инвестиции</span><span class="chip">внж при покупке недвижимости</span><span class="chip">резидентство грузия недвижимость</span>
+        </div>
+        <div class="ad-preview">
+          <div class="ad-title">ELYSIUM Тбилиси — Клубный Дом · 14 Резиденций</div>
+          <div class="ad-url">elysiumtbilisi.com</div>
+          <div class="ad-desc">Панорамные виды, полная автономность, охрана 24/7. Дом сдан, от 138 м².</div>
+        </div>
+        <div class="ad-preview">
+          <div class="ad-title">ВНЖ при Покупке Недвижимости — ELYSIUM</div>
+          <div class="ad-url">elysiumtbilisi.com</div>
+          <div class="ad-desc">Резидентство Грузии от $150 000. Низкие налоги, клубный дом на 14 резиденций.</div>
+        </div>
+        <div class="sitelink-grid">
+          <div class="sitelink-card"><div class="st">Резиденции и планировки</div><div class="sl">От 138 до 191 м²</div></div>
+          <div class="sitelink-card"><div class="st">ВНЖ при покупке</div><div class="sl">От $150 000</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ META (SECONDARY) ============ -->
+<section class="panel-tab" id="meta">
+  <div class="wrap">
+    <div class="hero">
+      <div class="pill">Второй приоритет · Meta Ads · $400/мес</div>
+      <h1>Одна кампания. Одна цель. Instagram-профиль ELYSIUM растёт на подписчиках из Грузии.</h1>
+      <p class="hero-sub">Полная замена прошлой версии (9 кампаний, лиды, 3 сайта × 3 языка). При $400/мес такая структура была нереалистичной — алгоритм не успевал бы обучаться на 9 маленьких кампаниях одновременно. Новая логика — противоположная: максимум концентрации на одной простой задаче.</p>
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-head"><span class="chapter-tag">[00]</span><h2>Резюме</h2></div>
+      <div class="card-grid c4">
+        <div class="card"><div class="fv">$400</div><div class="fl">весь бюджет, одна кампания</div></div>
+        <div class="card"><div class="fv">1</div><div class="fl">гео — только Грузия</div></div>
+        <div class="card"><div class="fv">2</div><div class="fl">аудитории: EN и KA (без RU)</div></div>
+        <div class="card"><div class="fv">Трафик</div><div class="fl">цель — переходы в Instagram-профиль</div></div>
+      </div>
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-head"><span class="chapter-tag">[01]</span><h2>Почему так просто</h2></div>
+      <p class="lede">Задача этого бюджета — не лиды (это делают Google и Yandex), а рост живой аудитории в Instagram: люди, которые видят продукт регулярно, до того как решат оставить заявку. Цель кампании — <b>Трафик</b> с целевым назначением «Посещение профиля» — ровно то, что уже частично тестировалось и показало себя рабочим паттерном в истории аккаунта.</p>
+      <p class="lede">Почему не «Вовлечённость» и не отдельная цель «Подписчики»: в Meta нет отдельной цели именно «рост подписчиков» — она либо достигается через Трафик с посадкой на профиль, либо через Engagement на конкретные посты. Первое даёт стабильно больше профильных переходов при том же бюджете, поэтому выбор — Трафик.</p>
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-head"><span class="chapter-tag">[02]</span><h2>Структура кампании</h2></div>
+      <div class="flow">
+        <div class="flow-step">Campaign: [Трафик] Elysium — Instagram Profile Growth</div>
+      </div>
+      <p class="lede" style="margin-top:14px;">Внутри — 2 ad set с CBO (Campaign Budget Optimization), система сама распределяет бюджет между ними по факту дешевизны результата:</p>
+      <div class="ledger">
+        <div class="ledger-row"><div class="ledger-country">EN — экспаты в Грузии</div><div class="bar-track"><div class="bar-fill" style="width:55%"></div></div><div class="ledger-cpl">$220</div><div class="ledger-status status-core">Старт</div></div>
+        <div class="ledger-row"><div class="ledger-country">KA — грузиноязычная</div><div class="bar-track"><div class="bar-fill" style="width:45%"></div></div><div class="ledger-cpl">$180</div><div class="ledger-status status-test">Старт, ждёт креативы</div></div>
+      </div>
+      <div class="callout">RU — сознательно не включаем: русскоязычная аудитория Грузии кроется в EN-сегменте (экспаты часто двуязычны) и в отдельных Google/Yandex кампаниях, которые уже покрывают русский язык напрямую. Дублировать здесь — распылять бюджет.</div>
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-head"><span class="chapter-tag">[03]</span><h2>Гео</h2></div>
+      <p class="lede">Единственное гео — Грузия, никакого расширения. При $400/мес любое дополнительное гео означает менее $13/день на аудиторию — ниже разумного порога для стабильного обучения алгоритма. Лучше один рынок с достаточным объёмом показов.</p>
+    </div>
+
+    <div class="chapter">
+      <div class="chapter-head"><span class="chapter-tag">[04]</span><h2>Креативы</h2></div>
+      <p class="lede">Переиспользуем уже готовый пул — под цель «Трафик на профиль» подходят те же форматы, что и раньше, менять не нужно.</p>
+      <div class="chip-row">
+        <span class="chip">DbNPvwPoYTk</span><span class="chip">Da-NFJANFTW</span><span class="chip">DZMyUYmDVb8</span><span class="chip">DXRZlkvDe6t</span>
+        <span class="chip">DbkTgX8Ipnu</span><span class="chip">DZZn1maNzph</span><span class="chip">DThvAr6DZrV</span>
+      </div>
+      <div class="callout warn">Для KA-аудитории нужны отдельные креативы на грузинском — до получения от Тани ad set KA запускается на паузе или с EN-креативами как временная заглушка (решить перед стартом).</div>
+    </div>
+
+    <div class="chapter" style="border-bottom:none;">
+      <div class="chapter-head"><span class="chapter-tag">[05]</span><h2>KPI — что считаем</h2></div>
+      <table class="grid">
+        <tr><th>Метрика</th><th>Что показывает</th></tr>
+        <tr><td>Cost per Profile Visit</td><td>Базовая эффективность — сколько стоит переход в профиль</td></tr>
+        <tr><td>Follow-through rate</td><td>Доля дошедших до профиля, кто подписался — низкий процент при дешёвом переходе значит нерелевантный трафик</td></tr>
+        <tr><td>Retention через 30 дней</td><td>Отписки в первый месяц — признак, что привлекли не ту аудиторию ради дешёвого клика</td></tr>
+      </table>
+      <p class="lede" style="margin-top:14px;">Пересмотр бюджета — не раньше 2-3 недель стабильных данных по обеим метрикам сразу (не только по цене перехода).</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="wrap"><footer>
+  <span>ELYSIUM RESIDENTIAL COMPLEX — внутренний документ команды</span>
+  <span>Google/Yandex — приоритет · Meta — второй канал</span>
+</footer></div>
+
+<script>
+  const buttons = document.querySelectorAll('.switch-btn');
+  const panels = document.querySelectorAll('.panel-tab');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+  const subButtons = document.querySelectorAll('.subswitch-btn');
+  const subPanels = document.querySelectorAll('.sub-panel');
+  subButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      subButtons.forEach(b => b.classList.remove('active'));
+      subPanels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.sub).classList.add('active');
+    });
+  });
+  const langButtons = document.querySelectorAll('.langswitch-btn');
+  const langPanels = document.querySelectorAll('.lang-panel');
+  langButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      langButtons.forEach(b => b.classList.remove('active'));
+      langPanels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.lang).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

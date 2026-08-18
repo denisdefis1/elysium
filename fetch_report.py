@@ -258,11 +258,21 @@ ads_raw = api_get_chunked(f"{ACCOUNT_ID}/insights", {
 }, start_date, end_date)
 creatives = dedup_by_entity_date(ads_raw, 'ad_id', 'ad_name', parent_fields=['adset_id', 'campaign_id'])
 
-ads_meta_raw = api_get(f"{ACCOUNT_ID}/ads", {
-    'fields': 'id,creative.thumbnail_width(720).thumbnail_height(720){thumbnail_url}',
-    'limit': 25,
-})
-thumb_by_ad_id = {a['id']: a.get('creative', {}).get('thumbnail_url') for a in ads_meta_raw}
+thumb_by_ad_id = {}
+ad_ids = [c["id"] for c in creatives]
+BATCH = 50
+for i in range(0, len(ad_ids), BATCH):
+    batch_ids = ad_ids[i:i + BATCH]
+    try:
+        batch_raw = api_get(f"{ACCOUNT_ID}/ads", {
+            'fields': 'id,creative.thumbnail_width(720).thumbnail_height(720){thumbnail_url}',
+            'ids': ','.join(batch_ids),
+            'limit': BATCH,
+        })
+        for a in batch_raw:
+            thumb_by_ad_id[a['id']] = a.get('creative', {}).get('thumbnail_url')
+    except MetaAPIError as e:
+        print(f"Пропускаю превью для батча {i}-{i+BATCH} — {e}")
 for c in creatives:
     c["thumbnail_url"] = thumb_by_ad_id.get(c["id"])
 
