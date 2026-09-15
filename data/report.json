@@ -1,5 +1,5 @@
 {
-  "last_updated": "15.09.2026, 03:14",
+  "last_updated": "15.09.2026, 11:09",
   "fetched_range": {
     "since": "2025-07-01",
     "until": "2026-09-15"
@@ -2096,7 +2096,7 @@
       "leads": 0,
       "clicks": 250,
       "link_clicks": 227,
-      "impressions": 13522
+      "impressions": 13526
     }
   ],
   "campaigns": [
@@ -7079,7 +7079,7 @@
           "leads": 0,
           "clicks": 250,
           "link_clicks": 227,
-          "impressions": 13522
+          "impressions": 13526
         }
       ],
       "language": "RU",
@@ -17607,7 +17607,7 @@
           "leads": 0,
           "clicks": 145,
           "link_clicks": 128,
-          "impressions": 6677
+          "impressions": 6680
         }
       ],
       "campaign_id": "120249413647620277"
@@ -17782,7 +17782,7 @@
           "leads": 0,
           "clicks": 105,
           "link_clicks": 99,
-          "impressions": 6845
+          "impressions": 6846
         }
       ],
       "campaign_id": "120249413647620277"
@@ -60366,7 +60366,7 @@
           "leads": 0,
           "clicks": 107,
           "link_clicks": 96,
-          "impressions": 4827
+          "impressions": 4829
         }
       ],
       "adset_id": "120249413647640277",
@@ -60817,7 +60817,7 @@
           "leads": 0,
           "clicks": 14,
           "link_clicks": 11,
-          "impressions": 459
+          "impressions": 460
         }
       ],
       "adset_id": "120249413647640277",
@@ -61300,7 +61300,7 @@
           "leads": 0,
           "clicks": 9,
           "link_clicks": 8,
-          "impressions": 328
+          "impressions": 329
         }
       ],
       "adset_id": "120249414776150277",
@@ -66073,7 +66073,7 @@
           "leads": 0,
           "clicks": 33,
           "link_clicks": 28,
-          "impressions": 1496
+          "impressions": 1498
         }
       ]
     },
@@ -93803,7 +93803,7 @@
           "leads": 0,
           "clicks": 21,
           "link_clicks": 19,
-          "impressions": 1784
+          "impressions": 1786
         }
       ]
     },
@@ -97250,7 +97250,7 @@
           "leads": 0,
           "clicks": 128,
           "link_clicks": 110,
-          "impressions": 6920
+          "impressions": 6924
         }
       ]
     },
@@ -193361,7 +193361,7 @@
           "leads": 0,
           "clicks": 250,
           "link_clicks": 227,
-          "impressions": 13522
+          "impressions": 13526
         }
       ]
     }
