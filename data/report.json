@@ -1,5 +1,5 @@
 {
-  "last_updated": "21.09.2026, 03:07",
+  "last_updated": "21.09.2026, 12:01",
   "fetched_range": {
     "since": "2025-07-01",
     "until": "2026-09-21"
@@ -61950,6 +61950,23 @@
       "adset_id": "120249414776150277",
       "campaign_id": "120249413647620277",
       "thumbnail_url": null
+    },
+    {
+      "id": "120249971049600277",
+      "name": "Ролик из инстаграмм",
+      "daily": [
+        {
+          "date": "2026-09-21",
+          "spend": 0.12,
+          "leads": 0,
+          "clicks": 0,
+          "link_clicks": 0,
+          "impressions": 21
+        }
+      ],
+      "adset_id": "120249971049640277",
+      "campaign_id": "120249971049580277",
+      "thumbnail_url": null
     }
   ],
   "age_groups": [
@@ -64020,6 +64037,14 @@
           "clicks": 30,
           "link_clicks": 30,
           "impressions": 1895
+        },
+        {
+          "date": "2026-09-21",
+          "spend": 0.0,
+          "leads": 0,
+          "clicks": 0,
+          "link_clicks": 0,
+          "impressions": 5
         }
       ]
     },
@@ -66074,6 +66099,14 @@
           "clicks": 33,
           "link_clicks": 28,
           "impressions": 1498
+        },
+        {
+          "date": "2026-09-21",
+          "spend": 0.13,
+          "leads": 0,
+          "clicks": 0,
+          "link_clicks": 0,
+          "impressions": 9
         }
       ]
     },
@@ -68112,6 +68145,14 @@
           "clicks": 24,
           "link_clicks": 17,
           "impressions": 822
+        },
+        {
+          "date": "2026-09-21",
+          "spend": 0.0,
+          "leads": 0,
+          "clicks": 0,
+          "link_clicks": 0,
+          "impressions": 9
         }
       ]
     },
@@ -72100,6 +72141,14 @@
           "clicks": 20,
           "link_clicks": 18,
           "impressions": 1119
+        },
+        {
+          "date": "2026-09-21",
+          "spend": 0.03,
+          "leads": 0,
+          "clicks": 0,
+          "link_clicks": 0,
+          "impressions": 9
         }
       ]
     },
@@ -76112,6 +76161,14 @@
           "clicks": 16,
           "link_clicks": 13,
           "impressions": 687
+        },
+        {
+          "date": "2026-09-21",
+          "spend": 0.0,
+          "leads": 0,
+          "clicks": 0,
+          "link_clicks": 0,
+          "impressions": 2
         }
       ]
     },
@@ -97251,6 +97308,14 @@
           "clicks": 128,
           "link_clicks": 110,
           "impressions": 6924
+        },
+        {
+          "date": "2026-09-21",
+          "spend": 0.0,
+          "leads": 0,
+          "clicks": 0,
+          "link_clicks": 0,
+          "impressions": 4
         }
       ]
     },
@@ -99312,6 +99377,14 @@
           "clicks": 121,
           "link_clicks": 116,
           "impressions": 6535
+        },
+        {
+          "date": "2026-09-21",
+          "spend": 0.19,
+          "leads": 0,
+          "clicks": 0,
+          "link_clicks": 0,
+          "impressions": 30
         }
       ]
     },
@@ -193364,11 +193437,25 @@
           "impressions": 13526
         }
       ]
+    },
+    {
+      "campaign_id": "120249971049580277",
+      "country": "GE",
+      "daily": [
+        {
+          "date": "2026-09-21",
+          "spend": 0.26,
+          "leads": 0,
+          "clicks": 0,
+          "link_clicks": 0,
+          "impressions": 39
+        }
+      ]
     }
   ],
   "reach_by_preset": {
     "all": {
-      "7d": 0,
+      "7d": 27,
       "14d": 80312,
       "30d": 161486,
       "month": 127241,
