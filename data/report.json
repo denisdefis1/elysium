@@ -1,5 +1,5 @@
 {
-  "last_updated": "16.10.2026, 16:17",
+  "last_updated": "16.10.2026, 20:40",
   "fetched_range": {
     "since": "2025-07-01",
     "until": "2026-10-16"
@@ -2280,15 +2280,15 @@
       "leads": 1,
       "clicks": 237,
       "link_clicks": 168,
-      "impressions": 5421
+      "impressions": 5423
     },
     {
       "date": "2026-10-16",
-      "spend": 25.47,
+      "spend": 28.43,
       "leads": 0,
-      "clicks": 83,
-      "link_clicks": 52,
-      "impressions": 2277
+      "clicks": 91,
+      "link_clicks": 58,
+      "impressions": 2512
     }
   ],
   "campaigns": [
@@ -7477,11 +7477,11 @@
         },
         {
           "date": "2026-10-16",
-          "spend": 8.89,
+          "spend": 11.74,
           "leads": 0,
-          "clicks": 18,
-          "link_clicks": 8,
-          "impressions": 596
+          "clicks": 26,
+          "link_clicks": 14,
+          "impressions": 815
         }
       ],
       "language": "RU",
@@ -7547,15 +7547,15 @@
           "leads": 0,
           "clicks": 213,
           "link_clicks": 159,
-          "impressions": 4305
+          "impressions": 4307
         },
         {
           "date": "2026-10-16",
-          "spend": 16.58,
+          "spend": 16.69,
           "leads": 0,
           "clicks": 65,
           "link_clicks": 44,
-          "impressions": 1681
+          "impressions": 1697
         }
       ],
       "language": "RU",
@@ -18460,11 +18460,11 @@
         },
         {
           "date": "2026-10-16",
-          "spend": 8.89,
+          "spend": 11.74,
           "leads": 0,
-          "clicks": 18,
-          "link_clicks": 8,
-          "impressions": 596
+          "clicks": 26,
+          "link_clicks": 14,
+          "impressions": 815
         }
       ],
       "campaign_id": "120250296033790277"
@@ -18526,15 +18526,15 @@
           "leads": 0,
           "clicks": 98,
           "link_clicks": 74,
-          "impressions": 2090
+          "impressions": 2091
         },
         {
           "date": "2026-10-16",
-          "spend": 6.27,
+          "spend": 6.37,
           "leads": 0,
           "clicks": 28,
           "link_clicks": 22,
-          "impressions": 757
+          "impressions": 766
         }
       ],
       "campaign_id": "120250435211900277"
@@ -18557,15 +18557,15 @@
           "leads": 0,
           "clicks": 115,
           "link_clicks": 85,
-          "impressions": 2215
+          "impressions": 2216
         },
         {
           "date": "2026-10-16",
-          "spend": 10.31,
+          "spend": 10.32,
           "leads": 0,
           "clicks": 37,
           "link_clicks": 22,
-          "impressions": 924
+          "impressions": 931
         }
       ],
       "campaign_id": "120250435211900277"
@@ -63022,11 +63022,11 @@
         },
         {
           "date": "2026-10-16",
-          "spend": 5.31,
+          "spend": 6.34,
           "leads": 0,
-          "clicks": 14,
-          "link_clicks": 6,
-          "impressions": 503
+          "clicks": 19,
+          "link_clicks": 9,
+          "impressions": 631
         }
       ],
       "adset_id": "120250296033800277",
@@ -63111,11 +63111,11 @@
         },
         {
           "date": "2026-10-16",
-          "spend": 0.0,
+          "spend": 0.04,
           "leads": 0,
           "clicks": 0,
           "link_clicks": 0,
-          "impressions": 1
+          "impressions": 10
         }
       ],
       "adset_id": "120250296033800277",
@@ -63281,11 +63281,11 @@
         },
         {
           "date": "2026-10-16",
-          "spend": 3.58,
+          "spend": 5.27,
           "leads": 0,
-          "clicks": 4,
-          "link_clicks": 2,
-          "impressions": 94
+          "clicks": 7,
+          "link_clicks": 5,
+          "impressions": 162
         }
       ],
       "adset_id": "120250296033800277",
@@ -63514,15 +63514,15 @@
           "leads": 0,
           "clicks": 98,
           "link_clicks": 74,
-          "impressions": 2090
+          "impressions": 2091
         },
         {
           "date": "2026-10-16",
-          "spend": 6.27,
+          "spend": 6.37,
           "leads": 0,
           "clicks": 28,
           "link_clicks": 22,
-          "impressions": 757
+          "impressions": 766
         }
       ],
       "adset_id": "120250435211880277",
@@ -63547,15 +63547,15 @@
           "leads": 0,
           "clicks": 115,
           "link_clicks": 85,
-          "impressions": 2215
+          "impressions": 2216
         },
         {
           "date": "2026-10-16",
-          "spend": 10.31,
+          "spend": 10.32,
           "leads": 0,
           "clicks": 37,
           "link_clicks": 22,
-          "impressions": 925
+          "impressions": 931
         }
       ],
       "adset_id": "120250435410970277",
@@ -65826,11 +65826,11 @@
         },
         {
           "date": "2026-10-16",
-          "spend": 2.0,
+          "spend": 2.71,
           "leads": 0,
           "clicks": 8,
           "link_clicks": 6,
-          "impressions": 253
+          "impressions": 278
         }
       ]
     },
@@ -68072,11 +68072,11 @@
         },
         {
           "date": "2026-10-16",
-          "spend": 2.88,
+          "spend": 3.06,
           "leads": 0,
-          "clicks": 10,
+          "clicks": 11,
           "link_clicks": 5,
-          "impressions": 454
+          "impressions": 478
         }
       ]
     },
@@ -70310,11 +70310,11 @@
         },
         {
           "date": "2026-10-16",
-          "spend": 3.06,
+          "spend": 3.41,
           "leads": 0,
-          "clicks": 10,
-          "link_clicks": 5,
-          "impressions": 399
+          "clicks": 11,
+          "link_clicks": 6,
+          "impressions": 433
         }
       ]
     },
@@ -74602,11 +74602,11 @@
         },
         {
           "date": "2026-10-16",
-          "spend": 3.95,
+          "spend": 4.15,
           "leads": 0,
-          "clicks": 14,
-          "link_clicks": 8,
-          "impressions": 251
+          "clicks": 17,
+          "link_clicks": 11,
+          "impressions": 280
         }
       ]
     },
@@ -78998,11 +78998,11 @@
         },
         {
           "date": "2026-10-16",
-          "spend": 3.06,
+          "spend": 3.28,
           "leads": 0,
           "clicks": 5,
           "link_clicks": 3,
-          "impressions": 187
+          "impressions": 207
         }
       ]
     },
@@ -81224,15 +81224,15 @@
           "leads": 0,
           "clicks": 15,
           "link_clicks": 10,
-          "impressions": 428
+          "impressions": 429
         },
         {
           "date": "2026-10-16",
-          "spend": 1.71,
+          "spend": 2.01,
           "leads": 0,
           "clicks": 6,
           "link_clicks": 2,
-          "impressions": 158
+          "impressions": 176
         }
       ]
     },
@@ -83390,7 +83390,7 @@
           "leads": 0,
           "clicks": 0,
           "link_clicks": 0,
-          "impressions": 5
+          "impressions": 6
         }
       ]
     },
@@ -85616,11 +85616,11 @@
         },
         {
           "date": "2026-10-16",
-          "spend": 1.64,
+          "spend": 1.76,
           "leads": 0,
-          "clicks": 7,
-          "link_clicks": 5,
-          "impressions": 141
+          "clicks": 9,
+          "link_clicks": 6,
+          "impressions": 157
         }
       ]
     },
@@ -87846,11 +87846,11 @@
         },
         {
           "date": "2026-10-16",
-          "spend": 1.59,
+          "spend": 1.93,
           "leads": 0,
           "clicks": 5,
           "link_clicks": 4,
-          "impressions": 110
+          "impressions": 126
         }
       ]
     },
@@ -90052,11 +90052,11 @@
         },
         {
           "date": "2026-10-16",
-          "spend": 3.14,
+          "spend": 3.29,
           "leads": 0,
-          "clicks": 14,
-          "link_clicks": 11,
-          "impressions": 192
+          "clicks": 15,
+          "link_clicks": 12,
+          "impressions": 207
         }
       ]
     },
@@ -92270,15 +92270,15 @@
           "leads": 0,
           "clicks": 38,
           "link_clicks": 33,
-          "impressions": 447
+          "impressions": 448
         },
         {
           "date": "2026-10-16",
-          "spend": 2.14,
+          "spend": 2.47,
           "leads": 0,
           "clicks": 4,
           "link_clicks": 3,
-          "impressions": 116
+          "impressions": 132
         }
       ]
     },
@@ -97112,7 +97112,7 @@
           "leads": 0,
           "clicks": 0,
           "link_clicks": 0,
-          "impressions": 1
+          "impressions": 2
         }
       ]
     },
@@ -98230,7 +98230,7 @@
           "leads": 0,
           "clicks": 0,
           "link_clicks": 0,
-          "impressions": 14
+          "impressions": 18
         }
       ]
     },
@@ -101957,15 +101957,15 @@
           "leads": 0,
           "clicks": 153,
           "link_clicks": 121,
-          "impressions": 2432
+          "impressions": 2433
         },
         {
           "date": "2026-10-16",
-          "spend": 9.87,
+          "spend": 11.45,
           "leads": 0,
-          "clicks": 51,
-          "link_clicks": 33,
-          "impressions": 897
+          "clicks": 53,
+          "link_clicks": 34,
+          "impressions": 987
         }
       ]
     },
@@ -104214,11 +104214,11 @@
         },
         {
           "date": "2026-10-16",
-          "spend": 15.57,
+          "spend": 16.89,
           "leads": 0,
-          "clicks": 30,
-          "link_clicks": 19,
-          "impressions": 1375
+          "clicks": 36,
+          "link_clicks": 24,
+          "impressions": 1504
         }
       ]
     },
@@ -107892,7 +107892,7 @@
           "leads": 0,
           "clicks": 0,
           "link_clicks": 0,
-          "impressions": 59
+          "impressions": 60
         },
         {
           "date": "2026-10-16",
@@ -198972,11 +198972,11 @@
         },
         {
           "date": "2026-10-16",
-          "spend": 9.0,
+          "spend": 11.74,
           "leads": 0,
-          "clicks": 18,
-          "link_clicks": 8,
-          "impressions": 612
+          "clicks": 26,
+          "link_clicks": 14,
+          "impressions": 815
         }
       ]
     },
@@ -199036,25 +199036,25 @@
           "leads": 0,
           "clicks": 213,
           "link_clicks": 159,
-          "impressions": 4305
+          "impressions": 4307
         },
         {
           "date": "2026-10-16",
-          "spend": 16.58,
+          "spend": 16.74,
           "leads": 0,
           "clicks": 65,
           "link_clicks": 44,
-          "impressions": 1682
+          "impressions": 1698
         }
       ]
     }
   ],
   "reach_by_preset": {
     "all": {
-      "7d": 7196,
-      "14d": 9093,
-      "30d": 16425,
-      "month": 9819,
+      "7d": 7219,
+      "14d": 9129,
+      "30d": 16439,
+      "month": 9844,
       "all": 2227594
     },
     "Вовлечённость": {
@@ -199065,10 +199065,10 @@
       "all": 285400
     },
     "Лиды": {
-      "7d": 7196,
-      "14d": 9093,
-      "30d": 16425,
-      "month": 9819,
+      "7d": 7219,
+      "14d": 9129,
+      "30d": 16439,
+      "month": 9844,
       "all": 438942
     },
     "Охват": {
